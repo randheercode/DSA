@@ -1,5 +1,5 @@
 # StayHomeMotivation
-A collection of Algorithm and Problem widely asked in interview for Developer position.
+A compiled collection of Data Structure, Algorithm and Programming Problems.
 
 
 ## Algorithm List
