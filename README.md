@@ -8,6 +8,7 @@ A compiled collection of Data Structure, Algorithm and Programming Problems.
 * Kadane's Algorithm for Maximum Sub Array problem
 * Sliding Window Technique
 * Morris Tree Traversal
+* LRU Cache Implementation (Using HashMap & LinkedList and Using LinkedHashMap)
 
 ## Problem List
 * Add Two Number(Not, 2+3 = 5 but something like this)
