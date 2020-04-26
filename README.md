@@ -11,6 +11,8 @@ A compiled collection of Data Structure, Algorithm and Programming Problems.
 * LRU Cache Implementation (Using HashMap & LinkedList and Using LinkedHashMap)
 
 ## Problem List
-* Add Two Number(Not, 2+3 = 5 but something like this)
+* Add Two Number(Not 2+3 = 5, but something like this)
 * LeetCode: Single Number
 * LeetCode: Jump Game
+* LeetCode: SubArray Sum
+* LeetCode: BitWise and of range of number
