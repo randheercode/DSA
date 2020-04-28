@@ -17,3 +17,5 @@ A compiled collection of Data Structure, Algorithm and Programming Problems.
 * LeetCode: SubArray Sum
 * LeetCode: BitWise and of range of number
 * LeetCode: LongestCommonSubSequence
+* LeetCode: MaximalSquareOf1
+* LeetCode: FirstUnique
