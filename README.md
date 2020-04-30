@@ -20,3 +20,4 @@ A compiled collection of Data Structure, Algorithm and Programming Problems.
 * LeetCode: MaximalSquareOf1
 * LeetCode: FirstUnique
 * LeetCode: BinaryTreeMaxPathSum
+* LeetCode: BinaryTreeValidPath
