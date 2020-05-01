@@ -21,3 +21,4 @@ A compiled collection of Data Structure, Algorithm and Programming Problems.
 * LeetCode: FirstUnique
 * LeetCode: BinaryTreeMaxPathSum
 * LeetCode: BinaryTreeValidPath
+* LeetCode: BadVersion
