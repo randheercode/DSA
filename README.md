@@ -25,4 +25,5 @@ A compiled collection of Data Structure, Algorithm and Programming Problems.
 * LeetCode: Jewel & Stones
 * LeetCode: Binary Complement
 * LeetCode: First unique char
+* LeetCode: Majority Elements
 
