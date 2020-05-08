@@ -26,4 +26,6 @@ A compiled collection of Data Structure, Algorithm and Programming Problems.
 * LeetCode: Binary Complement
 * LeetCode: First unique char
 * LeetCode: Majority Elements
+* LeetCode: Cousin Node
+* LeetCode: Check Straight Line
 
