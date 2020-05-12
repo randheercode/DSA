@@ -26,11 +26,13 @@ class FloodFill {
 }
 
 fun main() {
+    fun printArray(image: Array<IntArray>) {
+        println(image.joinToString(separator = " ", prefix = "[", postfix = "]") { it.joinToString(separator = ", ", prefix = "[", postfix = "]") })
+    }
+
     val array = arrayOf(intArrayOf(0, 0, 0), intArrayOf(0, 1, 1))
     printArray(array)
     printArray(FloodFill().floodFill(array, 1, 1, 1))
 }
 
-private fun printArray(image: Array<IntArray>) {
-    println(image.joinToString(separator = " ", prefix = "[", postfix = "]") { it.joinToString(separator = ", ", prefix = "[", postfix = "]") })
-}
+
