@@ -12,11 +12,30 @@ package problems
  */
 class RemoveKDigits {
     fun removeKdigits(num: String, k: Int): String {
+        if (num.length == k)
+            return "0";
 
-        return num.substring(k, num.length)
+        val sb = StringBuilder(num);
+
+        for (j in 0 until k) {
+            var i = 0;
+            while (i < sb.length - 1 && sb[i] <= sb[i + 1]) {
+                i++
+            }
+            sb.delete(i, i + 1);
+        }
+
+        while (sb.length > 1 && sb[0] == '0')
+            sb.delete(0, 1);
+
+        if (sb.isEmpty()) {
+            return "0";
+        }
+
+        return sb.toString();
     }
 }
 
 fun main() {
-    println(RemoveKDigits().removeKdigits("12345", 2))
+    println(RemoveKDigits().removeKdigits("5337", 2))
 }
