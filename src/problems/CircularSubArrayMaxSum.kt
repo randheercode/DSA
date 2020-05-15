@@ -4,6 +4,7 @@ package problems
  * Created by randheercode
  * Date: 15/5/20
  * Time: 5:38 pm
+ * https://leetcode.com/problems/maximum-sum-circular-subarray/discuss/633401/Kadane-Algorithm-Trick-beats-100-Java-Explained
  */
 class CircularSubArrayMaxSum {
     fun maxSubarraySumCircular(A: IntArray): Int {
