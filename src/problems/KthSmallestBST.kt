@@ -1,5 +1,7 @@
 package problems
 
+import utils.TreeNode
+
 /**
  * Created by randheercode
  * Date: 20/5/20
@@ -25,7 +27,7 @@ fun main() {
     testCase2()
 }
 
-fun testCase1() {
+private fun testCase1() {
     val root = TreeNode(3)
     root.right = TreeNode(4)
     root.left = TreeNode(1)
@@ -34,7 +36,7 @@ fun testCase1() {
 }
 
 
-fun testCase2() {
+private fun testCase2() {
     val root = TreeNode(5)
     root.right = TreeNode(6)
     root.left = TreeNode(3)
