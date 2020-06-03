@@ -27,9 +27,44 @@ class MultipleProblemLCEasy {
         }
         return resultBuilder.toString()
     }
+
+    fun isStrobogrammatic(num: String): Boolean {
+        var start = 0
+        var end: Int = num.lastIndex
+        while (start <= end) {
+            when (num[start]) {
+                '0', '1', '8' -> if (num[end] != num[start]) {
+                    return false
+                }
+                '6' -> if (num[end] != '9') {
+                    return false
+                }
+                '9' -> if (num[end] != '6') {
+                    return false
+                }
+                else -> return false
+            }
+            start++
+            end--
+        }
+        return true
+    }
 }
 
 fun main() {
+    // testReverseString2()
+    testisStrobogrammatic()
+}
+
+private fun testReverseString2() {
     println(MultipleProblemLCEasy().reverseStr("abcdefg", 2))
     println(MultipleProblemLCEasy().reverseStr("abcd", 4))
 }
+
+private fun testisStrobogrammatic() {
+    println(MultipleProblemLCEasy().isStrobogrammatic("88"))
+    println(MultipleProblemLCEasy().isStrobogrammatic("69"))
+    println(MultipleProblemLCEasy().isStrobogrammatic("00"))
+    println(MultipleProblemLCEasy().isStrobogrammatic("123"))
+}
+
