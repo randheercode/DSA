@@ -101,43 +101,48 @@ class MultipleProblemLCEasy {
         return builder.toString()
 
     }
+
+    fun countBinarySubString(s: String): Int {
+        var ans = 0
+        var prev = 0
+        var cur = 1
+        for (i in 1 until s.length) {
+            if (s[i - 1] != s[i]) {
+                ans += minOf(prev, cur)
+                prev = cur
+                cur = 1
+            } else {
+                cur++
+            }
+        }
+        return ans + minOf(prev, cur)
+    }
 }
 
 fun main() {
 //     testReverseString2()
 //    testisStrobogrammatic()
 //    testStringCompression()
-    testCountAndSay()
+//    testCountAndSay()
+    testBinaryStringCount()
 }
 
 private fun testReverseString2() {
-    println(MultipleProblemLCEasy().reverseStr("abcdefg", 2))
     println(MultipleProblemLCEasy().reverseStr("abcd", 4))
 }
 
 private fun testisStrobogrammatic() {
-    println(MultipleProblemLCEasy().isStrobogrammatic("88"))
-    println(MultipleProblemLCEasy().isStrobogrammatic("69"))
-    println(MultipleProblemLCEasy().isStrobogrammatic("00"))
     println(MultipleProblemLCEasy().isStrobogrammatic("123"))
 }
 
 private fun testStringCompression() {
-    println(MultipleProblemLCEasy().compress(charArrayOf('a', 'a', 'b', 'b', 'c', 'c', 'c')))
-    println(MultipleProblemLCEasy().compress(charArrayOf('a')))
     println(MultipleProblemLCEasy().compress(charArrayOf('a', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b')))
 }
 
 private fun testCountAndSay() {
-    println(MultipleProblemLCEasy().countAndSay(1))
-    println(MultipleProblemLCEasy().countAndSay(2))
-    println(MultipleProblemLCEasy().countAndSay(3))
-    println(MultipleProblemLCEasy().countAndSay(4))
-    println(MultipleProblemLCEasy().countAndSay(5))
-    println(MultipleProblemLCEasy().countAndSay(6))
-    println(MultipleProblemLCEasy().countAndSay(7))
-    println(MultipleProblemLCEasy().countAndSay(8))
-    println(MultipleProblemLCEasy().countAndSay(9))
     println(MultipleProblemLCEasy().countAndSay(10))
 }
 
+private fun testBinaryStringCount() {
+    println(MultipleProblemLCEasy().countBinarySubString("1010"))
+}
