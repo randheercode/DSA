@@ -278,6 +278,26 @@ class MultipleProblemLCEasy {
         }
     }
 
+    fun countElements(arr: IntArray): Int {
+        val elements = arr.toHashSet()
+        var count = 0
+        for (a in arr) if (elements.contains(a + 1)) count++
+        return count
+    }
+
+    fun groupAnagrams(strs: Array<String>): List<List<String>>? {
+        if (strs.isEmpty()) return listOf()
+        val ans: MutableMap<String, MutableList<String>> = HashMap()
+        for (s in strs) {
+            val ca = s.toCharArray()
+            Arrays.sort(ca)
+            val key = String(ca)
+            if (!ans.containsKey(key)) ans[key] = mutableListOf()
+            ans[key]!!.add(s)
+        }
+        return ArrayList(ans.values)
+    }
+
 }
 
 fun main() {
