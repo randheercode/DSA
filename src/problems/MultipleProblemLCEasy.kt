@@ -298,6 +298,53 @@ class MultipleProblemLCEasy {
         return ArrayList(ans.values)
     }
 
+    fun productExceptSelf(nums: IntArray): IntArray {
+        val forwardProd = IntArray(nums.size) { 1 }
+        val reverseProd = IntArray(nums.size) { 1 }
+
+        for (i in nums.indices) {
+            forwardProd[i] = if (i == 0) nums.first() else forwardProd[i - 1].times(nums[i])
+            val reverseIndex = nums.lastIndex.minus(i)
+            reverseProd[reverseIndex] = if (reverseIndex == nums.lastIndex) nums.last() else reverseProd[reverseIndex + 1].times(nums[reverseIndex])
+        }
+
+        for (i in nums.indices) {
+            nums[i] = when (i) {
+                0 -> reverseProd[i + 1]
+                nums.lastIndex -> forwardProd[i - 1]
+                else -> reverseProd[i + 1] * forwardProd[i - 1]
+            }
+        }
+        return nums
+    }
+
+    fun checkValidString(s: String): Boolean {
+        var left = 0
+        var right = 0
+        for (c in s.toCharArray()) {
+            left += if (c == '(') 1 else -1
+            right += if (c != ')') 1 else -1
+            if (right < 0) break
+            left = maxOf(left, 0)
+        }
+        return left == 0
+    }
+
+    fun sumEvenAfterQueries(A: IntArray, queries: Array<IntArray>): IntArray {
+        var sum = 0
+        for (x in A) if (x % 2 == 0) sum += x
+        val ans = IntArray(queries.size)
+        for (i in queries.indices) {
+            val value = queries[i][0]
+            val index = queries[i][1]
+            if (A[index] % 2 == 0) sum -= A[index]
+            A[index] += value
+            if (A[index] % 2 == 0) sum += A[index]
+            ans[i] = sum
+        }
+        return ans
+    }
+
 }
 
 fun main() {
@@ -346,4 +393,5 @@ private fun testIsIsomorphic() {
 
 private fun testMonotonic() {
     println(MultipleProblemLCEasy().isMonotonic(intArrayOf(1, 2, 2, 3)))
+    println(MultipleProblemLCEasy().checkValidString("(**)"))
 }
