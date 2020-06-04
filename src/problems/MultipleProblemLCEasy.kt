@@ -190,6 +190,33 @@ class MultipleProblemLCEasy {
         }
         return n == 1
     }
+
+    fun constructRectangle(area: Int): IntArray? {
+        var w = Math.sqrt(area.toDouble()).toInt()
+        while (area % w != 0) w--
+        return intArrayOf(area / w, w)
+    }
+
+    fun prevPermOpt1(A: IntArray): IntArray {
+        val length = A.size
+        var first = length.minus(2)
+        while (first >= 0 && A[first] <= A[first + 1]) first -= 1
+        if (first < 0) return A
+        var second = length.minus(1)
+        while (second > first && A[second] >= A[first]) second--
+        while (A[second] == A[second - 1]) second--
+        A[second] = A[first] + A[second]
+        A[first] = A[second] - A[first]
+        A[second] = A[second] - A[first]
+        return A
+    }
+
+    fun canConstruct(ransomNote: String, magazine: String): Boolean {
+        val ransomNotes = ransomNote.groupingBy { it }.eachCount()
+        val magazines = magazine.groupingBy { it }.eachCount()
+        return ransomNotes.none { magazines[it.key] ?: 0 < it.value }
+    }
+
 }
 
 fun main() {
