@@ -117,6 +117,55 @@ class MultipleProblemLCEasy {
         }
         return ans + minOf(prev, cur)
     }
+
+    fun twoSum(numbers: IntArray, target: Int): IntArray {
+        val indices = IntArray(2)
+        if (numbers.size < 2) return indices
+        var left = 0
+        var right: Int = numbers.size - 1
+        while (left < right) {
+            val v: Int = numbers.get(left) + numbers.get(right)
+            if (v == target) {
+                indices[0] = left + 1
+                indices[1] = right + 1
+                break
+            } else if (v > target) {
+                right--
+            } else {
+                left++
+            }
+        }
+        return indices
+    }
+
+    fun twoSumAnother(numbers: IntArray, target: Int): IntArray {
+        for (i in numbers.indices) {
+            val j = numbers.binarySearch(target - numbers[i], i + 1)
+            if (j > 0) return intArrayOf(i + 1, j + 1)
+        }
+        return intArrayOf()
+    }
+
+    fun twoSumAnother1(numbers: IntArray, target: Int): IntArray {
+        var l = 0
+        var r: Int = numbers.size - 1
+        while (numbers[l] + numbers[r] != target) {
+            if (numbers[l] + numbers[r] > target) r-- else l++
+        }
+        return intArrayOf(l + 1, r + 1)
+    }
+
+    fun isIsomorphic(s: String, t: String): Boolean {
+        val mapS = mutableMapOf<Char, Char>()
+        val mapT = mutableMapOf<Char, Char>()
+        for (i in s.indices) {
+            val sMapping = mapS.getOrPut(s[i]) { t[i] }
+            val tMapping = mapT.getOrPut(t[i]) { s[i] }
+            if (sMapping != t[i] || tMapping != s[i])
+                return false
+        }
+        return true
+    }
 }
 
 fun main() {
@@ -124,7 +173,9 @@ fun main() {
 //    testisStrobogrammatic()
 //    testStringCompression()
 //    testCountAndSay()
-    testBinaryStringCount()
+//    testBinaryStringCount()
+//    test2Sum()
+    testIsIsomorphic()
 }
 
 private fun testReverseString2() {
@@ -145,4 +196,17 @@ private fun testCountAndSay() {
 
 private fun testBinaryStringCount() {
     println(MultipleProblemLCEasy().countBinarySubString("1010"))
+}
+
+private fun test2Sum() {
+    println(MultipleProblemLCEasy().twoSum(intArrayOf(0, 0, 3, 4), 0))
+    println(MultipleProblemLCEasy().twoSumAnother(intArrayOf(2, 7, 11, 15), 9))
+    println(MultipleProblemLCEasy().twoSumAnother1(intArrayOf(2, 7, 11, 15), 9))
+}
+
+private fun testIsIsomorphic() {
+    println(MultipleProblemLCEasy().isIsomorphic("egg", "add"))
+    println(MultipleProblemLCEasy().isIsomorphic("foo", "bar"))
+    println(MultipleProblemLCEasy().isIsomorphic("paper", "title"))
+    println(MultipleProblemLCEasy().isIsomorphic("ab", "aa"))
 }
