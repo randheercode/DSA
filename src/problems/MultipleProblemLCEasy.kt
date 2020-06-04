@@ -217,6 +217,67 @@ class MultipleProblemLCEasy {
         return ransomNotes.none { magazines[it.key] ?: 0 < it.value }
     }
 
+    fun isMonotonic(A: IntArray): Boolean {
+        if (A.size <= 1) return true
+        val range = 1..A.lastIndex
+        var increasing = false
+        for (i in range) {
+            if (A[i - 1] > A[i]) {
+                increasing = false
+                break
+            } else if (A[i - 1] < A[i]) {
+                increasing = true
+                break
+            }
+        }
+        for (i in 1..A.lastIndex) {
+            if ((A[i - 1] > A[i] && increasing) || (A[i - 1] < A[i] && !increasing)) {
+                return false
+            }
+        }
+        return true
+    }
+
+    fun isMonotonic1(A: IntArray): Boolean {
+        var k = 0
+        var a = 0
+        for (i in 0 until A.size - 1) {
+            if (A[i] >= A[i + 1])
+                k++
+            if (A[i] <= A[i + 1])
+                a++
+        }
+        return k == A.size - 1 || a == A.size - 1
+    }
+
+    fun moveZeroes(nums: IntArray) {
+        var cp = 0
+        var wp = 0
+        for (i in nums.indices) {
+            if (nums[cp] != 0) {
+                nums[wp] = nums[cp]
+                if (wp != cp) nums[cp] = 0
+                cp++
+                wp++
+            } else {
+                cp++
+            }
+        }
+    }
+
+    fun reverseString(s: CharArray): Unit {
+        var start = 0
+        var end = s.lastIndex
+        var temp: Char
+        while (start < end) {
+            temp = s[start]
+            s[start] = s[end]
+            s[end] = temp
+            start++
+            end--
+        }
+    }
+
 }
 
 fun main() {
@@ -226,7 +287,8 @@ fun main() {
 //    testCountAndSay()
 //    testBinaryStringCount()
 //    test2Sum()
-    testIsIsomorphic()
+//    testIsIsomorphic()
+    testMonotonic()
 }
 
 private fun testReverseString2() {
@@ -260,4 +322,8 @@ private fun testIsIsomorphic() {
     println(MultipleProblemLCEasy().isIsomorphic("foo", "bar"))
     println(MultipleProblemLCEasy().isIsomorphic("paper", "title"))
     println(MultipleProblemLCEasy().isIsomorphic("ab", "aa"))
+}
+
+private fun testMonotonic() {
+    println(MultipleProblemLCEasy().isMonotonic(intArrayOf(1, 2, 2, 3)))
 }
