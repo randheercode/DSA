@@ -1,5 +1,8 @@
 package problems
 
+import java.util.*
+
+
 /**
  * Created by randheercode
  * Date: 3/6/20
@@ -165,6 +168,27 @@ class MultipleProblemLCEasy {
                 return false
         }
         return true
+    }
+
+    fun isHappy(n: Int): Boolean {
+        fun getNext(n: Int): Int {
+            var n = n
+            var totalSum = 0
+            while (n > 0) {
+                val d = n % 10
+                n /= 10
+                totalSum += d * d
+            }
+            return totalSum
+        }
+
+        var n = n
+        val seen: MutableSet<Int> = HashSet()
+        while (n != 1 && !seen.contains(n)) {
+            seen.add(n)
+            n = getNext(n)
+        }
+        return n == 1
     }
 }
 
