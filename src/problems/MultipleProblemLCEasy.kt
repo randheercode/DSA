@@ -356,6 +356,24 @@ class MultipleProblemLCEasy {
         return grid[0][0]
     }
 
+    fun intersection(nums1: IntArray, nums2: IntArray): IntArray {
+        val result = hashSetOf<Int>()
+        val first: IntArray
+        val second: IntArray
+        if (nums1.size <= nums2.size) {
+            first = nums1
+            second = nums2
+        } else {
+            first = nums2
+            second = nums1
+        }
+        val set = second.toHashSet()
+        for (num in first) {
+            if (set.contains(num)) result.add(num)
+        }
+        return result.toIntArray()
+    }
+
 }
 
 fun main() {
