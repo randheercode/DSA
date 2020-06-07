@@ -384,15 +384,64 @@ class MultipleProblemLCEasy {
 
         // Determine which shift (if any) to perform.
         val len = string.length
-        return if (leftShifts > rightShifts) {
-            leftShifts = (leftShifts - rightShifts) % len
-            string.substring(leftShifts) + string.substring(0, leftShifts)
-        } else if (rightShifts > leftShifts) {
-            rightShifts = (rightShifts - leftShifts) % len
-            string.substring(len - rightShifts) + string.substring(0, len - rightShifts)
-        } else {
-            string
+        return when {
+            leftShifts > rightShifts -> {
+                leftShifts = (leftShifts - rightShifts) % len
+                string.substring(leftShifts) + string.substring(0, leftShifts)
+            }
+            rightShifts > leftShifts -> {
+                rightShifts = (rightShifts - leftShifts) % len
+                string.substring(len - rightShifts) + string.substring(0, len - rightShifts)
+            }
+            else -> {
+                string
+            }
         }
+    }
+
+    // Middle of the Linked List
+    fun middleNode(head: ListNode?): ListNode? {
+        var mp = head
+        var ep = head
+        if (mp?.next == null) return mp
+        while (ep?.next != null) {
+            mp = mp?.next
+            ep = ep.next?.next
+        }
+        return mp
+    }
+
+    // Backspace String Compare
+    fun backspaceCompare(S: String, T: String): Boolean {
+        var i = S.length - 1
+        var j = T.length - 1
+        var skipS = 0
+        var skipT = 0
+        while (i >= 0 || j >= 0) {
+            while (i >= 0) {
+                if (S[i] == '#') {
+                    skipS++
+                    i--
+                } else if (skipS > 0) {
+                    skipS--
+                    i--
+                } else break
+            }
+            while (j >= 0) {
+                if (T[j] == '#') {
+                    skipT++
+                    j--
+                } else if (skipT > 0) {
+                    skipT--
+                    j--
+                } else break
+            }
+            if (i >= 0 && j >= 0 && S[i] != T[j]) return false
+            if (i >= 0 != j >= 0) return false
+            i--
+            j--
+        }
+        return true
     }
 
 }
