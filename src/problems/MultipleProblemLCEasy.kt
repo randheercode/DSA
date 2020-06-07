@@ -374,6 +374,27 @@ class MultipleProblemLCEasy {
         return result.toIntArray()
     }
 
+    fun stringShift(string: String, shift: Array<IntArray>): String {
+        val overallShifts = IntArray(2)
+        for (move in shift) {
+            overallShifts[move[0]] += move[1]
+        }
+        var leftShifts = overallShifts[0]
+        var rightShifts = overallShifts[1]
+
+        // Determine which shift (if any) to perform.
+        val len = string.length
+        return if (leftShifts > rightShifts) {
+            leftShifts = (leftShifts - rightShifts) % len
+            string.substring(leftShifts) + string.substring(0, leftShifts)
+        } else if (rightShifts > leftShifts) {
+            rightShifts = (rightShifts - leftShifts) % len
+            string.substring(len - rightShifts) + string.substring(0, len - rightShifts)
+        } else {
+            string
+        }
+    }
+
 }
 
 fun main() {
