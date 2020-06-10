@@ -444,9 +444,19 @@ class MultipleProblemLCEasy {
         return true
     }
 
-}
+    fun searchInsert(nums: IntArray, target: Int): Int {
+        var high = nums.size - 1
+        var low = 0
+        while (low <= high) {
+            val mid = (high + low) / 2
+            if (target == nums[mid]) return mid
+            if (target < nums[mid]) high = mid - 1
+            if (target > nums[mid]) low = mid + 1
+        }
+        return low
+    }
 
-fun main() {
+    fun main() {
 //     testReverseString2()
 //    testisStrobogrammatic()
 //    testStringCompression()
@@ -454,43 +464,52 @@ fun main() {
 //    testBinaryStringCount()
 //    test2Sum()
 //    testIsIsomorphic()
-    testMonotonic()
-}
+//    testMonotonic()
+        testSearchInsert()
+    }
 
-private fun testReverseString2() {
-    println(MultipleProblemLCEasy().reverseStr("abcd", 4))
-}
+    private fun testReverseString2() {
+        println(MultipleProblemLCEasy().reverseStr("abcd", 4))
+    }
 
-private fun testisStrobogrammatic() {
-    println(MultipleProblemLCEasy().isStrobogrammatic("123"))
-}
+    private fun testisStrobogrammatic() {
+        println(MultipleProblemLCEasy().isStrobogrammatic("123"))
+    }
 
-private fun testStringCompression() {
-    println(MultipleProblemLCEasy().compress(charArrayOf('a', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b')))
-}
+    private fun testStringCompression() {
+        println(MultipleProblemLCEasy().compress(charArrayOf('a', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b')))
+    }
 
-private fun testCountAndSay() {
-    println(MultipleProblemLCEasy().countAndSay(10))
-}
+    private fun testCountAndSay() {
+        println(MultipleProblemLCEasy().countAndSay(10))
+    }
 
-private fun testBinaryStringCount() {
-    println(MultipleProblemLCEasy().countBinarySubString("1010"))
-}
+    private fun testBinaryStringCount() {
+        println(MultipleProblemLCEasy().countBinarySubString("1010"))
+    }
 
-private fun test2Sum() {
-    println(MultipleProblemLCEasy().twoSum(intArrayOf(0, 0, 3, 4), 0))
-    println(MultipleProblemLCEasy().twoSumAnother(intArrayOf(2, 7, 11, 15), 9))
-    println(MultipleProblemLCEasy().twoSumAnother1(intArrayOf(2, 7, 11, 15), 9))
-}
+    private fun test2Sum() {
+        println(MultipleProblemLCEasy().twoSum(intArrayOf(0, 0, 3, 4), 0))
+        println(MultipleProblemLCEasy().twoSumAnother(intArrayOf(2, 7, 11, 15), 9))
+        println(MultipleProblemLCEasy().twoSumAnother1(intArrayOf(2, 7, 11, 15), 9))
+    }
 
-private fun testIsIsomorphic() {
-    println(MultipleProblemLCEasy().isIsomorphic("egg", "add"))
-    println(MultipleProblemLCEasy().isIsomorphic("foo", "bar"))
-    println(MultipleProblemLCEasy().isIsomorphic("paper", "title"))
-    println(MultipleProblemLCEasy().isIsomorphic("ab", "aa"))
-}
+    private fun testIsIsomorphic() {
+        println(MultipleProblemLCEasy().isIsomorphic("egg", "add"))
+        println(MultipleProblemLCEasy().isIsomorphic("foo", "bar"))
+        println(MultipleProblemLCEasy().isIsomorphic("paper", "title"))
+        println(MultipleProblemLCEasy().isIsomorphic("ab", "aa"))
+    }
 
-private fun testMonotonic() {
-    println(MultipleProblemLCEasy().isMonotonic(intArrayOf(1, 2, 2, 3)))
-    println(MultipleProblemLCEasy().checkValidString("(**)"))
-}
+    private fun testMonotonic() {
+        println(MultipleProblemLCEasy().isMonotonic(intArrayOf(1, 2, 2, 3)))
+        println(MultipleProblemLCEasy().checkValidString("(**)"))
+    }
+
+    private fun testSearchInsert() {
+        println(MultipleProblemLCEasy().searchInsert(intArrayOf(1, 3, 5, 6), 5))
+        println(MultipleProblemLCEasy().searchInsert(intArrayOf(1, 3, 5, 6), 2))
+        println(MultipleProblemLCEasy().searchInsert(intArrayOf(1, 3, 5, 6), 7))
+        println(MultipleProblemLCEasy().searchInsert(intArrayOf(1, 3, 5, 6), 0))
+        println(MultipleProblemLCEasy().searchInsert(intArrayOf(1), 1))
+    }
