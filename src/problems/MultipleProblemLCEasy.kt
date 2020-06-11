@@ -455,6 +455,17 @@ class MultipleProblemLCEasy {
         }
         return low
     }
+
+    fun sortColors(nums: IntArray): Unit {
+        val count = mutableMapOf<Int, Int>()
+        for (num in nums) count[num] = count.getOrDefault(num, 0) + 1
+        var index = 0
+        for (i in 0..2) {
+            val countI = count.getOrDefault(i, 0)
+            for (ind in index until index.plus(countI)) nums[ind] = i
+            index = index.plus(countI)
+        }
+    }
 }
 
 fun main() {
