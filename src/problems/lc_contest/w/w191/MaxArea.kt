@@ -1,4 +1,4 @@
-package problems.lc_contest.w191
+package problems.lc_contest.w.w191
 
 /**
  * Created by randheercode

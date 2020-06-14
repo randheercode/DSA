@@ -1,4 +1,4 @@
-package problems.lc_contest.bw28
+package problems.lc_contest.bw
 
 /**
  * Created by randheercode
