@@ -474,6 +474,233 @@ class MultipleProblemLCEasy {
         return if (root.`val` > `val`) searchBST(root.left, `val`)
         else searchBST(root.right, `val`)
     }
+
+    fun decompressRLElist(nums: IntArray): IntArray {
+        val n = nums.size.div(2)
+        val result = mutableListOf<Int>()
+        for (i in 0..n) {
+            repeat(nums[2 * i]) { result.add(nums[(2 * i) + 1]) }
+        }
+        return result.toIntArray()
+    }
+
+    fun findLengthOfLCIS(nums: IntArray): Int {
+        if (nums.isEmpty()) return 0
+        var current = 1
+        var max = 1
+        val len = nums.size
+        for (i in 1 until len) {
+            if (nums[i] > nums[i - 1]) current++
+            else {
+                max = maxOf(current, max)
+                current = 1
+            }
+        }
+        return maxOf(current, max)
+    }
+
+    fun canPlaceFlowers(flowerbed: IntArray, n: Int): Boolean {
+        var i = 0
+        var count = 0
+        while (i < flowerbed.size) {
+            if (flowerbed[i] == 0 && (i == 0 || flowerbed[i - 1] == 0) && (i == flowerbed.size - 1 || flowerbed[i + 1] == 0)) {
+                flowerbed[i++] = 1
+                count++
+            }
+            if (count >= n) return true
+            i++
+        }
+        return false
+    }
+
+    fun sumZero(n: Int): IntArray {
+        val result = IntArray(n)
+        var no = n / 2
+        var start = 0
+        var end = n - 1
+        while (start < end) {
+            result[start] = no.times(-1)
+            result[end] = no
+            start++
+            end--
+            no--
+        }
+        if (n.rem(2) != 0) result[n.div(2).plus(1)] = 0
+        return result
+    }
+
+    fun tictactoe(moves: Array<IntArray>): String {
+        val board = Array(3) { CharArray(3) { ' ' } }
+        fun findWinner(): Char? {
+            val lines = mutableListOf(
+                    listOf(0, 0, 0, 1, 0, 2),
+                    listOf(1, 0, 1, 1, 1, 2),
+                    listOf(2, 0, 2, 1, 2, 2),
+                    listOf(0, 0, 1, 0, 2, 0),
+                    listOf(0, 1, 1, 1, 2, 2),
+                    listOf(0, 2, 1, 2, 2, 2),
+                    listOf(0, 0, 1, 1, 2, 2),
+                    listOf(0, 2, 1, 1, 2, 0)
+            )
+            for (l in lines) {
+                if (board[l[0]][l[1]] != ' ' && board[l[0]][l[1]] == board[l[2]][l[3]] && board[l[2]][l[3]] == board[l[4]][l[5]])
+                    return board[l[0]][l[1]]
+            }
+            return null
+        }
+
+        var aMove = true
+        for (move in moves) {
+            board[move[0]][move[1]] = if (aMove) 'X' else 'O'
+            aMove = !aMove
+        }
+        val winner = findWinner()
+        return when {
+            winner != null -> if (winner == 'X') "A" else "B"
+            moves.size == 9 -> "Draw"
+            else -> "Pending"
+        }
+    }
+
+    fun tictactoe1(moves: Array<IntArray>): String {
+        val array = Array<IntArray>(3) {
+            IntArray(3)
+        }
+
+        for (i in moves.indices) {
+            // player A draws X(1)
+            if (i % 2 == 0) {
+                array[moves[i][0]][moves[i][1]] = 1
+            } else {
+                array[moves[i][0]][moves[i][1]] = 2
+            }
+        }
+
+        var result = ""
+        var isPending = false
+
+        // row
+        for (row in array.indices) {
+            if (array[row][0] == array[row][1] && array[row][1] == array[row][2]) {
+                if (array[row][0] == 1) {
+                    result = "A"
+                } else if (array[row][0] == 2) {
+                    result = "B"
+                }
+            }
+        }
+
+        // col
+        for (col in array[0].indices) {
+            if (array[0][col] == array[1][col] && array[1][col] == array[2][col]) {
+                if (array[0][col] == 1) {
+                    result = "A"
+                } else if (array[0][col] == 2) {
+                    result = "B"
+                }
+            }
+        }
+
+        if (array[0][0] == array[1][1] && array[1][1] == array[2][2]) {
+            if (array[0][0] == 1) {
+                result = "A"
+            } else if (array[0][0] == 2) {
+                result = "B"
+            }
+        }
+
+        if (array[0][2] == array[1][1] && array[1][1] == array[2][0]) {
+            if (array[0][2] == 1) {
+                result = "A"
+            } else if (array[0][2] == 2) {
+                result = "B"
+            }
+        }
+
+        if (result.isNotEmpty()) {
+            return result
+        }
+
+        for (row in array.indices) {
+            for (col in array.indices) {
+                if (array[row][col] == 0) {
+                    return "Pending"
+                }
+            }
+        }
+
+        return "Draw"
+    }
+
+    fun containsDuplicate(nums: IntArray): Boolean {
+        return nums.toSet().size != nums.size
+    }
+
+    fun containsNearbyDuplicate(nums: IntArray, k: Int): Boolean {
+        val set: MutableSet<Int> = HashSet()
+        for (i in nums.indices) {
+            if (set.contains(nums[i])) return true
+            set.add(nums[i])
+            if (set.size > k) {
+                set.remove(nums[i - k])
+            }
+        }
+        return false
+    }
+
+    fun containsNearbyAlmostDuplicate(nums: IntArray, k: Int, t: Int): Boolean {
+        fun getID(x: Long, w: Long): Long {
+            return if (x < 0) (x + 1) / w - 1 else x / w
+        }
+        if (t < 0) return false
+        val d: MutableMap<Long, Long> = HashMap()
+        val w = t.toLong() + 1
+        for (i in nums.indices) {
+            val m = getID(nums[i].toLong(), w)
+            if (d.containsKey(m)) return true
+            if (d.containsKey(m - 1) && Math.abs(nums[i] - d[m - 1]!!) < w) return true
+            if (d.containsKey(m + 1) && Math.abs(nums[i] - d[m + 1]!!) < w) return true
+            d[m] = nums[i].toLong()
+            if (i >= k) d.remove(getID(nums[i - k].toLong(), w))
+        }
+        return false
+    }
+
+    fun rotateString(A: String, B: String): Boolean {
+        val len = A.length
+        if (A.isEmpty() && B.isEmpty()) return true
+        return A.length == B.length && (A.indices).any {
+            (A.substring(it, len) + A.substring(0, it)) == B
+        }
+    }
+
+    fun removeDuplicates(S: String): String? {
+        val sb = StringBuilder()
+        var sbLength = 0
+        for (character in S.toCharArray()) {
+            if (sbLength != 0 && character == sb[sbLength - 1]) sb.deleteCharAt(sbLength-- - 1) else {
+                sb.append(character)
+                sbLength++
+            }
+        }
+        return sb.toString()
+    }
+
+    fun binaryTreePaths(root: TreeNode?): List<String> {
+        val path = mutableListOf<String>()
+
+        fun constructPath(root: TreeNode?, currentPath: String) {
+            if (root?.left == null && root?.right == null) {
+                path.add(currentPath)
+                return
+            }
+            if (root.left != null) constructPath(root.left, "$currentPath->${root.left?.`val`}")
+            if (root.right != null) constructPath(root.right, "$currentPath->${root.right?.`val`}")
+        }
+
+        if (root != null) constructPath(root, root.`val`.toString())
+        return path
+    }
 }
 
 fun main() {
