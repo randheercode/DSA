@@ -773,6 +773,52 @@ class MultipleProblemLCEasy {
 
         return Math.abs(getNumDays(secondDate[0], secondDate[1], secondDate[2]) - getNumDays(firstDate[0], firstDate[1], firstDate[2]))
     }
+
+    fun getDecimalValue(head: ListNode?): Int {
+        var head = head
+        val builder = StringBuilder()
+        while (head != null) {
+            builder.append(head.`val`)
+            head = head.next
+        }
+        return if (builder.isEmpty()) return 0 else builder.toString().toInt(2)
+    }
+
+    fun toHex(num: Int): String {
+        var num = num
+        if (num == 0) return "0"
+        val result = StringBuilder()
+        while (num != 0) {
+            val i = num and 15
+            if (i > 9) result.append(('a'.toInt() + i - 10).toChar()) else result.append(i)
+            num = num ushr 4
+        }
+        return result.reverse().toString()
+    }
+
+    fun getSum(a: Int, b: Int): Int {
+        if (a == 0) return b
+        if (b == 0) return a
+        var a = a
+        var b = b
+        while (b != 0) {
+            val carry: Int = a and b shl 1
+            a = a xor b
+            b = carry
+        }
+        return a
+    }
+
+    fun mergeTrees(t1: TreeNode?, t2: TreeNode?): TreeNode? {
+        fun mergeNode(first: TreeNode?, second: TreeNode?): TreeNode? {
+            if (first == null && second == null) return null
+            val treeNode = TreeNode((first?.`val` ?: 0).plus(second?.`val` ?: 0))
+            treeNode.left = mergeNode(first?.left, second?.left)
+            treeNode.right = mergeNode(first?.right, second?.right)
+            return treeNode
+        }
+        return mergeTrees(t1, t2)
+    }
 }
 
 fun main() {
@@ -784,7 +830,11 @@ fun main() {
 //    test2Sum()
 //    testIsIsomorphic()
 //    testMonotonic()
-    testSearchInsert()
+//    testSearchInsert()
+    println(10 or 20)
+    println(110 or 190)
+    println(10 or -1)
+    println(-1 or -2)
 }
 
 private fun testReverseString2() {
