@@ -701,6 +701,78 @@ class MultipleProblemLCEasy {
         if (root != null) constructPath(root, root.`val`.toString())
         return path
     }
+
+    fun intersect(nums1: IntArray, nums2: IntArray): IntArray? {
+        if (nums1.size > nums2.size) {
+            return intersect(nums2, nums1)
+        }
+        val m = HashMap<Int, Int>()
+        for (n in nums1) {
+            m[n] = m.getOrDefault(n, 0) + 1
+        }
+        var k = 0
+        for (n in nums2) {
+            val cnt = m.getOrDefault(n, 0)
+            if (cnt > 0) {
+                nums1[k++] = n
+                m[n] = cnt - 1
+            }
+        }
+        return nums1.copyOfRange(0, k)
+    }
+
+    fun intersect2(nums1: IntArray, nums2: IntArray): IntArray? {
+        Arrays.sort(nums1)
+        Arrays.sort(nums2)
+        var i = 0
+        var j = 0
+        var k = 0
+        while (i < nums1.size && j < nums2.size) {
+            if (nums1[i] < nums2[j]) {
+                ++i
+            } else if (nums1[i] > nums2[j]) {
+                ++j
+            } else {
+                nums1[k++] = nums1[i++]
+                ++j
+            }
+        }
+        return nums1.copyOfRange(0, k)
+    }
+
+    fun daysBetweenDates(date1: String, date2: String): Int {
+
+        val monthDays = intArrayOf(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
+
+        fun isLeap(year: Int): Boolean {
+            if (year % 400 == 0)
+                return true
+            if (year % 100 == 0)
+                return false
+            if (year % 4 == 0)
+                return true
+            return false
+        }
+
+        fun daysByYear(year: Int): Int {
+            return if (year == 1970) 0
+            else (if (isLeap(year)) 366 else 365) + daysByYear(year - 1)
+        }
+
+        fun getDaysUntil(month: Int, year: Int): Int {
+            return if (month < 1) 0
+            else ((if (isLeap(year) && month == 2) 1 else 0) + monthDays[month - 1]) + getDaysUntil(month - 1, year)
+        }
+
+        fun getNumDays(year: Int, month: Int, day: Int): Int {
+            return daysByYear(year - 1) + getDaysUntil(month - 1, year) + day
+        }
+
+        val firstDate = date1.split("-").map { it.toInt() }
+        val secondDate = date2.split("-").map { it.toInt() }
+
+        return Math.abs(getNumDays(secondDate[0], secondDate[1], secondDate[2]) - getNumDays(firstDate[0], firstDate[1], firstDate[2]))
+    }
 }
 
 fun main() {
