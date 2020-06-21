@@ -192,7 +192,7 @@ class Array101 {
         for (i in nums.indices) {
             hashTable[nums[i]] = true
         }
-        val result: MutableList<Int> = LinkedList()
+        val result: MutableList<Int> = mutableListOf()
 
         for (i in 1..nums.size) {
             if (!hashTable.containsKey(i)) {
