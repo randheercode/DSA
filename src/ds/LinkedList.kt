@@ -187,6 +187,7 @@ class LinkedList {
         }
         return null
     }
+
     fun removeNthFromEnd(head: ListNode?, n: Int): ListNode? {
         val dummy = ListNode(0)
         dummy.next = head
@@ -204,6 +205,121 @@ class LinkedList {
         second?.next = second?.next?.next
         return dummy.next
     }
+
+    fun reverseList(head: ListNode?): ListNode? {
+        var currHead: ListNode? = null
+        var curr = head
+        while (curr != null) {
+            val nextTemp = curr.next
+            curr.next = currHead
+            currHead = curr
+            curr = nextTemp
+        }
+        return currHead
+    }
+
+    fun removeElements(head: ListNode?, `val`: Int): ListNode? {
+        val dummy = ListNode(0)
+        dummy.next = head
+        var prev = dummy
+        var curr = head
+        while (curr != null) {
+            if (curr.`val` == `val`) prev.next = curr.next else prev = curr
+            curr = curr.next
+        }
+        return dummy.next
+    }
+
+    fun isPalindrome(head: ListNode?): Boolean {
+        var head = head
+        val sb = StringBuilder()
+        val sbRev = StringBuilder()
+        while (head != null) {
+            sb.append(head.`val`)
+            sb.insert(0, head.`val`)
+            head = head.next
+        }
+        return sb.length == 1 || sb.toString() == sbRev.toString()
+    }
+
+    fun mergeTwoLists(l1: ListNode?, l2: ListNode?): ListNode? {
+        var h1 = l1
+        var h2 = l2
+        val dummy = ListNode(0)
+        var current: ListNode? = dummy
+        while (h1 != null && h2 != null) {
+            if (h1.`val` < h2.`val`) {
+                current?.next = h1
+                h1 = h1.next
+            } else {
+                current?.next = h2
+                h2 = h2.next
+            }
+            current = current?.next
+        }
+
+        while (h1 != null) {
+            current?.next = h1
+            h1 = h1.next
+            current = current?.next
+        }
+
+        while (h2 != null) {
+            current?.next = h2
+            h2 = h2.next
+            current = current?.next
+        }
+
+        return dummy.next
+    }
+
+    fun addTwoNumbers(l1: ListNode?, l2: ListNode?): ListNode? {
+        val dummyHead = ListNode(0)
+        var p = l1
+        var q = l2
+        var curr: ListNode? = dummyHead
+        var carry = 0
+        while (p != null || q != null) {
+            val x = p?.`val` ?: 0
+            val y = q?.`val` ?: 0
+            val sum = carry + x + y
+            carry = sum / 10
+            curr?.next = ListNode(sum % 10)
+            curr = curr?.next
+            if (p != null) p = p.next
+            if (q != null) q = q.next
+        }
+        if (carry > 0) {
+            curr?.next = ListNode(carry)
+        }
+        return dummyHead.next
+    }
+
+    inner class Node(var `val`: Int) {
+        var prev: Node? = null
+        var next: Node? = null
+        var child: Node? = null
+    }
+
+    fun flatten(root: Node?): Node? {
+        if (root == null) return root
+        fun flattenDFS(prev: Node, curr: Node?): Node {
+            if (curr == null) return prev
+            curr.prev = prev
+            prev.next = curr
+            val tempNext = curr.next
+            val tail = flattenDFS(curr, curr.child)
+            curr.child = null
+            return flattenDFS(tail, tempNext)
+        }
+
+        val dummy = Node(0)
+        dummy.next = root
+        flattenDFS(dummy, root)
+        dummy.next?.prev = null
+        return dummy.next
+    }
+
 }
 
 fun main() {
