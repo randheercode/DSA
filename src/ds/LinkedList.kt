@@ -2,6 +2,7 @@ package ds
 
 import problems.ListNode
 
+
 /**
  * Created by randheercode
  * Date: 21/6/20
@@ -127,6 +128,12 @@ class MyLinkedList {
 }
 
 class LinkedList {
+    inner class Node(var `val`: Int) {
+        var prev: Node? = null
+        var next: Node? = null
+        var child: Node? = null
+    }
+
     fun hasCycle(head: ListNode?): Boolean {
         if (head == null) return false
         var fast = head
@@ -295,12 +302,6 @@ class LinkedList {
         return dummyHead.next
     }
 
-    inner class Node(var `val`: Int) {
-        var prev: Node? = null
-        var next: Node? = null
-        var child: Node? = null
-    }
-
     fun flatten(root: Node?): Node? {
         if (root == null) return root
         fun flattenDFS(prev: Node, curr: Node?): Node {
@@ -320,6 +321,82 @@ class LinkedList {
         return dummy.next
     }
 
+    fun insert(head: Node?, insertVal: Int): Node? {
+        if (head == null) {
+            val newNode = Node(insertVal)
+            newNode.next = newNode
+            return newNode
+        }
+        var prev = head
+        var curr = head.next
+        var toInsert = false
+        do {
+            if (prev!!.`val` <= insertVal && insertVal <= curr!!.`val`) {
+                toInsert = true
+            } else if (prev.`val` > curr!!.`val`) {
+                if (insertVal >= prev.`val` || insertVal <= curr.`val`) toInsert = true
+            }
+            if (toInsert) {
+                prev.next = Node(insertVal)
+                prev.next?.next = curr
+                return head
+            }
+            prev = curr
+            curr = curr.next
+        } while (prev !== head)
+
+        prev.next = Node(insertVal)
+        prev.next?.next = curr
+        return head
+    }
+
+}
+
+class CopyRandomList {
+    class Node(var `val`: Int) {
+        var next: Node? = null
+        var random: Node? = null
+    }
+
+    var visitedHash = mutableMapOf<Node, Node>()
+
+    fun copyRandomList(head: Node?): Node? {
+        if (head == null) {
+            return null
+        }
+
+        if (visitedHash.containsKey(head)) {
+            return visitedHash[head]
+        }
+
+        val node = Node(head.`val`)
+
+        visitedHash[head] = node
+
+        node.next = copyRandomList(head.next)
+        node.random = copyRandomList(head.random)
+        return node
+    }
+
+    fun rotateRight(head: ListNode?, k: Int): ListNode? {
+        if (head == null) return null
+        if (head.next == null) return head
+
+        var oldTail = head
+        var n = 1
+        while (oldTail?.next != null) {
+            oldTail = oldTail.next
+            n++
+        }
+        oldTail?.next = head
+
+        var newTail = head
+        for (i in 0 until n - k % n - 1) newTail = newTail?.next
+        val newHead = newTail?.next
+
+        newTail?.next = null
+        return newHead
+    }
 }
 
 fun main() {
