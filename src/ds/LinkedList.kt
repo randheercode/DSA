@@ -201,7 +201,7 @@ class LinkedList {
             first = first.next
             second = second!!.next
         }
-        second!!.next = second.next?.next
+        second?.next = second?.next?.next
         return dummy.next
     }
 }
