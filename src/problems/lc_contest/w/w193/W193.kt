@@ -1,4 +1,4 @@
-package problems.lc_contest.w
+package problems.lc_contest.w.w193
 
 import kotlin.collections.set
 
