@@ -17,7 +17,19 @@ class SingleNumber {
             number = number.xor(nums[i])
         return number
     }
+
+    fun singleNumber2(nums: IntArray): Int {
+        var one = 0
+        var two = 0
+        for (num in nums) {
+            two = two xor num and one.inv()
+            one = one xor num and two.inv()
+        }
+        return two
+    }
+
 }
+
 
 fun main() {
     print(SingleNumber().singleNumber(intArrayOf(2, 1, 1, 2, 4)))
