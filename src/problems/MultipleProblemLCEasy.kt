@@ -919,6 +919,21 @@ class MultipleProblemLCEasy {
         return if (n == 0) emptyList<TreeNode>() else generate(1, n)
     }
 
+    fun checkPossibility(nums: IntArray): Boolean {
+        val len = nums.size
+        if (len <= 2) return true
+        var used = false
+        for (i in 1 until len) {
+            if (nums[i] < nums[i - 1]) {
+                if (used) return false
+                if (i != 1 && nums[i - 2] > nums[i]) nums[i] = nums[i - 1]
+                used = true
+            }
+        }
+        return true
+    }
+
+
 }
 
 fun main() {
