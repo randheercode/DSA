@@ -835,6 +835,90 @@ class MultipleProblemLCEasy {
         }
         return G[n]
     }
+
+    fun fib(N: Int): Int {
+        return if (N < 2) {
+            N;
+        } else {
+            fib(N - 1) + fib(N - 2);
+        }
+    }
+
+    fun climbStairs(n: Int): Int {
+        fun climbStairs(i: Int, n: Int, memo: IntArray): Int {
+            if (i > n) {
+                return 0
+            }
+            if (i == n) {
+                return 1
+            }
+            if (memo[i] > 0) {
+                return memo[i]
+            }
+            memo[i] = climbStairs(i + 1, n, memo) + climbStairs(i + 2, n, memo)
+            return memo[i]
+        }
+
+        val memo = IntArray(n + 1)
+        return climbStairs(0, n, memo)
+    }
+
+    fun maxDepth(root: TreeNode?): Int {
+        return if (root == null) 0
+        else 1 + maxOf(maxDepth(root.left), maxDepth(root.right))
+    }
+
+    fun myPow(x: Double, n: Int): Double {
+        var x = x
+        var N = n.toLong()
+        if (N < 0) {
+            x = 1 / x
+            N = -N
+        }
+        fun fastPow(x: Double, n: Long): Double {
+            if (n == 0L) {
+                return 1.0
+            }
+            val half = fastPow(x, n / 2)
+            return if (n % 2 == 0L) {
+                half * half
+            } else {
+                half * half * x
+            }
+        }
+        return fastPow(x, N)
+    }
+
+    fun kthGrammar(N: Int, K: Int): Int {
+        return if (N == 1) 0 else K.inv() and 1 xor kthGrammar(N - 1, (K + 1) / 2)
+    }
+
+    fun generate(start: Int, end: Int): List<TreeNode?> {
+        val ans: MutableList<TreeNode?> = ArrayList()
+        if (start > end) {
+            ans.add(null)
+            return ans
+        }
+        for (i in start..end) {
+            val left = generate(start, i - 1)
+            val right = generate(i + 1, end)
+            for (l in left) {
+                for (r in right) {
+                    val root = TreeNode(i)
+                    root.left = l
+                    root.right = r
+                    ans.add(root)
+                }
+            }
+        }
+        return ans
+    }
+
+
+    fun generateTrees(n: Int): List<TreeNode?>? {
+        return if (n == 0) emptyList<TreeNode>() else generate(1, n)
+    }
+
 }
 
 fun main() {
