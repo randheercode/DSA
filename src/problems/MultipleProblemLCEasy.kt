@@ -823,6 +823,18 @@ class MultipleProblemLCEasy {
     fun countNodes(root: TreeNode?): Int {
         return if (root == null) 0 else 1 + (countNodes(root.left) + countNodes(root.right))
     }
+
+    fun numTrees(n: Int): Int {
+        val G = IntArray(n + 1)
+        G[1] = 1
+        G[0] = G[1]
+        for (i in 2..n) {
+            for (j in 1..i) {
+                G[i] += G[j - 1] * G[i - j]
+            }
+        }
+        return G[n]
+    }
 }
 
 fun main() {
