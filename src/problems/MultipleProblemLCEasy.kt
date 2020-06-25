@@ -933,6 +933,21 @@ class MultipleProblemLCEasy {
         return true
     }
 
+    fun findDuplicate(nums: IntArray): Int {
+        if (nums.isEmpty()) return -1
+        var tortoise = nums[0]
+        var hare = nums[0]
+        do {
+            tortoise = nums[tortoise]
+            hare = nums[nums[hare]]
+        } while (tortoise != hare)
+        tortoise = nums[0]
+        while (tortoise != hare) {
+            tortoise = nums[tortoise]
+            hare = nums[hare]
+        }
+        return hare
+    }
 
 }
 
