@@ -949,6 +949,22 @@ class MultipleProblemLCEasy {
         return hare
     }
 
+    fun sumNumbers(root: TreeNode?): Int {
+        val path = mutableListOf<String>()
+
+        fun constructPath(root: TreeNode?, currentPath: String) {
+            if (root?.left == null && root?.right == null) {
+                path.add(currentPath)
+                return
+            }
+            if (root.left != null) constructPath(root.left, "$currentPath${root.left?.`val`}")
+            if (root.right != null) constructPath(root.right, "$currentPath${root.right?.`val`}")
+        }
+
+        if (root != null) constructPath(root, root.`val`.toString()) else return 0
+        return  path.map { it.toInt() }.sum()
+    }
+
 }
 
 fun main() {
