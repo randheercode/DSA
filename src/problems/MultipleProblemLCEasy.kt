@@ -962,7 +962,17 @@ class MultipleProblemLCEasy {
         }
 
         if (root != null) constructPath(root, root.`val`.toString()) else return 0
-        return  path.map { it.toInt() }.sum()
+        return path.map { it.toInt() }.sum()
+    }
+
+    fun uniquePaths(m: Int, n: Int): Int {
+        val d = Array(m) { IntArray(n) { 1 } }
+        for (col in 1 until m) {
+            for (row in 1 until n) {
+                d[col][row] = d[col - 1][row] + d[col][row - 1]
+            }
+        }
+        return d[m - 1][n - 1]
     }
 
 }
