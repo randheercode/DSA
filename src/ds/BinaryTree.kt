@@ -153,4 +153,58 @@ class BinaryTree {
 
     // endregion
 
+    // region Problems
+
+    fun maxDepth(root: TreeNode?): Int {
+        if (root == null) return 0
+        return 1 + maxOf(maxDepth(root.left), maxDepth(root.right))
+    }
+
+
+    fun isSymmetric(root: TreeNode?): Boolean {
+        fun isMirror(t1: TreeNode?, t2: TreeNode?): Boolean {
+            if (t1 == null && t2 == null) return true
+            return if (t1 == null || t2 == null) false else t1.`val` == t2.`val`
+                    && isMirror(t1.right, t2.left)
+                    && isMirror(t1.left, t2.right)
+        }
+        return isMirror(root, root)
+    }
+
+    fun hasPathSum(root: TreeNode?, sum: Int): Boolean {
+        var sum = sum
+        if (root == null) return false
+        sum -= root.`val`
+        return if (root.left == null && root.right == null) sum == 0
+        else hasPathSum(root.left, sum) || hasPathSum(root.right, sum)
+    }
+
+    fun countUnivalSubtrees(root: TreeNode?): Int {
+        if (root == null) return 0
+        var count = 0
+        fun count(node: TreeNode?): Boolean {
+            if (node?.left == null && node?.right == null) {
+                count++
+                return true
+            }
+            var isUnval = true
+
+            if (node.left != null) {
+                isUnval = count(node.left) && isUnval && node.left?.`val` == node.`val`
+            }
+
+            if (node.right != null) {
+                isUnval = count(node.right) && isUnval && node.right?.`val` == node.`val`
+            }
+
+            if (!isUnval) return false
+            count++
+            return true
+        }
+        count(root)
+        return count
+    }
+
+    // endregion
+
 }
