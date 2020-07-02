@@ -12,6 +12,7 @@ import java.util.LinkedList
  */
 class BinaryTree {
 
+    // region PreOrder Traversal
     fun preorderTraversalRecursive(root: TreeNode?): List<Int> {
         val result = mutableListOf<Int>()
         fun traverse(root: TreeNode?) {
@@ -38,6 +39,10 @@ class BinaryTree {
         }
         return result
     }
+
+    // endregion
+
+    // region InOrder Traversal
 
     fun inorderTraversalRecursive(root: TreeNode?): List<Int> {
         val result = mutableListOf<Int>()
@@ -67,6 +72,10 @@ class BinaryTree {
         return result
     }
 
+    //endregion
+
+    // region PostOrder Traversal
+
     fun postOrderTraversalRecursive(root: TreeNode?): List<Int> {
         val result = mutableListOf<Int>()
         fun traverse(root: TreeNode?) {
@@ -93,6 +102,10 @@ class BinaryTree {
         }
         return result
     }
+
+    // endregion
+
+    // region LevelOrder Traversal
 
     fun levelOrderTraversalRecursive(root: TreeNode?): List<List<Int>> {
         fun height(root: TreeNode?): Int {
@@ -137,5 +150,7 @@ class BinaryTree {
 
         return result
     }
+
+    // endregion
 
 }
