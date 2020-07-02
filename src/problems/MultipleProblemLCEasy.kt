@@ -996,6 +996,26 @@ class MultipleProblemLCEasy {
         }
         return right.toInt()
     }
+
+    fun levelOrderBottom(root: TreeNode?): List<List<Int>> {
+        fun height(root: TreeNode?): Int {
+            return if (root == null) 0 else (1 + maxOf(height(root.left), height(root.right)))
+        }
+
+        val height = height(root)
+        val result = mutableListOf<MutableList<Int>>()
+        repeat(height) { result.add(mutableListOf()) }
+
+        fun traverse(root: TreeNode?, label: Int) {
+            if (root == null) return
+            result[height - label].add(root.`val`)
+            traverse(root.left, label + 1)
+            traverse(root.right, label + 1)
+        }
+        traverse(root, 1)
+        return result
+
+    }
 }
 
 fun main() {
