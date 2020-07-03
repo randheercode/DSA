@@ -1016,6 +1016,52 @@ class MultipleProblemLCEasy {
         return result
 
     }
+
+    fun prisonAfterNDays(cells: IntArray, N: Int): IntArray? {
+        fun nextDay(stateBitmap: Int): Int {
+            var stateBitmap = stateBitmap
+            stateBitmap = (stateBitmap shl 1).inv() xor (stateBitmap shr 1)
+            // set the head and tail to zero
+            stateBitmap = stateBitmap and 0x7e
+            return stateBitmap
+        }
+
+        var N = N
+        val seen = HashMap<Int, Int?>()
+        var isFastForwarded = false
+
+        var stateBitmap = 0x0
+        for (cell in cells) {
+            stateBitmap = stateBitmap shl 1
+            stateBitmap = stateBitmap or cell
+        }
+
+        // step 2). run the simulation with hashmap
+        while (N > 0) {
+            if (!isFastForwarded) {
+                if (seen.containsKey(stateBitmap)) {
+                    // the length of the cycle is seen[state_key] - N
+                    N %= seen[stateBitmap]!! - N
+                    isFastForwarded = true
+                } else seen[stateBitmap] = N
+            }
+            // check if there is still some steps remained,
+            // with or without the fast forwarding.
+            if (N > 0) {
+                N -= 1
+                stateBitmap = nextDay(stateBitmap)
+            }
+        }
+
+        // step 3). convert the bitmap back to the state cells
+        val ret = IntArray(cells.size)
+        for (i in cells.indices.reversed()) {
+            ret[i] = stateBitmap and 0x1
+            stateBitmap = stateBitmap shr 1
+        }
+        return ret
+    }
+
 }
 
 fun main() {
