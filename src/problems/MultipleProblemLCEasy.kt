@@ -1062,6 +1062,25 @@ class MultipleProblemLCEasy {
         return ret
     }
 
+    fun nthUglyNumber(n: Int): Int {
+        val ugly = IntArray(n)
+        ugly[0] = 1
+        var ind2 = 0
+        var ind3 = 0
+        var ind5 = 0
+        var lastValue2 = 2
+        var lastValue3 = 3
+        var lastValue5 = 5
+        for (i in 1 until n) {
+            val min = minOf(lastValue2, lastValue3, lastValue5)
+            ugly[i] = min
+            if (lastValue2 == min) lastValue2 = 2 * ugly[++ind2]
+            if (lastValue3 == min) lastValue3 = 3 * ugly[++ind3]
+            if (lastValue5 == min) lastValue5 = 5 * ugly[++ind5]
+        }
+        return ugly[n - 1]
+    }
+
 }
 
 fun main() {
