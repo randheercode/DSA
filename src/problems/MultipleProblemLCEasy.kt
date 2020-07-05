@@ -1081,6 +1081,16 @@ class MultipleProblemLCEasy {
         return ugly[n - 1]
     }
 
+    fun hammingDistance(x: Int, y: Int): Int {
+        var calc = x xor y
+        var diff = 0
+        while (calc > 0) {
+            diff += calc and 1
+            calc = calc shr 1
+        }
+        return diff
+    }
+
 }
 
 fun main() {
