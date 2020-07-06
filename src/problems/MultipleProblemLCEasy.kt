@@ -1091,6 +1091,28 @@ class MultipleProblemLCEasy {
         return diff
     }
 
+    fun plusOne(digits: IntArray): IntArray {
+        if (digits.isEmpty()) return intArrayOf(1)
+        var rem = 1
+        var i = digits.lastIndex
+
+        while (rem > 0 && i >= 0) {
+            val sum = digits[i].plus(rem)
+            digits[i] = sum % 10
+            rem = sum / 10
+            i--
+        }
+
+        return if (rem == 0) {
+            digits
+        } else {
+            val newDigits = IntArray(digits.size.plus(1))
+            newDigits[0] = rem
+            digits.forEachIndexed { index, num -> newDigits[index.plus(1)] = num }
+            newDigits
+        }
+    }
+
 }
 
 fun main() {
