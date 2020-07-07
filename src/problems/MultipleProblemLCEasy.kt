@@ -1,5 +1,7 @@
 package problems
 
+import generateIntArray
+import printArray
 import utils.TreeNode
 import java.util.*
 
@@ -1113,6 +1115,33 @@ class MultipleProblemLCEasy {
         }
     }
 
+    fun islandPerimeter(grid: Array<IntArray>): Int {
+        if (grid.isEmpty()) return 0
+        val row = grid.size
+        val col = grid[0].size
+        fun calculateWeight(r: Int, c: Int): Int {
+            var count = 0
+            if (r == 0 || (r > 0 && grid[r - 1][c] != 1)) count++
+            if (r == row - 1 || (r + 1 < row && grid[r + 1][c] != 1)) count++
+            if (c == 0 || (c > 0 && grid[r][c - 1] != 1)) count++
+            if (c == col - 1 || (c + 1 < col && grid[r][c + 1] != 1)) count++
+            return count
+        }
+
+        val weight = Array(row) { IntArray(col) { 0 } }
+        for (i in 0 until row) {
+            for (j in 0 until col) {
+                if (grid[i][j] == 1)
+                    weight[i][j] = calculateWeight(i, j)
+            }
+        }
+
+        printArray(weight)
+
+        return weight.map { it.sum() }.sum()
+
+    }
+
 }
 
 fun main() {
@@ -1125,10 +1154,7 @@ fun main() {
 //    testIsIsomorphic()
 //    testMonotonic()
 //    testSearchInsert()
-    println(10 or 20)
-    println(110 or 190)
-    println(10 or -1)
-    println(-1 or -2)
+    println(MultipleProblemLCEasy().islandPerimeter(generateIntArray("[[0,1,0,0],[1,1,1,0],[0,1,0,0],[1,1,0,0]]")))
 }
 
 private fun testReverseString2() {
