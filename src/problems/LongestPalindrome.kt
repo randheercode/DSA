@@ -6,38 +6,28 @@ package problems
  * Time: 2:37 pm
  */
 class LongestPalindrome {
-    fun longestPalindrome(s: String): String {
-        if (s.isEmpty()) return ""
-        var centerIndex = Int.MIN_VALUE
-        var length = Int.MIN_VALUE
-        for (i in s.indices) {
-            val currentLength = palindromeLength(s, i)
-            if (currentLength > length) {
-                centerIndex = i
-                length = currentLength
-            }
+    fun longestPalindrome(s: String): String? {
+        var longestPalindrome = ""
+        for (index in s.indices) {
+            val oddPalindrome = checkPalindrome(s, index, index)
+            val evenPalindrome = checkPalindrome(s, index, index + 1)
+            val palindrome = if (oddPalindrome.length > evenPalindrome.length) oddPalindrome else evenPalindrome
+            longestPalindrome = if (palindrome.length > longestPalindrome.length) palindrome else longestPalindrome
         }
-        println("$centerIndex $length")
-        return s.substring(centerIndex.minus(length / 2), centerIndex.plus(length / 2))
+        return longestPalindrome
     }
 
-    private fun palindromeLength(s: String, i: Int): Int {
-        var left = i - 1
-        var right = i + 1
-        var count = 1
-        while (left >= 0 && right < s.length) {
-            if (s[left] == s[right]) {
-                count += 2
-                left--
-                right++
-            } else {
-                return count
-            }
+    private fun checkPalindrome(str: String, start: Int, end: Int): String {
+        var s = start
+        var e = end
+        while (s >= 0 && e < str.length && str[s] == str[e]) {
+            s--
+            e++
         }
-        return count
+        return str.substring(s + 1, e)
     }
 }
 
 fun main() {
-    println(LongestPalindrome().longestPalindrome("babbad"))
+    println(LongestPalindrome().longestPalindrome("babad"))
 }
