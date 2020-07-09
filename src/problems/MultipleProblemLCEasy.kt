@@ -1142,6 +1142,24 @@ class MultipleProblemLCEasy {
 
     }
 
+    fun widthOfBinaryTree(root: TreeNode?): Int {
+        var maxWidth = 0
+        val firstColIndexTable = mutableMapOf<Int, Int>()
+        fun dfs(node: TreeNode?, depth: Int, colIndex: Int) {
+            if (node == null) return
+            if (!firstColIndexTable.containsKey(depth)) {
+                firstColIndexTable[depth] = colIndex
+            }
+            val firstColIndex = firstColIndexTable!![depth]
+            maxWidth = maxOf(maxWidth, colIndex - firstColIndex!! + 1)
+
+            dfs(node.left, depth + 1, 2 * colIndex)
+            dfs(node.right, depth + 1, 2 * colIndex + 1)
+        }
+
+        dfs(root, 0, 0)
+        return maxWidth
+    }
 }
 
 fun main() {
