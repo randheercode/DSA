@@ -4,6 +4,7 @@ import utils.TreeNode
 import java.util.*
 import java.util.LinkedList
 
+
 /**
  * Created by randheercode
  * Date: 2/7/20
@@ -205,6 +206,174 @@ class BinaryTree {
         return count
     }
 
+    fun buildTreeInPost(inorder: IntArray, postorder: IntArray): TreeNode? {
+        var postOrderPos = postorder.size - 1
+        val indexMap = mutableMapOf<Int, Int>()
+        fun helper(inOrderLeft: Int, inOrderRight: Int): TreeNode? {
+            if (inOrderLeft > inOrderRight) return null
+            val rootVal = postorder[postOrderPos]
+            val root = TreeNode(rootVal)
+            val index = indexMap[rootVal]!!
+            postOrderPos--
+            root.right = helper(index + 1, inOrderRight)
+            root.left = helper(inOrderLeft, index - 1)
+            return root
+        }
+
+        var idx = 0
+        for (`val` in inorder) indexMap[`val`] = idx++
+        return helper(0, inorder.size - 1)
+    }
+
+    fun buildTreeInPre(preorder: IntArray, inorder: IntArray): TreeNode? {
+        var preOrderPos = 0
+        val indexMap = mutableMapOf<Int, Int>()
+        fun helper(inOrderLeft: Int, inOrderRight: Int): TreeNode? {
+            if (inOrderLeft > inOrderRight) return null
+            val rootVal = preorder[preOrderPos]
+            val root = TreeNode(rootVal)
+            val index = indexMap[rootVal]!!
+            preOrderPos++
+            root.left = helper(inOrderLeft, index - 1)
+            root.right = helper(index + 1, inOrderRight)
+            return root
+        }
+
+        var idx = 0
+        for (`val` in inorder) indexMap[`val`] = idx++
+        return helper(0, inorder.size - 1)
+    }
+
+    // https://leetcode.com/explore/learn/card/data-structure-tree/133/conclusion/994/
+    inner class Node(var `val`: Int) {
+        var left: Node? = null
+        var right: Node? = null
+        var next: Node? = null
+    }
+
+    fun connect(root: Node?): Node? {
+        if (root == null) {
+            return root
+        }
+        val nodes = LinkedList<Node>()
+        nodes.add(root)
+        while (nodes.size > 0) {
+            val size = nodes.size
+            for (i in 0 until size) {
+                val node = nodes.poll()
+                if (i < size - 1) {
+                    node.next = nodes.peek()
+                }
+                if (node.left != null) {
+                    nodes.add(node.left!!)
+                }
+                if (node.right != null) {
+                    nodes.add(node.right!!)
+                }
+            }
+        }
+        return root
+    }
+
+    fun connect2(root: Node?): Node? {
+        var prev: Node? = null
+        var leftmost: Node? = null
+        fun processChild(childNode: Node?) {
+            if (childNode != null) {
+                if (prev != null) {
+                    prev?.next = childNode
+                } else {
+                    leftmost = childNode
+                }
+                prev = childNode
+            }
+        }
+
+        if (root == null) {
+            return root
+        }
+        leftmost = root
+        var curr: Node? = leftmost
+        while (leftmost != null) {
+            prev = null
+            curr = leftmost
+            leftmost = null
+            while (curr != null) {
+                processChild(curr.left)
+                processChild(curr.right)
+                curr = curr.next
+            }
+        }
+        return root
+    }
+
+    fun lowestCommonAncestor(root: TreeNode?, p: TreeNode?, q: TreeNode?): TreeNode? {
+        var ans: TreeNode? = null
+        fun recurseTree(currentNode: TreeNode?, p1: TreeNode?, q1: TreeNode?): Boolean {
+            if (currentNode == null) {
+                return false
+            }
+            val left = if (recurseTree(currentNode.left, p1, q1)) 1 else 0
+            val right = if (recurseTree(currentNode.right, p1, q1)) 1 else 0
+            val mid = if (currentNode === p1 || currentNode === q1) 1 else 0
+            if (mid + left + right >= 2) {
+                ans = currentNode
+            }
+            return mid + left + right > 0
+        }
+        recurseTree(root, p, q)
+        return ans
+    }
     // endregion
 
+}
+
+class BinaryTreeCodec {
+    // Encodes a tree to a single string.
+    fun serialize(root: TreeNode?): String {
+        if (root == null) return "[]"
+        val queue: Queue<TreeNode?> = LinkedList<TreeNode>()
+        queue.add(root)
+        var sol = "["
+        while (!queue.isEmpty()) {
+            val temp = queue.remove()
+            if (temp != null) {
+                queue.add(temp.left)
+                queue.add(temp.right)
+                sol += temp.`val`
+            } else sol += "null"
+            sol += ","
+        }
+        var j = sol.length - 1
+        while (j >= 0 && !Character.isDigit(sol[j])) {
+            j--
+        }
+        sol = sol.substring(0, j + 1)
+        sol += "]"
+        return sol
+    }
+
+    // Decodes your encoded data to tree.
+    fun deserialize(data: String): TreeNode? {
+        if (data.length == 2) return null
+        val nodes = data.substring(1, data.length - 1).split(",".toRegex()).toTypedArray()
+        val queue: Queue<TreeNode?> = LinkedList<TreeNode>()
+        val sol = TreeNode(Integer.valueOf(nodes[0]))
+        queue.add(sol)
+        var j = 1
+        while (j < nodes.size) {
+            var left: TreeNode? = null
+            var right: TreeNode? = null
+            val temp = queue.remove()
+            if (nodes[j] != "null") left = TreeNode(Integer.valueOf(nodes[j]))
+            j++
+            if (j < nodes.size && nodes[j] != "null") right = TreeNode(Integer.valueOf(nodes[j]))
+            j++
+            temp!!.left = left
+            temp.right = right
+            if (left != null) queue.add(left)
+            if (right != null) queue.add(right)
+        }
+        return sol
+    }
 }
