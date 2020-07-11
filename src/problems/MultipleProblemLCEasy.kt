@@ -1160,6 +1160,35 @@ class MultipleProblemLCEasy {
         dfs(root, 0, 0)
         return maxWidth
     }
+
+    fun subsets(nums: IntArray): List<List<Int>> {
+        val resultSize = Math.pow(2.0, nums.size.toDouble()).toLong()
+        val resultSet = mutableListOf<List<Int>>()
+        for (i in 0 until resultSize) {
+            resultSet.add(nums.filterIndexed { index, _ -> (i and (1 shl index).toLong()) > 0 }.toList())
+        }
+        return resultSet
+    }
+
+    fun subsets2(nums: IntArray): List<List<Int>> {
+        fun helper(nums: IntArray, i: Int, subset: MutableList<Int>, res: MutableList<List<Int>>) {
+            if (i == nums.size) {
+                res.add(subset)
+            } else {
+                val newSubset = mutableListOf<Int>()
+                newSubset.addAll(subset)
+                helper(nums, i + 1, newSubset, res)
+                subset.add(nums[i])
+                helper(nums, i + 1, subset, res)
+            }
+        }
+
+        val res = mutableListOf<List<Int>>()
+        helper(nums, 0, mutableListOf(), res)
+        return res
+    }
+
+
 }
 
 fun main() {
