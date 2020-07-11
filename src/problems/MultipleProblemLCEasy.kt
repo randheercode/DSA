@@ -1,6 +1,5 @@
 package problems
 
-import generateIntArray
 import printArray
 import utils.TreeNode
 import java.util.*
@@ -1188,6 +1187,46 @@ class MultipleProblemLCEasy {
         return res
     }
 
+    fun twoSumMy(nums: IntArray, target: Int): IntArray {
+        val map = nums.mapIndexed { index, i -> i to index }.toMap()
+        var i = 0
+        while (i < nums.size) {
+            val req = target - nums[i]
+            if (map.containsKey(req) && map[req] != i) {
+                return intArrayOf(i, map[req]!!)
+            }
+            i++
+        }
+        return IntArray(2)
+    }
+
+    fun twoSum2(numbers: IntArray, target: Int): IntArray {
+        var l = 0
+        var e = numbers.size - 1
+        while (l < e) {
+            if (numbers[l] + numbers[e] == target) return intArrayOf(l.plus(1), e.plus(1))
+            if (numbers[l] + numbers[e] > target) e--
+            else l++
+        }
+        return intArrayOf()
+    }
+
+    fun lengthOfLongestSubstring(s: String): Int {
+        val n = s.length
+        val set = mutableSetOf<Char>()
+        var maxLen = 0
+        var i = 0
+        var j = 0
+        while (i < n && j < n) {
+            if (!set.contains(s[j])) {
+                set.add(s[j++])
+                maxLen = maxOf(maxLen, j - i)
+            } else {
+                set.remove(s[i++])
+            }
+        }
+        return maxLen
+    }
 
 }
 
@@ -1201,7 +1240,8 @@ fun main() {
 //    testIsIsomorphic()
 //    testMonotonic()
 //    testSearchInsert()
-    println(MultipleProblemLCEasy().islandPerimeter(generateIntArray("[[0,1,0,0],[1,1,1,0],[0,1,0,0],[1,1,0,0]]")))
+//    println(MultipleProblemLCEasy().islandPerimeter(generateIntArray("[[0,1,0,0],[1,1,1,0],[0,1,0,0],[1,1,0,0]]")))
+    println(MultipleProblemLCEasy().twoSum2(intArrayOf(2, 3, 4), 6).toList())
 }
 
 private fun testReverseString2() {
