@@ -1,5 +1,8 @@
 package problems.lc_contest.bw.bw30
 
+import java.util.*
+
+
 /**
  * Created by randheercode
  * LeetCode Contest.
@@ -48,12 +51,14 @@ private fun test2() {
 
 private class Prob3 {
     fun minDifference(nums: IntArray): Int {
-        if (nums.size <= 4) return 0
+        val n: Int = nums.size
+        var res = Int.MAX_VALUE
+        if (n < 5) return 0
         nums.sort()
-        val left = nums[3]
-        val right = nums[nums.size.minus(4)]
-        val diffLeft = nums.max()!!.minus(left)
-        return 0
+        for (i in 0..3) {
+            res = minOf(res, nums[n - 4 + i] - nums[i])
+        }
+        return res
     }
 }
 

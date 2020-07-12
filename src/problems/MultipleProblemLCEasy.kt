@@ -1239,6 +1239,106 @@ class MultipleProblemLCEasy {
         return ans
     }
 
+    fun findMedianSortedArrays(nums1: IntArray, nums2: IntArray): Double {
+        val total = nums1.toMutableList()
+        total.addAll(nums2.toList())
+        total.sort()
+        return if (total.size.rem(2) == 0) {
+            val mid = total.size.div(2).minus(1)
+            total[mid].plus(total[mid + 1]).div(2.0)
+        } else {
+            total[total.size.div(2)].toDouble()
+        }
+    }
+
+    fun reverse(x: Int): Int {
+        val isNeg = x < 0
+        var x = Math.abs(x)
+        var ans: Long = 0
+        while (x > 0) {
+            val temp = x.rem(10)
+            ans = ans.times(10).plus(temp)
+            x = x.div(10)
+        }
+        if (ans > Int.MAX_VALUE) return 0
+        return if (isNeg) ans.toInt().times(-1) else ans.toInt()
+    }
+
+    fun isPalindrome(x: Int): Boolean {
+        if (x < 0) return false
+        fun reverse(x: Int): Int {
+            val isNeg = x < 0
+            var x = Math.abs(x)
+            var ans: Long = 0
+            while (x > 0) {
+                val temp = x.rem(10)
+                ans = ans.times(10).plus(temp)
+                x = x.div(10)
+            }
+            if (ans > Int.MAX_VALUE) return 0
+            return if (isNeg) ans.toInt().times(-1) else ans.toInt()
+        }
+        return x == reverse(x)
+    }
+
+    fun isPalindrome(head: ListNode?): Boolean {
+        var root = head
+        val strB = StringBuilder()
+        val strRevB = StringBuilder()
+        while (root != null) {
+            strB.append(root.`val`)
+            strRevB.insert(0, root.`val`.toString())
+            root = root.next
+        }
+        return strB.toString() == strRevB.toString()
+    }
+
+    fun reverseList(head: ListNode?): ListNode? {
+        val dummyNode = ListNode(0)
+        var current = head
+        while (current != null) {
+            val next = current.next
+            current.next = dummyNode.next
+            dummyNode.next = current
+            current = next
+        }
+        return dummyNode.next
+    }
+
+    fun reverseBetween(head: ListNode?, m: Int, n: Int): ListNode? {
+        if (head == null) return null
+        var pos = 1
+        val dummyNode = ListNode(0)
+        var ansNode: ListNode? = dummyNode
+        var currentNode = head
+
+        fun appendNormal(range: IntRange) {
+            while (currentNode != null && pos in range) {
+                ansNode?.next = currentNode
+                currentNode = currentNode?.next
+                ansNode = ansNode?.next
+                ansNode?.next = null
+                pos++
+            }
+        }
+
+        fun appendReverse(range: IntRange) {
+            while (currentNode != null && pos in range) {
+                val next = currentNode?.next
+                currentNode?.next = ansNode?.next
+                ansNode?.next = currentNode
+                currentNode = next
+                pos++
+            }
+            while (ansNode?.next != null) ansNode = ansNode?.next
+        }
+
+        appendNormal(0 until m)
+        appendReverse(m..n)
+        appendNormal(n.plus(1)..Int.MAX_VALUE)
+
+        return dummyNode.next
+    }
 }
 
 fun main() {
