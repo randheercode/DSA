@@ -1344,6 +1344,14 @@ class MultipleProblemLCEasy {
         if (p == null && q == null) return true
         return p?.`val` == q?.`val` && isSameTree(p?.left, q?.left) && isSameTree(p?.right, q?.right)
     }
+
+
+    fun angleClock(hour: Int, minutes: Int): Double {
+        val minAngleFrom12 = minutes.times(6)
+        val hourAngleFrom12 = (if (hour == 12) 0 else hour.times(30)).plus(minutes.div(2.0))
+        val angle = Math.abs(minAngleFrom12.minus(hourAngleFrom12))
+        return minOf(angle, 360.minus(angle))
+    }
 }
 
 fun main() {
@@ -1357,7 +1365,8 @@ fun main() {
 //    testMonotonic()
 //    testSearchInsert()
 //    println(MultipleProblemLCEasy().islandPerimeter(generateIntArray("[[0,1,0,0],[1,1,1,0],[0,1,0,0],[1,1,0,0]]")))
-    println(MultipleProblemLCEasy().twoSum2(intArrayOf(2, 3, 4), 6).toList())
+//    println(MultipleProblemLCEasy().twoSum2(intArrayOf(2, 3, 4), 6).toList())
+    println(MultipleProblemLCEasy().angleClock(12, 32))
 }
 
 private fun testReverseString2() {
