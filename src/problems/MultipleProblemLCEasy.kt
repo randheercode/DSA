@@ -1352,6 +1352,10 @@ class MultipleProblemLCEasy {
         val angle = Math.abs(minAngleFrom12.minus(hourAngleFrom12))
         return minOf(angle, 360.minus(angle))
     }
+
+    fun reverseWords(s: String): String {
+        return s.split(" ").reversed().filter { it.isNotEmpty() }.joinToString(" ")
+    }
 }
 
 fun main() {
