@@ -1356,6 +1356,27 @@ class MultipleProblemLCEasy {
     fun reverseWords(s: String): String {
         return s.split(" ").reversed().filter { it.isNotEmpty() }.joinToString(" ")
     }
+    fun myPow1(x: Double, n: Int): Double {
+        var x = x
+        var N = n.toLong()
+        if (N < 0) {
+            x = 1 / x
+            N = -N
+        }
+        fun fastPow(x: Double, n: Long): Double {
+            if (n == 0L) {
+                return 1.0
+            }
+            val half = fastPow(x, n / 2)
+            return if (n % 2 == 0L) {
+                half * half
+            } else {
+                half * half * x
+            }
+        }
+        return fastPow(x, N)
+    }
+
 }
 
 fun main() {
@@ -1370,7 +1391,7 @@ fun main() {
 //    testSearchInsert()
 //    println(MultipleProblemLCEasy().islandPerimeter(generateIntArray("[[0,1,0,0],[1,1,1,0],[0,1,0,0],[1,1,0,0]]")))
 //    println(MultipleProblemLCEasy().twoSum2(intArrayOf(2, 3, 4), 6).toList())
-    println(MultipleProblemLCEasy().angleClock(12, 32))
+//    println(MultipleProblemLCEasy().angleClock(12, 32))
 }
 
 private fun testReverseString2() {
