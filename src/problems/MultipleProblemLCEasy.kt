@@ -1356,6 +1356,7 @@ class MultipleProblemLCEasy {
     fun reverseWords(s: String): String {
         return s.split(" ").reversed().filter { it.isNotEmpty() }.joinToString(" ")
     }
+
     fun myPow1(x: Double, n: Int): Double {
         var x = x
         var N = n.toLong()
@@ -1377,6 +1378,68 @@ class MultipleProblemLCEasy {
         return fastPow(x, N)
     }
 
+    fun myAtoi(str: String): Int {
+        var str = str
+        str = str.trim { it <= ' ' }
+        if (str.isEmpty()) return 0
+        var neg = 0
+        val ret: Int
+        if (str[0] == '-') neg = 1
+        if (str[0] == '+') neg = -1
+        var num = ""
+        for (i in str.indices) {
+            if (neg != 0 && i == 0) continue
+            num += if (str[i].toInt() in 48..57) {
+                str[i]
+            } else break
+        }
+        ret = try {
+            num.toInt()
+        } catch (e: Exception) {
+            if (num.length < 10) return 0
+            return if (neg == 1) Int.MIN_VALUE else Int.MAX_VALUE
+        }
+        return if (neg != 1) ret else ret * -1
+    }
+
+    fun isValid(s: String): Boolean {
+        val stack = Stack<Char>()
+        var idx = 0
+        while (idx < s.length) {
+            if (stack.isEmpty() || s[idx] == '(' || s[idx] == '{' || s[idx] == '[') {
+                stack.add(s[idx])
+            } else {
+                if ((stack.peek() == '(' && s[idx] != ')') || (stack.peek() == '{' && s[idx] != '}') || stack.peek() == '[' && s[idx] != ']') {
+                    return false
+                } else {
+                    stack.pop()
+                }
+            }
+            idx++
+        }
+        return true
+    }
+
+    fun strStr(haystack: String, needle: String): Int {
+        fun matchFrom(index: Int): Boolean {
+            var idx = 0
+            while (idx < needle.length) {
+                if (haystack[index + idx] != needle[idx]) return false
+                idx++
+            }
+            return true
+        }
+        if (needle.isEmpty()) return 0
+        if (haystack.length < needle.length) return -1
+        if (haystack.length == needle.length && haystack == needle) return 0
+        var idx = 0
+        while (idx <= haystack.length.minus(needle.length)) {
+            if (haystack[idx] == needle[0] && matchFrom(idx)) return idx
+            idx++
+        }
+        return -1
+    }
+
 }
 
 fun main() {
@@ -1392,6 +1455,8 @@ fun main() {
 //    println(MultipleProblemLCEasy().islandPerimeter(generateIntArray("[[0,1,0,0],[1,1,1,0],[0,1,0,0],[1,1,0,0]]")))
 //    println(MultipleProblemLCEasy().twoSum2(intArrayOf(2, 3, 4), 6).toList())
 //    println(MultipleProblemLCEasy().angleClock(12, 32))
+//    println(MultipleProblemLCEasy().myAtoi("+-2"))
+    println(MultipleProblemLCEasy().strStr("cabcdef","ef"))
 }
 
 private fun testReverseString2() {
