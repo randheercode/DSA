@@ -1440,6 +1440,39 @@ class MultipleProblemLCEasy {
         return -1
     }
 
+    fun topKFrequent(nums: IntArray, k: Int): IntArray? {
+        // O(1) time
+        if (k == nums.size) {
+            return nums
+        }
+
+        // 1. build hash map : character and how often it appears
+        // O(N) time
+        val count = mutableMapOf<Int, Int>()
+        for (n in nums) {
+            count[n] = count.getOrDefault(n, 0)!! + 1
+        }
+
+        // init heap 'the less frequent element first'
+        val heap: Queue<Int> = PriorityQueue(
+                Comparator { n1: Int?, n2: Int? -> count[n1]!! - count[n2]!! })
+
+        // 2. keep k top frequent elements in the heap
+        // O(N log k) < O(N log N) time
+        for (n in count.keys) {
+            heap.add(n)
+            if (heap.size > k) heap.poll()
+        }
+
+        // 3. build an output array
+        // O(k log k) time
+        val top = IntArray(k)
+        for (i in k - 1 downTo 0) {
+            top[i] = heap.poll()
+        }
+        return top
+    }
+
 }
 
 fun main() {
@@ -1456,7 +1489,7 @@ fun main() {
 //    println(MultipleProblemLCEasy().twoSum2(intArrayOf(2, 3, 4), 6).toList())
 //    println(MultipleProblemLCEasy().angleClock(12, 32))
 //    println(MultipleProblemLCEasy().myAtoi("+-2"))
-    println(MultipleProblemLCEasy().strStr("cabcdef","ef"))
+    println(MultipleProblemLCEasy().strStr("cabcdef", "ef"))
 }
 
 private fun testReverseString2() {
