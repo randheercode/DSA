@@ -1473,6 +1473,20 @@ class MultipleProblemLCEasy {
         return top
     }
 
+    fun removeElements(head: ListNode?, `val`: Int): ListNode? {
+        val dummyNode = ListNode(0)
+        dummyNode.next = head
+        var currentNode: ListNode? = dummyNode
+        while (currentNode?.next != null) {
+            if (currentNode.next?.`val` == `val`) {
+                currentNode.next = currentNode.next?.next
+            } else {
+                currentNode = currentNode.next
+            }
+        }
+        return dummyNode.next
+    }
+
 }
 
 fun main() {
