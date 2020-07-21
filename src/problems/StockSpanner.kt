@@ -18,7 +18,7 @@ class StockSpanner {
     fun next(price: Int): Int {
         var span = 1
         while (!s.isEmpty() && price >= s.peek()[0]) {
-            span += s.peek().get(1)
+            span += s.peek()[1]
             s.pop()
         }
         s.push(intArrayOf(price, span))

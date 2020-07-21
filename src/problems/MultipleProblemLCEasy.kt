@@ -1487,6 +1487,35 @@ class MultipleProblemLCEasy {
         return dummyNode.next
     }
 
+
+    internal class Solution {
+        private lateinit var board: Array<CharArray>
+        private var ROWS = 0
+        private var COLS = 0
+        fun exist(board: Array<CharArray>, word: String): Boolean {
+            this.board = board
+            ROWS = board.size
+            COLS = board[0].size
+            for (row in 0 until ROWS) for (col in 0 until COLS) if (backtrack(row, col, word, 0)) return true
+            return false
+        }
+
+        private fun backtrack(row: Int, col: Int, word: String, index: Int): Boolean {
+            if (index >= word.length) return true
+            if (row < 0 || row == ROWS || col < 0 || col == COLS || board[row][col] != word[index]) return false
+            var ret = false
+            board[row][col] = '#'
+            val rowOffsets = intArrayOf(0, 1, 0, -1)
+            val colOffsets = intArrayOf(1, 0, -1, 0)
+            for (d in 0..3) {
+                ret = backtrack(row + rowOffsets[d], col + colOffsets[d], word, index + 1)
+                if (ret) break
+            }
+            board[row][col] = word[index]
+            return ret
+        }
+    }
+
 }
 
 fun main() {
