@@ -1537,6 +1537,18 @@ class MultipleProblemLCEasy {
         return result
     }
 
+    fun singleNumber(nums: IntArray): IntArray {
+        val result = mutableMapOf<Int, Int>()
+        for (num in nums) {
+            if (result.containsKey(num)) {
+                result.remove(num)
+            } else {
+                result[num] = num
+            }
+        }
+        return result.keys.toIntArray()
+    }
+
 }
 
 fun main() {
