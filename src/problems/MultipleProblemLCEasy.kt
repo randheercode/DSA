@@ -1549,6 +1549,27 @@ class MultipleProblemLCEasy {
         return result.keys.toIntArray()
     }
 
+    fun allPathsSourceTarget(graph: Array<IntArray>): List<List<Int>> {
+        val target = graph.size - 1
+        var results: MutableList<List<Int>> = mutableListOf()
+        fun backtrack(currNode: Int, path: LinkedList<Int>) {
+            if (currNode == target) {
+                results.add(ArrayList(path))
+                return
+            }
+            for (nextNode in graph[currNode]) {
+                path.addLast(nextNode)
+                backtrack(nextNode, path)
+                path.removeLast()
+            }
+        }
+        results = ArrayList()
+        val path = LinkedList<Int>()
+        path.addLast(0)
+        backtrack(0, path)
+        return results
+    }
+
 }
 
 fun main() {
@@ -1565,7 +1586,7 @@ fun main() {
 //    println(MultipleProblemLCEasy().twoSum2(intArrayOf(2, 3, 4), 6).toList())
 //    println(MultipleProblemLCEasy().angleClock(12, 32))
 //    println(MultipleProblemLCEasy().myAtoi("+-2"))
-    println(MultipleProblemLCEasy().strStr("cabcdef", "ef"))
+//    println(MultipleProblemLCEasy().strStr("cabcdef", "ef"))
 }
 
 private fun testReverseString2() {
