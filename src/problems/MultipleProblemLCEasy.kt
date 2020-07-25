@@ -1570,6 +1570,16 @@ class MultipleProblemLCEasy {
         return results
     }
 
+    fun findMin(nums: IntArray): Int {
+        var low = 0
+        var high = nums.size - 1
+        while (low < high) {
+            val pivot = low + (high - low) / 2
+            if (nums[pivot] < nums[high]) high = pivot else if (nums[pivot] > nums[high]) low = pivot + 1 else high -= 1
+        }
+        return nums[low]
+    }
+
 }
 
 fun main() {
