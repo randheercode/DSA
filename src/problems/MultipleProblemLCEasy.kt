@@ -1580,6 +1580,25 @@ class MultipleProblemLCEasy {
         return nums[low]
     }
 
+    fun addDigits(num: Int): Int {
+        fun digitSum(n: Int): Int {
+            var number = n
+            var sum = 0
+            while (number > 0) {
+                val r = number % 10
+                sum += r
+                number /= 10
+            }
+            return sum
+        }
+
+        var sum = digitSum(num)
+        while (sum >= 10) {
+            sum = digitSum(sum)
+        }
+        return sum
+    }
+
 }
 
 fun main() {
@@ -1597,6 +1616,7 @@ fun main() {
 //    println(MultipleProblemLCEasy().angleClock(12, 32))
 //    println(MultipleProblemLCEasy().myAtoi("+-2"))
 //    println(MultipleProblemLCEasy().strStr("cabcdef", "ef"))
+    println(MultipleProblemLCEasy().addDigits(38))
 }
 
 private fun testReverseString2() {
