@@ -1599,6 +1599,25 @@ class MultipleProblemLCEasy {
         return sum
     }
 
+    fun buildTreeInPost(inorder: IntArray, postorder: IntArray): TreeNode? {
+        var postOrderPos = postorder.size - 1
+        val indexMap = mutableMapOf<Int, Int>()
+        fun helper(inOrderLeft: Int, inOrderRight: Int): TreeNode? {
+            if (inOrderLeft > inOrderRight) return null
+            val rootVal = postorder[postOrderPos]
+            val root = TreeNode(rootVal)
+            val index = indexMap[rootVal]!!
+            postOrderPos--
+            root.right = helper(index + 1, inOrderRight)
+            root.left = helper(inOrderLeft, index - 1)
+            return root
+        }
+
+        var idx = 0
+        for (`val` in inorder) indexMap[`val`] = idx++
+        return helper(0, inorder.size - 1)
+    }
+
 }
 
 fun main() {
