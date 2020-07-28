@@ -1618,6 +1618,23 @@ class MultipleProblemLCEasy {
         return helper(0, inorder.size - 1)
     }
 
+    fun leastInterval(tasks: CharArray, n: Int): Int {
+        val frequencies = IntArray(26)
+        for (t in tasks) {
+            frequencies[t.toInt() - 'A'.toInt()]++
+        }
+        var fMax = 0
+        for (f in frequencies) {
+            fMax = maxOf(fMax, f)
+        }
+        var nMax = 0
+        for (f in frequencies) {
+            if (f == fMax) nMax++
+        }
+
+        return maxOf(tasks.size, (fMax - 1) * (n + 1) + nMax)
+    }
+
 }
 
 fun main() {
