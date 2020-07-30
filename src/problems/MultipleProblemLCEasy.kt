@@ -1635,6 +1635,27 @@ class MultipleProblemLCEasy {
         return maxOf(tasks.size, (fMax - 1) * (n + 1) + nMax)
     }
 
+    fun deleteNodes(head: ListNode?, m: Int, n: Int): ListNode? {
+        val dummy = ListNode(0)
+        dummy.next = head
+        var current: ListNode? = dummy
+
+
+        while (current != null) {
+            var keep = 0
+            while (keep < m && current != null) {
+                current = current.next
+                keep++
+            }
+            var delete = 0
+            while (delete < n && current != null) {
+                current.next = current.next?.next
+                delete++
+            }
+        }
+        return dummy.next
+    }
+
 }
 
 fun main() {
