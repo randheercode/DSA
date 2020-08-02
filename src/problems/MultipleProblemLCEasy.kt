@@ -1656,6 +1656,12 @@ class MultipleProblemLCEasy {
         return dummy.next
     }
 
+    fun detectCapitalUse(word: String): Boolean {
+        val caps = 65..90
+        val capsCount = word.filter { it.toInt() in caps }.length
+        return capsCount == 0 || (capsCount == 1 && word[0].toInt() in caps) || capsCount == word.length
+    }
+
 }
 
 
