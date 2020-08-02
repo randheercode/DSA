@@ -1662,6 +1662,56 @@ class MultipleProblemLCEasy {
         return capsCount == 0 || (capsCount == 1 && word[0].toInt() in caps) || capsCount == word.length
     }
 
+    fun isPrefixOfWord(sentence: String, searchWord: String): Int {
+        val words = sentence.split(" ")
+        var i = 0
+        while (i < words.size) {
+            if (words[i].startsWith(searchWord)) return i.plus(1)
+            i++
+        }
+        return -1
+    }
+
+    fun reverseOnlyLetters(S: String): String {
+        val s = StringBuilder(S)
+        var left = 0
+        var right = s.lastIndex
+        while (left < right) {
+            while (left < right && !s[left].isLetter()) left++
+            while (left < right && !s[right].isLetter()) right--
+            if (s[left].isLetter() && s[right].isLetter()) {
+                val temp = s[left]
+                s[left] = s[right]
+                s[right] = temp
+                left++
+                right--
+            }
+        }
+        return s.toString()
+    }
+
+    fun isPathCrossing(path: String): Boolean {
+        val visited = mutableSetOf<Pair<Int, Int>>()
+        var currentX = 0
+        var currentY = 0
+        visited.add(Pair(0, 0))
+        var i = 0
+        while (i < path.length) {
+            when (path[i]) {
+                'N', 'S' -> {
+                    currentY += if (path[i] == 'N') 1 else -1
+                }
+                'E', 'W' -> {
+                    currentX += if (path[i] == 'E') 1 else -1
+                }
+            }
+            val newPoint = Pair(currentX, currentY)
+            if (visited.contains(newPoint)) return true
+            else visited.add(newPoint)
+            i++
+        }
+        return false
+    }
 }
 
 
