@@ -1,36 +1,53 @@
 package problems
 
-import java.util.*
-
 
 /**
  * Created by randheercode
  * Date: 7/6/20
  * Time: 4:47 pm
  */
-internal class MinStack {
-    private val stack = Stack<Int>()
-    private val minStack = Stack<Int>()
+class MinStack {
+
+    /** initialize your data structure here. */
+    private val data = mutableListOf<Int>()
+    private var topIndex = -1
+    private var minIndex = -1
+
     fun push(x: Int) {
-        stack.push(x)
-        if (minStack.isEmpty() || x <= minStack.peek()) {
-            minStack.push(x)
-        }
+        data.add(x)
+        topIndex++
+        if (minIndex == -1 || x <= data[minIndex]) minIndex = topIndex
     }
 
-    fun pop() {
-        if (stack.peek() == minStack.peek()) {
-            minStack.pop()
-        }
-        stack.pop()
+    fun pop(): Int {
+        return if (topIndex > -1) {
+            val num = data[topIndex]
+            data.removeAt(topIndex)
+            if (topIndex == minIndex) {
+                assignNextMin()
+            }
+            topIndex--
+            num
+        } else -1
     }
 
     fun top(): Int {
-        return stack.peek()
+        return if (topIndex > -1) data[topIndex]
+        else -1
     }
 
     fun getMin(): Int {
-        return minStack.peek()
+        return if (minIndex > -1) data[minIndex]
+        else -1
     }
-}
 
+    private fun assignNextMin() {
+        minIndex = if (data.isEmpty()) {
+            -1
+        } else {
+            val next = data.min()!!
+            data.lastIndexOf(next)
+        }
+    }
+
+}
