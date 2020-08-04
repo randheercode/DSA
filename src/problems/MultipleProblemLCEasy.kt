@@ -1712,6 +1712,16 @@ class MultipleProblemLCEasy {
         }
         return false
     }
+
+    fun isPalindrome(s: String): Boolean {
+        fun isLetterOrDigit(char: Char): Boolean {
+            return char in 'A'..'Z' || char in 'a'..'z' || (char.toInt() - 48) in 0..9
+        }
+
+        val charDigits = StringBuilder()
+        for (char in s) if (isLetterOrDigit(char)) charDigits.append(char)
+        return charDigits.toString().toLowerCase() == charDigits.toString().reversed().toLowerCase()
+    }
 }
 
 
@@ -1731,6 +1741,7 @@ fun main() {
 //    println(MultipleProblemLCEasy().myAtoi("+-2"))
 //    println(MultipleProblemLCEasy().strStr("cabcdef", "ef"))
 //    println(MultipleProblemLCEasy().addDigits(38))
+    println(MultipleProblemLCEasy().isPalindrome("0P"))
 }
 
 private fun testReverseString2() {
