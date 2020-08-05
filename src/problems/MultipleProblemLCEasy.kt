@@ -1690,6 +1690,10 @@ class MultipleProblemLCEasy {
         return s.toString()
     }
 
+    fun isPowerOfFour(num: Int): Boolean {
+        return num > 0 && Math.log(num.toDouble()) / Math.log(2.0) % 2 == 0.0
+    }
+
     fun isPathCrossing(path: String): Boolean {
         val visited = mutableSetOf<Pair<Int, Int>>()
         var currentX = 0
