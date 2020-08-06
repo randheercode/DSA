@@ -1726,6 +1726,17 @@ class MultipleProblemLCEasy {
         for (char in s) if (isLetterOrDigit(char)) charDigits.append(char)
         return charDigits.toString().toLowerCase() == charDigits.toString().reversed().toLowerCase()
     }
+
+    fun findDuplicates(nums: IntArray): List<Int>? {
+        val ans: MutableList<Int> = ArrayList()
+        for (num in nums) {
+            if (nums[Math.abs(num) - 1] < 0) {
+                ans.add(Math.abs(num))
+            }
+            nums[Math.abs(num) - 1] *= -1
+        }
+        return ans
+    }
 }
 
 
