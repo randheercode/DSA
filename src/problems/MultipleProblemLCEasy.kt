@@ -1,5 +1,6 @@
 package problems
 
+import generateIntArray
 import printArray
 import utils.TreeNode
 import java.util.*
@@ -1737,6 +1738,46 @@ class MultipleProblemLCEasy {
         }
         return ans
     }
+
+    fun increasingBST(root: TreeNode?): TreeNode? {
+        var cur: TreeNode? = null
+        fun inorder(node: TreeNode?) {
+            if (node == null) return
+            inorder(node.left)
+            node.left = null
+            cur?.right = node
+            cur = node
+            inorder(node.right)
+        }
+
+        val ans = TreeNode(0)
+        cur = ans
+        inorder(root)
+        return ans.right
+    }
+
+    fun matrixReshape(nums: Array<IntArray>, r: Int, c: Int): Array<IntArray> {
+        val iMax = nums.size
+        val jMax = nums[0].size
+        if (iMax.times(jMax) != r.times(c)) return nums
+        var i = 0
+        var j = 0
+        val result = Array(r) { IntArray(c) { 0 } }
+        for (currI in 0 until r) {
+            for (currJ in 0 until c) {
+                result[currI]!![currJ] = nums[i][j]
+                if (j + 1 == jMax) {
+                    j = 0
+                    i++
+                } else {
+                    j++
+                }
+            }
+        }
+        return result
+    }
+
+
 }
 
 
@@ -1756,7 +1797,8 @@ fun main() {
 //    println(MultipleProblemLCEasy().myAtoi("+-2"))
 //    println(MultipleProblemLCEasy().strStr("cabcdef", "ef"))
 //    println(MultipleProblemLCEasy().addDigits(38))
-    println(MultipleProblemLCEasy().isPalindrome("0P"))
+//    println(MultipleProblemLCEasy().isPalindrome("0P"))
+    println(MultipleProblemLCEasy().matrixReshape(generateIntArray("[[1,2],[3,4]]"), 1, 4))
 }
 
 private fun testReverseString2() {

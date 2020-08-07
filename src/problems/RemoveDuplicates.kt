@@ -20,4 +20,27 @@ class RemoveDuplicates {
         }
         return currentPointer + 1
     }
+
+    fun removeDuplicates2(nums: IntArray): Int {
+        if (nums.isEmpty()) return 0
+        var len = 1
+        var count = 1
+        for (i in 1 until nums.size) {
+            if (nums[i] == nums[i - 1]) {
+                count++;
+            } else {
+                count = 1;
+            }
+            if (count <= 2) {
+                nums[len++] = nums[i];
+            }
+        }
+        return len
+    }
+}
+
+fun main() {
+    val input = intArrayOf(-3, -1, -1, 0, 0, 0, 0, 0, 2)
+    RemoveDuplicates().removeDuplicates2(input)
+    println(input.toList())
 }
