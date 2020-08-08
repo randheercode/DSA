@@ -1,6 +1,5 @@
 package problems
 
-import generateIntArray
 import printArray
 import utils.TreeNode
 import java.util.*
@@ -1784,72 +1783,45 @@ class MultipleProblemLCEasy {
         else maxNum
     }
 
+    fun findDisappearedNumbers(nums: IntArray): List<Int> {
+        for (i in nums.indices) {
+            val key = Math.abs(nums[i]) - 1
+            if (nums[key] > 0)
+                nums[key] = nums[key] * -1
+        }
+
+        val notP = mutableListOf<Int>()
+        for (i in nums.indices) {
+            if (nums[i] > 0) notP.add(i + 1)
+        }
+
+        return notP
+    }
+
+    fun firstMissingPositive(nums: IntArray): Int {
+        val n = nums.size
+        var contains = 0
+        for (i in 0 until n) if (nums[i] == 1) {
+            contains++
+            break
+        }
+        if (contains == 0) return 1
+        if (n == 1) return 2
+        for (i in 0 until n) if (nums[i] <= 0 || nums[i] > n) nums[i] = 1
+        for (i in 0 until n) {
+            val a = Math.abs(nums[i])
+            if (a == n) nums[0] = -Math.abs(nums[0]) else nums[a] = -Math.abs(nums[a])
+        }
+        for (i in 1 until n) {
+            if (nums[i] > 0) return i
+        }
+        return if (nums[0] > 0) n else n + 1
+    }
 
 }
 
 
 fun main() {
-//     testReverseString2()
-//    testisStrobogrammatic()
-//    testStringCompression()
-//    testCountAndSay()
-//    testBinaryStringCount()
-//    test2Sum()
-//    testIsIsomorphic()
-//    testMonotonic()
-//    testSearchInsert()
-//    println(MultipleProblemLCEasy().islandPerimeter(generateIntArray("[[0,1,0,0],[1,1,1,0],[0,1,0,0],[1,1,0,0]]")))
-//    println(MultipleProblemLCEasy().twoSum2(intArrayOf(2, 3, 4), 6).toList())
-//    println(MultipleProblemLCEasy().angleClock(12, 32))
-//    println(MultipleProblemLCEasy().myAtoi("+-2"))
-//    println(MultipleProblemLCEasy().strStr("cabcdef", "ef"))
-//    println(MultipleProblemLCEasy().addDigits(38))
-//    println(MultipleProblemLCEasy().isPalindrome("0P"))
-    println(MultipleProblemLCEasy().matrixReshape(generateIntArray("[[1,2],[3,4]]"), 1, 4))
+    println(MultipleProblemLCEasy().findDisappearedNumbers(intArrayOf(4, 3, 2, 7, 8, 2, 3, 1)))
 }
 
-private fun testReverseString2() {
-    println(MultipleProblemLCEasy().reverseStr("abcd", 4))
-}
-
-private fun testisStrobogrammatic() {
-    println(MultipleProblemLCEasy().isStrobogrammatic("123"))
-}
-
-private fun testStringCompression() {
-    println(MultipleProblemLCEasy().compress(charArrayOf('a', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b')))
-}
-
-private fun testCountAndSay() {
-    println(MultipleProblemLCEasy().countAndSay(10))
-}
-
-private fun testBinaryStringCount() {
-    println(MultipleProblemLCEasy().countBinarySubString("1010"))
-}
-
-private fun test2Sum() {
-    println(MultipleProblemLCEasy().twoSum(intArrayOf(0, 0, 3, 4), 0))
-    println(MultipleProblemLCEasy().twoSumAnother(intArrayOf(2, 7, 11, 15), 9))
-    println(MultipleProblemLCEasy().twoSumAnother1(intArrayOf(2, 7, 11, 15), 9))
-}
-
-private fun testIsIsomorphic() {
-    println(MultipleProblemLCEasy().isIsomorphic("egg", "add"))
-    println(MultipleProblemLCEasy().isIsomorphic("foo", "bar"))
-    println(MultipleProblemLCEasy().isIsomorphic("paper", "title"))
-    println(MultipleProblemLCEasy().isIsomorphic("ab", "aa"))
-}
-
-private fun testMonotonic() {
-    println(MultipleProblemLCEasy().isMonotonic(intArrayOf(1, 2, 2, 3)))
-    println(MultipleProblemLCEasy().checkValidString("(**)"))
-}
-
-private fun testSearchInsert() {
-    println(MultipleProblemLCEasy().searchInsert(intArrayOf(1, 3, 5, 6), 5))
-    println(MultipleProblemLCEasy().searchInsert(intArrayOf(1, 3, 5, 6), 2))
-    println(MultipleProblemLCEasy().searchInsert(intArrayOf(1, 3, 5, 6), 7))
-    println(MultipleProblemLCEasy().searchInsert(intArrayOf(1, 3, 5, 6), 0))
-    println(MultipleProblemLCEasy().searchInsert(intArrayOf(1), 1))
-}
