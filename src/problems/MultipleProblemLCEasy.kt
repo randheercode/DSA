@@ -1777,6 +1777,13 @@ class MultipleProblemLCEasy {
         return result
     }
 
+    fun distributeCandies(candies: IntArray): Int {
+        val map = candies.groupBy { it }.map { it.key to it.value.size }.toMap()
+        val maxNum = candies.size.div(2)
+        return if (maxNum >= map.size) map.size
+        else maxNum
+    }
+
 
 }
 
