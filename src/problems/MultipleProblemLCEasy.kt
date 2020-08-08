@@ -1818,8 +1818,53 @@ class MultipleProblemLCEasy {
         return if (nums[0] > 0) n else n + 1
     }
 
-}
+    fun closestValue(root: TreeNode?, target: Double): Int {
+        fun diff(node: TreeNode) = Math.abs(target.minus(node.`val`))
+        var result: TreeNode? = null
+        var diffrence = Double.MAX_VALUE
 
+        fun closest(node: TreeNode?) {
+            if (node == null) return
+            val currDiff = diff(node)
+            if (currDiff < diffrence) {
+                diffrence = currDiff
+                result = node
+            }
+            closest(node.left)
+            closest(node.right)
+        }
+        closest(root)
+        return result?.`val` ?: -1
+    }
+
+    fun pathSum(root: TreeNode?, sum: Int): Int {
+        var count = 0
+        val h = mutableMapOf<Int, Int>()
+
+        fun countSum(node: TreeNode?, sumTill: Int) {
+            var currSum = sumTill
+            if (node == null) return
+
+            currSum += node.`val`
+
+            if (currSum == sum) count++
+
+            count += h.getOrDefault(currSum - sum, 0)
+
+            h[currSum] = h.getOrDefault(currSum, 0) + 1
+
+            countSum(node.left, currSum)
+            countSum(node.right, currSum)
+
+            h[currSum] = h[currSum]!! - 1
+        }
+
+        countSum(root, 0)
+        return count
+    }
+
+
+}
 
 fun main() {
     println(MultipleProblemLCEasy().findDisappearedNumbers(intArrayOf(4, 3, 2, 7, 8, 2, 3, 1)))
