@@ -8,7 +8,7 @@ import printArray
  * Date: 9/8/20
  * Time: 4:25 pm
  */
-class Aug20Challenge {
+class Aug20LeetCode {
     fun orangesRotting(grid: Array<IntArray>): Int {
         val iRange = grid.indices
         val jRange = grid[0].indices
@@ -54,10 +54,16 @@ class Aug20Challenge {
 
         return dayTaken
     }
+
+    companion object {
+        fun orangesRotting() {
+            val input = generateIntArray("[[2,1,1],[1,1,0],[0,1,1]]")
+            printArray(input)
+            println(Aug20LeetCode().orangesRotting(input))
+        }
+    }
 }
 
 fun main() {
-    val input = generateIntArray("[[2,1,1],[1,1,0],[0,1,1]]")
-    printArray(input)
-    println(Aug20Challenge().orangesRotting(input))
+    Aug20LeetCode.orangesRotting()
 }
