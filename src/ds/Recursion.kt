@@ -1,6 +1,6 @@
 package ds
 
-import problems.ListNode
+import problem.old.ListNode
 import utils.TreeNode
 
 /**

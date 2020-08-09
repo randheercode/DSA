@@ -6,7 +6,7 @@ package algorithm.lrucache
  * Time: 9:48 pm
  * Implementation of LRU Cache using HashMap.
  * Another implementation in Java using LinkedHashMap:removeEldestEntry() is overridden to impose a
- * policy for removing old mappings when size goes beyond capacity.
+ * policy for removing problem.old mappings when size goes beyond capacity.
  */
 internal class CustomLinkedHashMap<K, V>(private val initialCapacity: Int, loadFactor: Float, accessOrder: Boolean) : LinkedHashMap<K, V>(initialCapacity, loadFactor, accessOrder) {
 
