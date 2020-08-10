@@ -3,6 +3,7 @@ package problem
 import generateIntArray
 import printArray
 
+
 /**
  * Created by randheercode
  * Date: 9/8/20
@@ -55,15 +56,127 @@ class Aug20LeetCode {
         return dayTaken
     }
 
+    fun uniqueOccurrences(arr: IntArray): Boolean {
+        val map = mutableMapOf<Int, Int>()
+        for (a in arr) map[a] = map.getOrDefault(a, 0) + 1
+        return map.values.toSet().size == map.size
+    }
+
+    fun numSpecialEquivGroups(A: Array<String>): Int {
+
+        fun transformString(str: String): String {
+            val evenBuilder = StringBuilder()
+            val oddBuilder = StringBuilder()
+            for (i in str.indices) {
+                if (i.rem(2) == 0) evenBuilder.append(str[i])
+                else oddBuilder.append(str[i])
+            }
+            return evenBuilder.groupingBy { it }.eachCount().toSortedMap().toString() + oddBuilder.groupingBy { it }.eachCount().toSortedMap().toString()
+        }
+
+        val maps = A.map { it to transformString(it) }.toMap()
+
+        val result = mutableMapOf<String, MutableList<String>>()
+
+        for (item in maps) {
+            result[item.value] = result.getOrDefault(item.value, mutableListOf())
+            result[item.value]?.add(item.key)
+        }
+
+        return result.count()
+    }
+
+    fun numSpecialEquivGroupsSmart(A: Array<String>): Int {
+        val seen: MutableSet<String?> = mutableSetOf()
+        for (S in A) {
+            val count = IntArray(52)
+            for (i in S.indices) count[S[i] - 'a' + 26 * (i % 2)]++
+            seen.add(count.contentToString())
+        }
+        return seen.size
+    }
+
+    fun maxCount(m: Int, n: Int, ops: Array<IntArray>): Int {
+        var iMin = m
+        var jMin = n
+        for (op in ops) {
+            iMin = minOf(iMin, op[0])
+            jMin = minOf(jMin, op[1])
+        }
+        return iMin.times(jMin)
+    }
+
+    fun freqAlphabets(s: String): String {
+        var current = s.lastIndex
+        val result = StringBuilder()
+        while (current >= 0) {
+            if (s[current] == '#') {
+                val num = s.substring(current - 2, current).toInt()
+                result.insert(0, (num.plus(96)).toChar())
+                current -= 3
+            } else {
+                result.insert(0, (s[current].toInt().minus(48).plus(96)).toChar())
+                current--
+            }
+        }
+        return result.toString()
+    }
+
+    fun maxProduct(nums: IntArray): Int {
+        var first = Int.MIN_VALUE
+        var second = Int.MIN_VALUE
+        for (i in nums.indices) {
+            if (nums[i] > first) {
+                second = first
+                first = nums[i]
+            } else if (nums[i] > second) {
+                second = nums[i]
+            }
+        }
+        return (first.minus(1)) * (second.minus(1))
+    }
+
     companion object {
         fun orangesRotting() {
             val input = generateIntArray("[[2,1,1],[1,1,0],[0,1,1]]")
             printArray(input)
             println(Aug20LeetCode().orangesRotting(input))
         }
+
+        fun uniqueOccurrences() {
+            println(Aug20LeetCode().uniqueOccurrences(intArrayOf(1, 2, 2, 1, 1, 3)))
+            println(Aug20LeetCode().uniqueOccurrences(intArrayOf(1, 2)))
+            println(Aug20LeetCode().uniqueOccurrences(intArrayOf(-3, 0, 1, -3, 1, 1, 1, -3, 10, 0)))
+        }
+
+        fun numSpecialEquivGroups() {
+            println(Aug20LeetCode().numSpecialEquivGroups(arrayOf("abcd", "cdab", "cbad", "xyzz", "zzxy", "zzyx")))
+            println(Aug20LeetCode().numSpecialEquivGroups(arrayOf("abc", "acb", "bac", "bca", "cab", "cba")))
+        }
+
+        fun numSpecialEquivGroupsSmart() {
+            println(Aug20LeetCode().numSpecialEquivGroupsSmart(arrayOf("abcd", "cdab", "cbad", "xyzz", "zzxy", "zzyx")))
+            println(Aug20LeetCode().numSpecialEquivGroupsSmart(arrayOf("abc", "acb", "bac", "bca", "cab", "cba")))
+        }
+
+        fun maxCount() {
+            println(Aug20LeetCode().maxCount(3, 3, generateIntArray("[[2,2],[3,3]]")))
+            println(Aug20LeetCode().maxCount(3, 3, arrayOf()))
+        }
+
+        fun freqAlphabets() {
+            println(Aug20LeetCode().freqAlphabets("10#11#12"))
+            println(Aug20LeetCode().freqAlphabets("1326#"))
+        }
+
+        fun maxProduct() {
+            println(Aug20LeetCode().maxProduct(intArrayOf(3, 4, 5, 2)))
+            println(Aug20LeetCode().maxProduct(intArrayOf(1, 5, 4, 5)))
+            println(Aug20LeetCode().maxProduct(intArrayOf(3, 7)))
+        }
     }
 }
 
 fun main() {
-    Aug20LeetCode.orangesRotting()
+    Aug20LeetCode.maxProduct()
 }
