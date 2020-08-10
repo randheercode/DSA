@@ -136,6 +136,31 @@ class Aug20LeetCode {
         return (first.minus(1)) * (second.minus(1))
     }
 
+    fun titleToNumber(s: String): Int {
+        fun getNumber(char: Char, idx: Int): Int {
+            val no = char - 'A' + 1
+            var num = 1
+            if (idx > 0) num = Math.pow(26.0, idx.toDouble()).toInt()
+            num *= no
+            return num
+        }
+
+        val len = s.lastIndex
+        var result = 0
+        s.forEachIndexed { idx, char ->
+            result += getNumber(char, len - idx)
+        }
+        return result
+    }
+
+    fun titleToNumberOptimal(s: String): Int {
+        var result = 0
+        s.forEach {
+            result = result * 26 + (it - 'A' + 1)
+        }
+        return result
+    }
+
     companion object {
         fun orangesRotting() {
             val input = generateIntArray("[[2,1,1],[1,1,0],[0,1,1]]")
@@ -174,9 +199,23 @@ class Aug20LeetCode {
             println(Aug20LeetCode().maxProduct(intArrayOf(1, 5, 4, 5)))
             println(Aug20LeetCode().maxProduct(intArrayOf(3, 7)))
         }
+
+        fun titleToNumber() {
+            println(Aug20LeetCode().titleToNumber("A"))
+            println(Aug20LeetCode().titleToNumber("AB"))
+            println(Aug20LeetCode().titleToNumber("ZY"))
+            println(Aug20LeetCode().titleToNumber("FXSHRXW"))
+        }
+
+        fun titleToNumberOptimal() {
+            println(Aug20LeetCode().titleToNumber("A"))
+            println(Aug20LeetCode().titleToNumber("AB"))
+            println(Aug20LeetCode().titleToNumber("ZY"))
+            println(Aug20LeetCode().titleToNumber("FXSHRXW"))
+        }
     }
 }
 
 fun main() {
-    Aug20LeetCode.maxProduct()
+    Aug20LeetCode.titleToNumberOptimal()
 }
