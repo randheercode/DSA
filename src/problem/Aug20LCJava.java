@@ -1,6 +1,9 @@
 package problem;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -30,6 +33,22 @@ public class Aug20LCJava {
         for (int s = papers[n]; k > s; s += papers[k])
             k--;
         return k;
+    }
+
+    public List<Integer> getRow(int rowIndex) {
+        if (rowIndex == 0) return Collections.singletonList(1);
+        if (rowIndex == 1) return new ArrayList<>(Arrays.asList(1, 1));
+
+        List<Integer> last = getRow(rowIndex - 1);
+        int prev = last.get(0);
+        for (int i = 1; i < last.size(); i++) {
+            int next = prev + last.get(i);
+            prev = last.get(i);
+            last.set(i, next);
+        }
+        last.set(0, 1);
+        last.add(1);
+        return last;
     }
 
     public static void hIndexTest(Aug20LCJava obj) {
