@@ -50,11 +50,11 @@ public class Aug20LCJava {
 
     public int longestPalindrome(String s) {
         int[] count = new int[128];
-        for (char c: s.toCharArray())
+        for (char c : s.toCharArray())
             count[c]++;
 
         int ans = 0;
-        for (int v: count) {
+        for (int v : count) {
             ans += v / 2 * 2;
             if (ans % 2 == 0 && v % 2 == 1)
                 ans++;
@@ -62,18 +62,48 @@ public class Aug20LCJava {
         return ans;
     }
 
-    public static void hIndexTest(Aug20LCJava obj) {
-        System.out.println(obj.hIndex(new int[]{3, 0, 6, 1, 5}));
+    public int eraseOverlapIntervals(int[][] intervals) {
+        if (intervals.length == 0) return 0;
+        Arrays.sort(intervals, Comparator.comparingInt(i -> i[1]));
+        int end = intervals[0][1];
+
+        int count = 0;
+        for (int i = 1; i < intervals.length; i++) {
+            if (intervals[i][0] < end) {
+                count++;
+            } else {
+                end = intervals[i][1];
+            }
+        }
+
+        return count;
+    }
+
+    public int[] findPermutation(String s) {
+        int[] res = new int[s.length() + 1];
+        Stack<Integer> stack = new Stack<>();
+        int j = 0;
+        for (int i = 1; i <= s.length(); i++) {
+            if (s.charAt(i - 1) == 'I') {
+                stack.push(i);
+                while (!stack.isEmpty())
+                    res[j++] = stack.pop();
+            } else
+                stack.push(i);
+        }
+        stack.push(s.length() + 1);
+        while (!stack.isEmpty())
+            res[j++] = stack.pop();
+        return res;
     }
 
     public static void main(String[] args) {
         Aug20LCJava obj = new Aug20LCJava();
-        Aug20LCJava.hIndexTest(obj);
     }
 }
 
 class CombinationIterator {
-    public Deque< String > combinations = new ArrayDeque<>();
+    public Deque<String> combinations = new ArrayDeque<>();
 
     public CombinationIterator(String characters, int combinationLength) {
         int n = characters.length(), k = combinationLength;
