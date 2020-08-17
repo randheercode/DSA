@@ -115,6 +115,19 @@ public class Aug20LCJava {
         return t2Profit;
     }
 
+    public int[] distributeCandies(int candies, int num_people) {
+        int n = 1;
+        int[] result = new int[num_people];
+        while (candies > 0) {
+            int givenToCurrent = Math.min(candies, n);
+            result[(n - 1) % num_people] += givenToCurrent;
+            candies -= givenToCurrent;
+            n++;
+        }
+
+        return result;
+    }
+
     public static void main(String[] args) {
         Aug20LCJava obj = new Aug20LCJava();
     }
