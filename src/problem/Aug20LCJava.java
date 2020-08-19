@@ -130,14 +130,14 @@ public class Aug20LCJava {
 
     public int[] numsSameConsecDiff(int N, int K) {
         if (N == 1)
-            return new int[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+            return new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 
         List<Integer> results = new ArrayList<Integer>();
         for (int num = 1; num < 10; ++num)
             this.DFS(N - 1, num, K, results);
 
 
-        return results.stream().mapToInt(i->i).toArray();
+        return results.stream().mapToInt(i -> i).toArray();
     }
 
     protected void DFS(int N, int num, int K, List<Integer> results) {
@@ -157,6 +157,39 @@ public class Aug20LCJava {
                 this.DFS(N - 1, newNum, K, results);
             }
         }
+    }
+
+    public String toGoatLatin(String S) {
+        Set<Character> vowels =
+                new HashSet<>() {
+                    {
+                        add('a');
+                        add('e');
+                        add('i');
+                        add('o');
+                        add('u');
+                        add('A');
+                        add('E');
+                        add('I');
+                        add('O');
+                        add('U');
+                    }
+                };
+        String suff = "";
+        StringBuilder sb = new StringBuilder();
+
+        for (String tok : S.split(" ")) {
+            suff += 'a';
+
+            if (!vowels.contains(tok.charAt(0))) {
+                tok = tok.substring(1) + tok.charAt(0);
+            }
+
+            sb.append(tok).append("ma").append(suff).append(' ');
+        }
+
+        sb.deleteCharAt(sb.length() - 1);
+        return sb.toString();
     }
 
     public static void main(String[] args) {
