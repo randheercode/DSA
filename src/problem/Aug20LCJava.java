@@ -246,6 +246,23 @@ public class Aug20LCJava {
         }
     }
 
+    public int[] sortArrayByParity(int[] A) {
+        if (A.length <= 1) return A;
+        int[] result = new int[A.length];
+        int idx = -1;
+        for (int a : A) {
+            if (a % 2 == 0) {
+                result[++idx] = a;
+            }
+        }
+        for (int a : A) {
+            if (a % 2 != 0) {
+                result[++idx] = a;
+            }
+        }
+        return result;
+    }
+
     public static void main(String[] args) {
         Aug20LCJava obj = new Aug20LCJava();
     }
