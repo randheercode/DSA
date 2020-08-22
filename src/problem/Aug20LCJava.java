@@ -263,6 +263,37 @@ public class Aug20LCJava {
         return result;
     }
 
+    public boolean hasPath(int[][] maze, int[] start, int[] destination) {
+        boolean[][] visited = new boolean[maze.length][maze[0].length];
+        return mazeHelper(maze, start, destination, visited);
+    }
+
+    public boolean mazeHelper(int[][] maze, int[] start, int[] destination, boolean[][] visited) {
+        if (visited[start[0]][start[1]])
+            return false;
+        if (start[0] == destination[0] && start[1] == destination[1])
+            return true;
+        visited[start[0]][start[1]] = true;
+        int r = start[1] + 1, l = start[1] - 1, u = start[0] - 1, d = start[0] + 1;
+        while (r < maze[0].length && maze[start[0]][r] == 0) // right
+            r++;
+        if (mazeHelper(maze, new int[]{start[0], r - 1}, destination, visited))
+            return true;
+        while (l >= 0 && maze[start[0]][l] == 0) //left
+            l--;
+        if (mazeHelper(maze, new int[]{start[0], l + 1}, destination, visited))
+            return true;
+        while (u >= 0 && maze[u][start[1]] == 0) //up
+            u--;
+        if (mazeHelper(maze, new int[]{u + 1, start[1]}, destination, visited))
+            return true;
+        while (d < maze.length && maze[d][start[1]] == 0) //down
+            d++;
+        if (mazeHelper(maze, new int[]{d - 1, start[1]}, destination, visited))
+            return true;
+        return false;
+    }
+
     public static void main(String[] args) {
         Aug20LCJava obj = new Aug20LCJava();
     }
@@ -307,5 +338,39 @@ class CombinationIterator {
 
     public boolean hasNext() {
         return (!combinations.isEmpty());
+    }
+}
+
+class RandomPick {
+
+    int[][] rects;
+    List<Integer> psum = new ArrayList<>();
+    int tot = 0;
+    Random rand = new Random();
+
+    public RandomPick(int[][] rects) {
+        this.rects = rects;
+        for (int[] x : rects) {
+            tot += (x[2] - x[0] + 1) * (x[3] - x[1] + 1);
+            psum.add(tot);
+        }
+    }
+
+    public int[] pick() {
+        int targ = rand.nextInt(tot);
+
+        int lo = 0;
+        int hi = rects.length - 1;
+        while (lo != hi) {
+            int mid = (lo + hi) / 2;
+            if (targ >= psum.get(mid)) lo = mid + 1;
+            else hi = mid;
+        }
+
+        int[] x = rects[lo];
+        int width = x[2] - x[0] + 1;
+        int height = x[3] - x[1] + 1;
+        int base = psum.get(lo) - width * height;
+        return new int[]{x[0] + (targ - base) % width, x[1] + (targ - base) / width};
     }
 }
