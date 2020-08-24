@@ -294,6 +294,36 @@ public class Aug20LCJava {
         return false;
     }
 
+    public class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
+
+        TreeNode() {
+        }
+
+        TreeNode(int val) {
+            this.val = val;
+        }
+
+        TreeNode(int val, TreeNode left, TreeNode right) {
+            this.val = val;
+            this.left = left;
+            this.right = right;
+        }
+    }
+
+    public int calculateSum(TreeNode node, boolean isLeft) {
+        if (node == null) return 0;
+        if (node.left == null && node.right == null && isLeft) return node.val;
+        if (node.left == null && node.right == null) return 0;
+        return calculateSum(node.left, true) + calculateSum(node.right, false);
+    }
+
+    public int sumOfLeftLeaves(TreeNode root) {
+        return calculateSum(root, false);
+    }
+
     public static void main(String[] args) {
         Aug20LCJava obj = new Aug20LCJava();
     }
@@ -414,4 +444,5 @@ class StreamChecker {
         }
         return node.word;
     }
+
 }
