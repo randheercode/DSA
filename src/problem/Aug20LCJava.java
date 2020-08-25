@@ -324,6 +324,35 @@ public class Aug20LCJava {
         return calculateSum(root, false);
     }
 
+    public int mincostTickets(int[] days, int[] costs) {
+        if (days.length == 0) return 0;
+
+        int n = days[days.length - 1];
+
+        int[] dp = new int[n + 1];
+        boolean[] travel = new boolean[n + 1];
+
+        for (int day : days) {
+            travel[day] = true;
+        }
+
+        for (int i = 1; i < dp.length; i++) {
+            if (!travel[i]) {
+                dp[i] = dp[i - 1];
+                continue;
+            }
+
+            int oneDayCost = dp[i - 1] + costs[0];
+            int sevenDayCost = dp[Math.max(i - 7, 0)] + costs[1];
+            int thirtyDayCost = dp[Math.max(i - 30, 0)] + costs[2];
+
+            dp[i] = Math.min(oneDayCost, Math.min(sevenDayCost, thirtyDayCost));
+        }
+
+        return dp[n];
+
+    }
+
     public static void main(String[] args) {
         Aug20LCJava obj = new Aug20LCJava();
     }
