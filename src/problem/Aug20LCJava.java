@@ -1,5 +1,9 @@
 package problem;
 
+import kotlin.Pair;
+
+import java.awt.*;
+import java.util.List;
 import java.util.*;
 
 /**
@@ -519,4 +523,98 @@ class StreamChecker {
         return node.word;
     }
 
+}
+
+class RoomCleaner {
+    // going clockwise : 0: 'up', 1: 'right', 2: 'down', 3: 'left'
+    int[][] directions = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+    HashSet visited = new HashSet();
+    Robot robot;
+
+    public void goBack() {
+        /*robot.turnRight();
+        robot.turnRight();
+        robot.move();
+        robot.turnRight();
+        robot.turnRight();*/
+    }
+
+    public void backtrack(int row, int col, int d) {
+        visited.add(new Pair(row, col));
+        // robot.clean();
+        // going clockwise : 0: 'up', 1: 'right', 2: 'down', 3: 'left'
+        for (int i = 0; i < 4; ++i) {
+            int newD = (d + i) % 4;
+            int newRow = row + directions[newD][0];
+            int newCol = col + directions[newD][1];
+
+            if (!visited.contains(new Pair(newRow, newCol)) /*&& robot.move()*/) {
+                backtrack(newRow, newCol, newD);
+                goBack();
+            }
+            // turn the robot following chosen direction : clockwise
+            // robot.turnRight();
+        }
+    }
+
+    public void cleanRoom(Robot robot) {
+        this.robot = robot;
+        backtrack(0, 0, 0);
+    }
+}
+
+class PancakeSort {
+    /*
+    Iterate over array and find the max num and remember its index
+    Now filp [0, index]: this make sure the max goes to the very beginning
+    Now flip [0, end]: this make sue the max goes to the end. Initially
+    end is the length - 1.
+
+    Now update end by doing end--, since we dont care the end anymore
+    as it has the max value in sorted postion already.
+
+    We keep shrinking the range by end-- each time we flip and when end == 0
+    we are done.
+
+    */
+    public List<Integer> pancakeSort(int[] A) {
+        List<Integer> res = new ArrayList<>();
+        int end = A.length - 1;
+
+        while (end >= 0) {
+            // find max from 0 to end
+            int maxIndex = 0;
+            int max = 0;
+
+            for (int i = 0; i <= end; i++) {
+                if (max < A[i]) {
+                    max = A[i];
+                    maxIndex = i;
+                }
+            }
+
+            // first flip to make max at the front
+            flip(A, maxIndex);
+            res.add(maxIndex + 1);
+
+            // second flip to make max at index end
+            flip(A, end);
+            res.add(end + 1);
+
+            end--;
+        }
+
+        return res;
+    }
+
+    public void flip(int[] A, int k) {
+        int l = 0, r = k;
+        while (l < r) {
+            int temp = A[l];
+            A[l] = A[r];
+            A[r] = temp;
+            l++;
+            r--;
+        }
+    }
 }
