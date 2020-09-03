@@ -452,6 +452,10 @@ public class Aug20LCJava {
         return false;
     }
 
+    public boolean repeatedSubstringPattern(String s) {
+        return (s + s).substring(1, 2 * s.length() - 1).contains(s);
+    }
+
     public static void main(String[] args) {
         Aug20LCJava obj = new Aug20LCJava();
     }
