@@ -6,7 +6,7 @@ package problem;
  * Date:
  * Time:
  */
-public class Nov20LC {
+public class Sep20LC {
     public int lengthOfLastWord(String s) {
         if (s == null) return 0;
         s = s.trim();
