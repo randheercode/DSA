@@ -1,9 +1,7 @@
 package problem;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by IntelliJ IDEA.
@@ -175,6 +173,13 @@ public class Sep20LC {
             tSum += t.charAt(i);
         }
         return (char) (tSum - sSum);
+    }
+
+    public String largestNumber(int[] nums) {
+        List<String> numString = Arrays.stream(nums).mapToObj(Integer::toString).collect(Collectors.toList());
+        numString.sort((s1, s2) -> (s2 + s1).compareTo(s1 + s2));
+        if (numString.get(0).equals("0")) return "0";
+        return numString.stream().collect(Collectors.joining());
     }
 }
 
