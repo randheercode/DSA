@@ -181,6 +181,18 @@ public class Sep20LC {
         if (numString.get(0).equals("0")) return "0";
         return numString.stream().collect(Collectors.joining());
     }
+
+    public int findPoisonedDuration(int[] timeSeries, int duration) {
+        int result = 0;
+        int poisonedTill = 0;
+        for (int time : timeSeries) {
+            int nextPoisonedTill = time + duration;
+            result += nextPoisonedTill - Math.max(poisonedTill, time);
+            poisonedTill = nextPoisonedTill;
+        }
+        return result;
+    }
+
 }
 
 class UniquePath3 {
