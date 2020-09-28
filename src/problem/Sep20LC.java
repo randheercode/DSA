@@ -259,6 +259,33 @@ public class Sep20LC {
         return ret;
     }
 
+    public int numSubarrayProductLessThanKTLE(int[] nums, int k) {
+        int count = 0;
+        for (int i = 0; i < nums.length; i++) {
+            int mul = 1;
+            for (int j = i; j < nums.length; j++) {
+                mul *= nums[j];
+                if (mul < k) count++;
+                else break;
+            }
+        }
+        return count;
+    }
+
+    public int numSubarrayProductLessThanK(int[] nums, int k) {
+        if (k == 0) return 0;
+        int cnt = 0;
+        int pro = 1;
+        for (int i = 0, j = 0; j < nums.length; j++) {
+            pro *= nums[j];
+            while (i <= j && pro >= k) {
+                pro /= nums[i++];
+            }
+            cnt += j - i + 1;
+        }
+        return cnt;
+    }
+
 }
 
 class UniquePath3 {
