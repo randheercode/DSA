@@ -1,4 +1,4 @@
-package problem;
+package problem.challenge;
 
 import java.util.*;
 import java.util.stream.Collectors;

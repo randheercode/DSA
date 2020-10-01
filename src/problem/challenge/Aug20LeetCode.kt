@@ -1,4 +1,4 @@
-package problem
+package problem.challenge
 
 import generateIntArray
 import printArray
