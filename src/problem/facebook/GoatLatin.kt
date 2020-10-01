@@ -31,5 +31,6 @@ class GoatLatin {
 }
 
 fun main() {
-
+    println(GoatLatin().toGoatLatin("Each word consists of lowercase and uppercase letters only")
+            == "Eachmaa ordwmaaa onsistscmaaaa ofmaaaaa owercaselmaaaaaa andmaaaaaaa uppercasemaaaaaaaa etterslmaaaaaaaaa onlymaaaaaaaaaa")
 }
