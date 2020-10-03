@@ -3,6 +3,7 @@ package problem
 import java.util.*
 import kotlin.math.abs
 
+
 class OctLC {
     fun maxDistance(arrays: List<List<Int>>): Int {
         var res = 0
@@ -14,6 +15,28 @@ class OctLC {
             max_val = maxOf(max_val, arrays[i][arrays[i].size - 1])
         }
         return res
+    }
+
+    fun findPairs(nums: IntArray, k: Int): Int {
+        Arrays.sort(nums)
+        var left = 0
+        var right = 1
+        var result = 0
+        while (left < nums.size && right < nums.size) {
+            if (left == right || nums[right] - nums[left] < k) {
+                // List item 1 in the text
+                right++
+            } else if (nums[right] - nums[left] > k) {
+                // List item 2 in the text
+                left++
+            } else {
+                // List item 3 in the text
+                left++
+                result++
+                while (left < nums.size && nums[left] == nums[left - 1]) left++
+            }
+        }
+        return result
     }
 }
 
