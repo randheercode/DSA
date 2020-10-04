@@ -38,6 +38,18 @@ class OctLC {
         }
         return result
     }
+
+    fun removeCoveredIntervals(intervals: Array<IntArray>): Int {
+        val intervalSet = intervals.toHashSet()
+        var count = 0
+        for (interval in intervals) {
+            intervalSet.remove(interval)
+            val has = intervalSet.find { it[0] <= interval[0] && it[1] >= interval[1] }
+            if (has == null) count++
+            intervalSet.add(interval)
+        }
+        return count
+    }
 }
 
 fun main() {
