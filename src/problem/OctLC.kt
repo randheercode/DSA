@@ -2,6 +2,7 @@ package problem
 
 import java.util.*
 import kotlin.math.abs
+import kotlin.math.log
 
 
 class OctLC {
@@ -50,13 +51,35 @@ class OctLC {
         }
         return count
     }
+
+    fun findComplement(num: Int): Int {
+        val str = StringBuilder(num.toString(2))
+        for (i in str.indices)
+            str[i] = if (str[i] == '0') '1' else '0'
+        return str.toString().toInt(2)
+    }
+
+    fun bitwiseComplement(N: Int): Int {
+        val str = StringBuilder(N.toString(2))
+        for (i in str.indices)
+            str[i] = if (str[i] == '0') '1' else '0'
+        return str.toString().toInt(2)
+    }
+
+    fun bitwiseComplementO1(N: Int): Int {
+        val l = log(N.toDouble(), 2.0).toInt() + 1
+        val bitmask = (1 shl l) - 1
+        return bitmask xor N
+    }
 }
 
 fun main() {
-    println(OctLC().maxDistance(arrayListOf(
-            listOf(1, 4),
-            listOf(0, 5)
-    )))
+    println("findComplement")
+    println(OctLC().findComplement(5))
+    println("bitwiseComplement")
+    println(OctLC().bitwiseComplement(10))
+    println("bitwiseComplementO1")
+    println(OctLC().bitwiseComplementO1(10))
 }
 
 class RecentCounter {
