@@ -1,5 +1,6 @@
 package problem
 
+import utils.TreeNode
 import java.util.*
 import kotlin.math.abs
 import kotlin.math.log
@@ -70,6 +71,13 @@ class OctLC {
         val l = log(N.toDouble(), 2.0).toInt() + 1
         val bitmask = (1 shl l) - 1
         return bitmask xor N
+    }
+
+    fun insertIntoBST(root: TreeNode?, `val`: Int): TreeNode? {
+        if (root == null) return TreeNode(`val`)
+        if (`val` > root.`val`) root.right = insertIntoBST(root.right, `val`)
+        else root.left = insertIntoBST(root.left, `val`)
+        return root
     }
 }
 
