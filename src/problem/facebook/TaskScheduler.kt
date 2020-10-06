@@ -25,18 +25,18 @@ class TaskScheduler {
         }
 
         // max frequency
-        var f_max = 0
+        var fMax = 0
         for (f in frequencies) {
-            f_max = maxOf(f_max, f)
+            fMax = maxOf(fMax, f)
         }
 
         // count the most frequent tasks
-        var n_max = 0
+        var nMax = 0
         for (f in frequencies) {
-            if (f == f_max) n_max++
+            if (f == fMax) nMax++
         }
 
-        return maxOf(tasks.size, (f_max - 1) * (n + 1) + n_max)
+        return maxOf(tasks.size, (fMax - 1) * (n + 1) + nMax)
     }
 }
 
@@ -44,4 +44,5 @@ fun main() {
     println(TaskScheduler().leastInterval(charArrayOf('A', 'A', 'A', 'B', 'B', 'B'), 2))
     println(TaskScheduler().leastInterval(charArrayOf('A', 'A', 'A', 'B', 'B', 'B'), 0))
     println(TaskScheduler().leastInterval(charArrayOf('A', 'A', 'B', 'B', 'C', 'D', 'D', 'D', 'E', 'E', 'F', 'G'), 2))
+    println(TaskScheduler().leastIntervalMath(charArrayOf('A', 'A', 'B', 'B', 'C', 'D', 'D', 'D', 'E', 'E', 'F', 'G'), 2))
 }
