@@ -1,5 +1,6 @@
 package problem.facebook
 
+import problem.old.ListNode
 import java.util.*
 
 // https://leetcode.com/problems/task-scheduler/solution/
@@ -37,6 +38,42 @@ class TaskScheduler {
         }
 
         return maxOf(tasks.size, (fMax - 1) * (n + 1) + nMax)
+    }
+
+    fun rotateRight(head: ListNode?, k: Int): ListNode? {
+        if (head?.next == null || k == 0) return head
+
+        // Count Nodes
+        var nodeCount = 1
+        var tailNode = head
+        while (tailNode?.next != null) {
+            tailNode = tailNode.next
+            nodeCount++
+        }
+
+        val rr = k % nodeCount
+
+        if (rr == nodeCount || rr == 0) return head
+
+        // With 5 node, 7 rotation is overall 2 rotation
+        var r = 1
+
+        var current = head
+
+        while (r < nodeCount - rr) {
+            current = current?.next
+            r++
+        }
+
+        val newHead = current?.next
+        current?.next = null
+        current = newHead
+        while (current?.next != null) {
+            current = current.next
+        }
+        current?.next = head
+
+        return newHead
     }
 }
 
