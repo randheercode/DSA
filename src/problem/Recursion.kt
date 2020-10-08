@@ -99,6 +99,82 @@ class Recursion {
         val result = resultMap.toSortedMap(kotlin.Comparator { a, b -> a.compareTo(b) })
         return result.map { "${it.key}${if (it.value > 1) it.value.toString() else ""}" }.joinToString("")
     }
+
+    fun isStrobogrammatic(num: String): Boolean {
+        var start = 0
+        var end: Int = num.lastIndex
+        while (start <= end) {
+            when (num[start]) {
+                '0', '1', '8' -> if (num[end] != num[start]) {
+                    return false
+                }
+                '6' -> if (num[end] != '9') {
+                    return false
+                }
+                '9' -> if (num[end] != '6') {
+                    return false
+                }
+                else -> return false
+            }
+            start++
+            end--
+        }
+        return true
+    }
+
+    fun findStrobogrammatic(n: Int): List<String> {
+        return findStrobogrammaticHelper(n, n)
+    }
+
+    private fun findStrobogrammaticHelper(n: Int, m: Int): List<String> {
+        if (n == 0) return ArrayList(listOf(""))
+        if (n == 1) return ArrayList(listOf("0", "1", "8"))
+        val list = findStrobogrammaticHelper(n - 2, m)
+        val res: MutableList<String> = ArrayList()
+        for (i in list.indices) {
+            val s = list[i]
+            if (n != m) res.add("0" + s + "0")
+            res.add("1" + s + "1")
+            res.add("6" + s + "9")
+            res.add("8" + s + "8")
+            res.add("9" + s + "6")
+        }
+        return res
+    }
+
+    private val pairs = arrayOf(charArrayOf('0', '0'), charArrayOf('1', '1'), charArrayOf('6', '9'), charArrayOf('8', '8'), charArrayOf('9', '6'))
+
+    fun strobogrammaticInRange(low: String, high: String): Int {
+        val count = intArrayOf(0)
+        for (len in low.length..high.length) {
+            val c = CharArray(len)
+            strobogrammaticInRangeDFS(low, high, c, 0, len - 1, count)
+        }
+        return count[0]
+    }
+
+    private fun strobogrammaticInRangeDFS(low: String, high: String, c: CharArray, left: Int, right: Int, count: IntArray) {
+        if (left > right) {
+            val s = String(c)
+            if (s.length == low.length && s < low ||
+                    s.length == high.length && s > high) {
+                return
+            }
+            count[0]++
+            return
+        }
+        for (p in pairs) {
+            c[left] = p[0]
+            c[right] = p[1]
+            if (c.size != 1 && c[0] == '0') {
+                continue
+            }
+            if (left == right && p[0] != p[1]) {
+                continue
+            }
+            strobogrammaticInRangeDFS(low, high, c, left + 1, right - 1, count)
+        }
+    }
 }
 
 fun main() {
