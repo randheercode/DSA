@@ -79,6 +79,18 @@ class OctLC {
         else root.left = insertIntoBST(root.left, `val`)
         return root
     }
+
+    fun search(nums: IntArray, target: Int): Int {
+        var start = 0
+        var end = nums.lastIndex
+        while (start <= end) {
+            val mid = start + (end - start) / 2
+            if (nums[mid] == target) return mid
+            if (nums[mid] > target) end = mid - 1
+            if (nums[mid] < target) start = mid + 1
+        }
+        return -1
+    }
 }
 
 fun main() {
@@ -102,6 +114,32 @@ class RecentCounter {
             if (slideWindow.first < t - 3000) slideWindow.removeFirst() else break
         }
         return slideWindow.size
+    }
+
+}
+
+class TwoSum {
+
+    /** Initialize your data structure here. */
+    private val freq = mutableMapOf<Int, Int>()
+    private val nums = mutableSetOf<Int>()
+
+
+    /** Add the number to an internal data structure.. */
+    fun add(number: Int) {
+        nums.add(number)
+        freq[number] = freq.getOrDefault(number, 0) + 1
+    }
+
+    /** Find if there exists any pair of numbers which sum is equal to the value. */
+    fun find(value: Int): Boolean {
+        for (num in nums) {
+            val keyToLook = value - num
+            if (freq.containsKey(keyToLook) && (num != keyToLook || freq.getOrDefault(num, 0) > 1)) {
+                return true
+            }
+        }
+        return false
     }
 
 }
