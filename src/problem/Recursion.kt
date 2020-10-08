@@ -175,11 +175,29 @@ class Recursion {
             strobogrammaticInRangeDFS(low, high, c, left + 1, right - 1, count)
         }
     }
+
+    private fun kthGrammarGenerate(N: Int): String {
+        if (N == 1) return "0"
+        val old = kthGrammarGenerate(N - 1)
+        val result = StringBuilder()
+        for (c in old) {
+            if (c == '0') result.append("01")
+            else result.append("10")
+        }
+        println(result)
+        return result.toString()
+    }
+
+    fun kthGrammar(N: Int, K: Int): Int {
+        return kthGrammarGenerate(N)[K - 1].toInt() - '0'.toInt()
+    }
+
+    fun kthGrammarOptimal(N: Int, K: Int): Int {
+        return if (N == 1) 0 else K.inv() and 1 xor kthGrammar(N - 1, (K + 1) / 2)
+    }
 }
 
 fun main() {
-    println(Recursion().countOfAtoms("H2O"))
-    println(Recursion().countOfAtoms("Mg(OH)2"))
-    println(Recursion().countOfAtoms("K4(ON(SO3)2)2"))
-    println(Recursion().countOfAtoms("Be32"))
+    println(Recursion().kthGrammar(1, 1))
+    println(Recursion().kthGrammarOptimal(1, 1))
 }
