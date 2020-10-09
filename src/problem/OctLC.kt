@@ -143,3 +143,54 @@ class TwoSum {
     }
 
 }
+
+class BinaryTreeCodec() {
+    // Encodes a tree to a single string.
+    fun serialize(root: TreeNode?): String {
+        if (root == null) return "[]"
+        val queue: Queue<TreeNode?> = LinkedList<TreeNode>()
+        queue.add(root)
+        var sol = "["
+        while (!queue.isEmpty()) {
+            val temp = queue.remove()
+            if (temp != null) {
+                queue.add(temp.left)
+                queue.add(temp.right)
+                sol += temp.`val`
+            } else sol += "null"
+            sol += ","
+        }
+        var j = sol.length - 1
+        while (j >= 0 && !Character.isDigit(sol[j])) {
+            j--
+        }
+        sol = sol.substring(0, j + 1)
+        sol += "]"
+        return sol
+    }
+
+    // Decodes your encoded data to tree.
+    fun deserialize(data: String): TreeNode? {
+        if (data.length == 2) return null
+        val nodes = data.substring(1, data.length - 1).split(",".toRegex()).toTypedArray()
+        val queue: Queue<TreeNode?> = LinkedList<TreeNode>()
+        val sol = TreeNode(Integer.valueOf(nodes[0]))
+        queue.add(sol)
+        var j = 1
+        while (j < nodes.size) {
+            var left: TreeNode? = null
+            var right: TreeNode? = null
+            val temp = queue.remove()
+            if (nodes[j] != "null") left = TreeNode(Integer.valueOf(nodes[j]))
+            j++
+            if (j < nodes.size && nodes[j] != "null") right = TreeNode(Integer.valueOf(nodes[j]))
+            j++
+            temp!!.left = left
+            temp.right = right
+            if (left != null) queue.add(left)
+            if (right != null) queue.add(right)
+        }
+        return sol
+    }
+}
+
