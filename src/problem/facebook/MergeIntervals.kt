@@ -2,6 +2,7 @@ package problem.facebook
 
 import java.util.*
 
+// https://leetcode.com/problems/merge-intervals/
 class MergeIntervals {
     fun merge(intervals: Array<IntArray>): Array<IntArray> {
         if (intervals.size <= 1) return intervals
