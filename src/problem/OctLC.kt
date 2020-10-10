@@ -91,15 +91,56 @@ class OctLC {
         }
         return -1
     }
+
+    fun findMinArrowShots(points: Array<IntArray>): Int {
+        fun merge(intervals: Array<IntArray>): Array<IntArray> {
+            if (intervals.size <= 1) return intervals
+            Arrays.sort(intervals, compareBy { it[0] })
+            val result = mutableListOf<IntArray>()
+            for (interval in intervals) {
+                if (result.isEmpty()) {
+                    result.add(interval)
+                    continue
+                }
+                if (interval[0] <= result.last()[1]) {
+                    result.last()[0] = maxOf(interval[0], result.last()[0])
+                    result.last()[1] = minOf(interval[1], result.last()[1])
+                } else {
+                    result.add(interval)
+                }
+            }
+            return result.toTypedArray()
+        }
+        return merge(points).size
+    }
 }
 
 fun main() {
-    println("findComplement")
-    println(OctLC().findComplement(5))
-    println("bitwiseComplement")
-    println(OctLC().bitwiseComplement(10))
-    println("bitwiseComplementO1")
-    println(OctLC().bitwiseComplementO1(10))
+    println(OctLC().findMinArrowShots(arrayOf(
+            intArrayOf(10, 16),
+            intArrayOf(2, 8),
+            intArrayOf(1, 6),
+            intArrayOf(7, 12)
+    )))
+    println(OctLC().findMinArrowShots(arrayOf(
+            intArrayOf(1, 2),
+            intArrayOf(3, 4),
+            intArrayOf(5, 6),
+            intArrayOf(7, 8)
+    )))
+    println(OctLC().findMinArrowShots(arrayOf(
+            intArrayOf(1, 2),
+            intArrayOf(2, 3),
+            intArrayOf(3, 4),
+            intArrayOf(4, 5)
+    )))
+    println(OctLC().findMinArrowShots(arrayOf(
+            intArrayOf(2,3),
+            intArrayOf(2, 3)
+    )))
+    println(OctLC().findMinArrowShots(arrayOf(
+            intArrayOf(1, 2)
+    )))
 }
 
 class RecentCounter {
