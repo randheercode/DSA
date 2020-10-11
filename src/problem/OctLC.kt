@@ -113,6 +113,26 @@ class OctLC {
         }
         return merge(points).size
     }
+
+    fun removeDuplicateLetters(s: String): String? {
+        val stack = Stack<Char>()
+        val seen = HashSet<Char>()
+        val lastOccurrence = HashMap<Char, Int>()
+        for (i in s.indices) lastOccurrence[s[i]] = i
+        for (i in s.indices) {
+            val c = s[i]
+            if (!seen.contains(c)) {
+                while (!stack.isEmpty() && c < stack.peek() && lastOccurrence[stack.peek()]!! > i) {
+                    seen.remove(stack.pop())
+                }
+                seen.add(c)
+                stack.push(c)
+            }
+        }
+        val sb = StringBuilder(stack.size)
+        for (c in stack) sb.append(c)
+        return sb.toString()
+    }
 }
 
 fun main() {
@@ -135,7 +155,7 @@ fun main() {
             intArrayOf(4, 5)
     )))
     println(OctLC().findMinArrowShots(arrayOf(
-            intArrayOf(2,3),
+            intArrayOf(2, 3),
             intArrayOf(2, 3)
     )))
     println(OctLC().findMinArrowShots(arrayOf(
