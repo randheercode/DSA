@@ -133,34 +133,40 @@ class OctLC {
         for (c in stack) sb.append(c)
         return sb.toString()
     }
+
+    fun buddyStrings(A: String, B: String): Boolean {
+        if (A.length != B.length || A.isEmpty()) return false
+        val freq = IntArray(26)
+        if (A == B) {
+            for (c in A) freq[c - 'a']++
+            return freq.any { it > 1 }
+        }
+        var first = -1
+        var last = -1
+        var idx = 0
+        while (idx < A.length) {
+            if (A[idx] != B[idx]) {
+                when {
+                    first == -1 -> first = idx
+                    last == -1 -> last = idx
+                    else -> return false
+                }
+            }
+            idx++
+        }
+        return last != -1 && A[first] == B[last] && A[last] == B[first]
+    }
 }
 
 fun main() {
-    println(OctLC().findMinArrowShots(arrayOf(
-            intArrayOf(10, 16),
-            intArrayOf(2, 8),
-            intArrayOf(1, 6),
-            intArrayOf(7, 12)
-    )))
-    println(OctLC().findMinArrowShots(arrayOf(
-            intArrayOf(1, 2),
-            intArrayOf(3, 4),
-            intArrayOf(5, 6),
-            intArrayOf(7, 8)
-    )))
-    println(OctLC().findMinArrowShots(arrayOf(
-            intArrayOf(1, 2),
-            intArrayOf(2, 3),
-            intArrayOf(3, 4),
-            intArrayOf(4, 5)
-    )))
-    println(OctLC().findMinArrowShots(arrayOf(
-            intArrayOf(2, 3),
-            intArrayOf(2, 3)
-    )))
-    println(OctLC().findMinArrowShots(arrayOf(
-            intArrayOf(1, 2)
-    )))
+//    println(OctLC().buddyStrings("ab", "ba"))
+//    println(!OctLC().buddyStrings("ab", "ab"))
+//    println(OctLC().buddyStrings("aa", "aa"))
+//    println(OctLC().buddyStrings("aaaaaaabc", "aaaaaaabc"))
+//    println(!OctLC().buddyStrings("", "aa"))
+//    println(!OctLC().buddyStrings("aabbc", "abaad"))
+//    println(!OctLC().buddyStrings("abcaa", "abcbb"))
+    println(!OctLC().buddyStrings("abc", "acd"))
 }
 
 class RecentCounter {
