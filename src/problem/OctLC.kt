@@ -1,5 +1,6 @@
 package problem
 
+import problem.old.ListNode
 import utils.TreeNode
 import java.util.*
 import kotlin.math.abs
@@ -155,6 +156,46 @@ class OctLC {
             idx++
         }
         return last != -1 && A[first] == B[last] && A[last] == B[first]
+    }
+
+    fun sortList(head: ListNode?): ListNode? {
+        if (head?.next == null) return head
+        val mid: ListNode = getMid(head)
+        val left: ListNode? = sortList(head)
+        val right: ListNode? = sortList(mid)
+        return merge(left, right)
+    }
+
+    private fun merge(list1: ListNode?, list2: ListNode?): ListNode? {
+        var list1: ListNode? = list1
+        var list2: ListNode? = list2
+        val dummyHead = ListNode(0)
+        var tail: ListNode? = dummyHead
+        while (list1 != null && list2 != null) {
+            if (list1.`val` < list2.`val`) {
+                tail?.next = list1
+                list1 = list1.next
+                tail = tail?.next
+            } else {
+                tail?.next = list2
+                list2 = list2.next
+                tail = tail?.next
+            }
+        }
+        tail?.next = list1 ?: list2
+        return dummyHead.next
+    }
+
+    private fun getMid(head: ListNode?): ListNode {
+        var head: ListNode? = head
+        var midPrev: ListNode? = null
+        while (head?.next != null) {
+            midPrev = if (midPrev == null) head else midPrev.next
+            head = head.next?.next
+        }
+        val mid = midPrev?.next
+        midPrev?.next = null
+        return mid!!
     }
 }
 
