@@ -197,6 +197,56 @@ class OctLC {
         midPrev?.next = null
         return mid!!
     }
+
+    fun rob(nums: IntArray): Int {
+        var prevMax = 0
+        var currMax = 0
+        for (x in nums) {
+            val temp = currMax
+            currMax = maxOf(prevMax + x, currMax)
+            prevMax = temp
+        }
+        return currMax
+    }
+
+    fun rob2(nums: IntArray): Int {
+        fun robSimple(nums: IntArray, start: Int, end: Int): Int {
+            var t1 = 0
+            var t2 = 0
+            for (i in start..end) {
+                val temp = t1
+                val current = nums[i]
+                t1 = maxOf(current + t2, t1)
+                t2 = temp
+            }
+            return t1
+        }
+        if (nums.isEmpty()) return 0
+        if (nums.size == 1) return nums[0]
+        val max1 = robSimple(nums, 0, nums.size - 2)
+        val max2 = robSimple(nums, 1, nums.size - 1)
+        return maxOf(max1, max2)
+    }
+
+    fun rob(root: TreeNode?): Int {
+        fun robHelper(node: TreeNode?): IntArray {
+            // return [rob this node, not rob this node]
+            if (node == null) {
+                return intArrayOf(0, 0)
+            }
+            val left = robHelper(node.left)
+            val right = robHelper(node.right)
+            // if we rob this node, we cannot rob its children
+            val rob = node.`val` + left[1] + right[1]
+            // else, we free to choose rob its children or not
+            val notRob = maxOf(left[0], left[1]) + maxOf(right[0], right[1])
+            return intArrayOf(rob, notRob)
+        }
+
+        val answer = robHelper(root)
+        return maxOf(answer[0], answer[1])
+    }
+
 }
 
 fun main() {
