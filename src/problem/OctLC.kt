@@ -247,6 +247,38 @@ class OctLC {
         return maxOf(answer[0], answer[1])
     }
 
+    fun rotate(nums: IntArray, k: Int) {
+        var k = k
+        k %= nums.size
+        var count = 0
+        var start = 0
+        while (count < nums.size) {
+            var current = start
+            var prev = nums[start]
+            do {
+                val next = (current + k) % nums.size
+                val temp = nums[next]
+                nums[next] = prev
+                prev = temp
+                current = next
+                count++
+            } while (start != current)
+            start++
+        }
+    }
+
+    fun minMeetingRooms(intervals: Array<IntArray>): Int {
+        Arrays.sort(intervals) { a, b -> a[0] - b[0] }
+        val pq = PriorityQueue<IntArray> { a, b -> a[1] - b[1] }
+        for (i in intervals) {
+            if (!pq.isEmpty() && pq.peek()[1] <= i[0]) {
+                pq.poll()
+            }
+            pq.add(i)
+        }
+        return pq.size
+    }
+
 }
 
 fun main() {
