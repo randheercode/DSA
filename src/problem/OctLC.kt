@@ -1,5 +1,6 @@
 package problem
 
+import generateIntArray
 import problem.old.ListNode
 import utils.TreeNode
 import java.util.*
@@ -279,6 +280,25 @@ class OctLC {
         return pq.size
     }
 
+    fun searchMatrix(matrix: Array<IntArray>, target: Int): Boolean {
+        val m: Int = matrix.size
+        if (m == 0) return false
+        val n: Int = matrix[0].size
+
+        var left = 0
+        var right = m * n - 1
+        var pivotIdx: Int
+        var pivotElement: Int
+        while (left <= right) {
+            pivotIdx = (left + right) / 2
+            pivotElement = matrix[pivotIdx / n][pivotIdx % n]
+            if (target == pivotElement) return true else {
+                if (target < pivotElement) right = pivotIdx - 1 else left = pivotIdx + 1
+            }
+        }
+        return false
+    }
+
 }
 
 fun main() {
@@ -289,7 +309,9 @@ fun main() {
 //    println(!OctLC().buddyStrings("", "aa"))
 //    println(!OctLC().buddyStrings("aabbc", "abaad"))
 //    println(!OctLC().buddyStrings("abcaa", "abcbb"))
-    println(!OctLC().buddyStrings("abc", "acd"))
+//    println(!OctLC().buddyStrings("abc", "acd"))
+    println(OctLC().searchMatrix(generateIntArray("[[1,3,5,7],[10,11,16,20],[23,30,34,50]]"), 3))
+    println(OctLC().searchMatrix(generateIntArray("[[1,3,5,7],[10,11,16,20],[23,30,34,50]]"), 13))
 }
 
 class RecentCounter {
