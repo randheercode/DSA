@@ -37,4 +37,13 @@ public class SampleTest {
         Assert.assertEquals("[13, 50]", list.toString());
     }
 
+    @Test
+    public void numberOfSets() {
+        Assert.assertEquals(5, obj.numberOfSets(4, 2));
+        Assert.assertEquals(3, obj.numberOfSets(3, 1));
+        Assert.assertEquals(796297179, obj.numberOfSets(30, 7));
+        Assert.assertEquals(7, obj.numberOfSets(5, 3));
+        Assert.assertEquals(1, obj.numberOfSets(3, 2));
+    }
+
 }
