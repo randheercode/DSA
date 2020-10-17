@@ -37,32 +37,37 @@ public class OctLCJava {
         int L;
         while (left <= right) {
             L = left + (right - left) / 2;
-            if (robinKarpAlgo(L, a, modulus, len, nums) != -1) left = L + 1;
+            if (robinKarpRollingHash(L, a, modulus, len, nums) != -1) left = L + 1;
             else right = L - 1;
         }
 
-        int start = robinKarpAlgo(left - 1, a, modulus, len, nums);
+        int start = robinKarpRollingHash(left - 1, a, modulus, len, nums);
         return S.substring(start, start + left - 1);
     }
 
-    private int robinKarpAlgo(int L, int a, long modulus, int n, int[] nums) {
+    private int robinKarpRollingHash(int L, int a, long modulus, int n, int[] nums) {
         // compute the hash of string S[until L]
-        long h = 0;
-        for (int i = 0; i < L; ++i) h = (h * a + nums[i]) % modulus;
-
+        long hash = 0;
+        for (int i = 0; i < L; ++i) {
+            hash = (hash * a + nums[i]) % modulus;
+        }
         // already seen hashes of strings of length L
         HashSet<Long> seen = new HashSet<>();
-        seen.add(h);
-        // const value to be used often : a**L % modulus
-        long aL = 1;
-        for (int i = 1; i <= L; ++i) aL = (aL * a) % modulus;
+        seen.add(hash);
+
+        long aLargest = 1;
+        for (int i = 1; i < L; ++i) aLargest = (aLargest * a) % modulus;
+        aLargest = aLargest % modulus;
 
         for (int start = 1; start < n - L + 1; ++start) {
             // compute rolling hash in O(1) time
-            h = (h * a - nums[start - 1] * aL % modulus + modulus) % modulus;
-            h = (h + nums[start + L - 1]) % modulus;
-            if (seen.contains(h)) return start;
-            seen.add(h);
+            long outHash = (nums[start - 1] * aLargest) % modulus; // hash being removed
+            hash = (hash - outHash + modulus) % modulus; // Make sure number not going negative.
+            hash = (hash * a) % modulus;  // Power increase for all remaining
+            long inHash = nums[start + L - 1]; // new char hash
+            hash = (hash + inHash) % modulus;
+            if (seen.contains(hash)) return start;
+            seen.add(hash);
         }
         return -1;
     }
@@ -72,6 +77,7 @@ public class OctLCJava {
         // convert string to array of integers
         // to implement constant time slice
         int[] nums = new int[n];
+
         for (int i = 0; i < n; ++i) nums[i] = (int) S.charAt(i) - (int) 'a';
         // base value for the rolling hash function
         int a = 26;
@@ -83,7 +89,7 @@ public class OctLCJava {
         int L;
         while (left <= right) {
             L = left + (right - left) / 2;
-            if (robinKarpAlgo(L, a, modulus, n, nums) != -1) left = L + 1;
+            if (robinKarpRollingHash(L, a, modulus, n, nums) != -1) left = L + 1;
             else right = L - 1;
         }
 

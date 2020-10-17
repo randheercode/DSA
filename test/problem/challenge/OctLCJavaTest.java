@@ -15,24 +15,21 @@ public class OctLCJavaTest {
 
     @Test
     public void findRepeatedDnaSequences() {
-        Assert.assertEquals(obj.findRepeatedDnaSequences("AAAAACCCCCAAAAACCCCCCAAAAAGGGTTT").toString(),
-                "[AAAAACCCCC, CCCCCAAAAA]");
-        Assert.assertEquals(obj.findRepeatedDnaSequences("AAAAAAAAAAAAA").toString(),
-                "[AAAAAAAAAA]");
-        Assert.assertEquals(obj.findRepeatedDnaSequences("AAAAAAAAAAA").toString(),
-                "[AAAAAAAAAA]");
+        Assert.assertEquals("[AAAAACCCCC, CCCCCAAAAA]", obj.findRepeatedDnaSequences("AAAAACCCCCAAAAACCCCCCAAAAAGGGTTT").toString());
+        Assert.assertEquals("[AAAAAAAAAA]", obj.findRepeatedDnaSequences("AAAAAAAAAAAAA").toString());
+        Assert.assertEquals("[AAAAAAAAAA]", obj.findRepeatedDnaSequences("AAAAAAAAAAA").toString());
     }
 
     @Test
     public void longestDupSubstring() {
-        Assert.assertEquals(obj.longestDupSubstring("banana"), "ana");
-        Assert.assertEquals(obj.longestDupSubstring("abcd"), "");
+        Assert.assertEquals("ana", obj.longestDupSubstring("banana"));
+        Assert.assertEquals("", obj.longestDupSubstring("abcd"));
     }
 
     @Test
     public void longestRepeatingSubstring() {
-        Assert.assertEquals(obj.longestRepeatingSubstring("banana"), 3);
-        Assert.assertEquals(obj.longestRepeatingSubstring("abcd"), 0);
+        Assert.assertEquals(3, obj.longestRepeatingSubstring("banana"));
+        Assert.assertEquals(0, obj.longestRepeatingSubstring("abcd"));
     }
 
 }
