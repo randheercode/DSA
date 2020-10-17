@@ -29,4 +29,10 @@ public class OctLCJavaTest {
         Assert.assertEquals(obj.longestDupSubstring("abcd"), "");
     }
 
+    @Test
+    public void longestRepeatingSubstring() {
+        Assert.assertEquals(obj.longestRepeatingSubstring("banana"), 3);
+        Assert.assertEquals(obj.longestRepeatingSubstring("abcd"), 0);
+    }
+
 }

@@ -67,6 +67,29 @@ public class OctLCJava {
         return -1;
     }
 
+    public int longestRepeatingSubstring(String S) {
+        int n = S.length();
+        // convert string to array of integers
+        // to implement constant time slice
+        int[] nums = new int[n];
+        for (int i = 0; i < n; ++i) nums[i] = (int) S.charAt(i) - (int) 'a';
+        // base value for the rolling hash function
+        int a = 26;
+        // modulus value for the rolling hash function to avoid overflow
+        long modulus = (long) Math.pow(2, 24);
+
+        // binary search, L = repeating string length
+        int left = 1, right = n;
+        int L;
+        while (left <= right) {
+            L = left + (right - left) / 2;
+            if (robinKarpAlgo(L, a, modulus, n, nums) != -1) left = L + 1;
+            else right = L - 1;
+        }
+
+        return left - 1;
+    }
+
 }
 
 
