@@ -1,4 +1,4 @@
-package problem
+package algorithm
 
 import utils.TreeNode
 import java.util.*
@@ -195,9 +195,4 @@ class Recursion {
     fun kthGrammarOptimal(N: Int, K: Int): Int {
         return if (N == 1) 0 else K.inv() and 1 xor kthGrammar(N - 1, (K + 1) / 2)
     }
-}
-
-fun main() {
-    println(Recursion().kthGrammar(1, 1))
-    println(Recursion().kthGrammarOptimal(1, 1))
 }
