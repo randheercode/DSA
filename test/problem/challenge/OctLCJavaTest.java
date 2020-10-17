@@ -14,7 +14,7 @@ public class OctLCJavaTest {
     OctLCJava obj = new OctLCJava();
 
     @Test
-    public void test_findRepeatedDnaSequences() {
+    public void findRepeatedDnaSequences() {
         Assert.assertEquals(obj.findRepeatedDnaSequences("AAAAACCCCCAAAAACCCCCCAAAAAGGGTTT").toString(),
                 "[AAAAACCCCC, CCCCCAAAAA]");
         Assert.assertEquals(obj.findRepeatedDnaSequences("AAAAAAAAAAAAA").toString(),
@@ -23,5 +23,10 @@ public class OctLCJavaTest {
                 "[AAAAAAAAAA]");
     }
 
+    @Test
+    public void longestDupSubstring() {
+        Assert.assertEquals(obj.longestDupSubstring("banana"), "ana");
+        Assert.assertEquals(obj.longestDupSubstring("abcd"), "");
+    }
 
 }

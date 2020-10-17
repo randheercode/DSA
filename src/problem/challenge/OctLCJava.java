@@ -23,6 +23,50 @@ public class OctLCJava {
         return new ArrayList<>(output);
     }
 
+    public String longestDupSubstring(String S) {
+        int len = S.length();
+        int[] nums = new int[len];
+        for (int i = 0; i < len; i++) {
+            nums[i] = (int) S.charAt(i) - (int) 'a';
+        }
+        int a = 26; // Base for rolling hash
+        long modulus = (long) Math.pow(2, 32); // modulus to handled overflow
+
+        // Binary search for max Length duplicate
+        int left = 1, right = len;
+        int L;
+        while (left <= right) {
+            L = left + (right - left) / 2;
+            if (robinKarpAlgo(L, a, modulus, len, nums) != -1) left = L + 1;
+            else right = L - 1;
+        }
+
+        int start = robinKarpAlgo(left - 1, a, modulus, len, nums);
+        return S.substring(start, start + left - 1);
+    }
+
+    private int robinKarpAlgo(int L, int a, long modulus, int n, int[] nums) {
+        // compute the hash of string S[until L]
+        long h = 0;
+        for (int i = 0; i < L; ++i) h = (h * a + nums[i]) % modulus;
+
+        // already seen hashes of strings of length L
+        HashSet<Long> seen = new HashSet<>();
+        seen.add(h);
+        // const value to be used often : a**L % modulus
+        long aL = 1;
+        for (int i = 1; i <= L; ++i) aL = (aL * a) % modulus;
+
+        for (int start = 1; start < n - L + 1; ++start) {
+            // compute rolling hash in O(1) time
+            h = (h * a - nums[start - 1] * aL % modulus + modulus) % modulus;
+            h = (h + nums[start + L - 1]) % modulus;
+            if (seen.contains(h)) return start;
+            seen.add(h);
+        }
+        return -1;
+    }
+
 }
 
 
