@@ -32,4 +32,10 @@ public class OctLCJavaTest {
         Assert.assertEquals(0, obj.longestRepeatingSubstring("abcd"));
     }
 
+    @Test
+    public void maxProfit() {
+        Assert.assertEquals(2, obj.maxProfit(2, new int[]{2, 4, 1}));
+        Assert.assertEquals(7, obj.maxProfit(2, new int[]{3, 2, 6, 5, 0, 3}));
+    }
+
 }
