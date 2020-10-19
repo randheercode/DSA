@@ -38,4 +38,10 @@ public class OctLCJavaTest {
         Assert.assertEquals(7, obj.maxProfit(2, new int[]{3, 2, 6, 5, 0, 3}));
     }
 
+    @Test
+    public void minDominoRotations() {
+        Assert.assertEquals(2, obj.minDominoRotations(new int[]{2, 1, 2, 4, 2, 2}, new int[]{5, 2, 6, 2, 3, 2}));
+        Assert.assertEquals(-1, obj.minDominoRotations(new int[]{3, 5, 1, 2, 3}, new int[]{3, 6, 3, 3, 4}));
+    }
+
 }
