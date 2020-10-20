@@ -1,8 +1,6 @@
 package problem.challenge;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -176,6 +174,46 @@ public class OctLCJava {
         else return checkMinDominoRotations(B[0], B, A, n);
     }
 
+    static class Node {
+        public int val;
+        public List<Node> neighbors;
+
+        public Node() {
+            val = 0;
+            neighbors = new ArrayList<Node>();
+        }
+
+        public Node(int _val) {
+            val = _val;
+            neighbors = new ArrayList<Node>();
+        }
+
+        public Node(int _val, ArrayList<Node> _neighbors) {
+            val = _val;
+            neighbors = _neighbors;
+        }
+    }
+
+    private Node cloneGraphHelper(Node node, Map<Node, Node> map) {
+        if (map.containsKey(node))  return map.get(node);
+        Node newNode = new Node();
+        map.put(node, newNode);
+        newNode.val = node.val;
+        if (node.neighbors == null) return newNode;
+        for (int i = 0; i < node.neighbors.size(); i++) {
+            newNode.neighbors.add(cloneGraphHelper(node.neighbors.get(i), map));
+        }
+        return newNode;
+    }
+
+    public Node cloneGraph(Node node) {
+        Map<Node, Node> cloned = new HashMap<>();
+        if (node == null) return null;
+        return cloneGraphHelper(node, cloned);
+    }
+
 }
+
+
 
 
