@@ -44,4 +44,9 @@ public class OctLCJavaTest {
         Assert.assertEquals(-1, obj.minDominoRotations(new int[]{3, 5, 1, 2, 3}, new int[]{3, 6, 3, 3, 4}));
     }
 
+    @Test
+    public void cloneGraph() {
+        Assert.assertNull(obj.cloneGraph(null));
+    }
+
 }
