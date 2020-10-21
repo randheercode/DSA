@@ -3,6 +3,9 @@ package problem.challenge;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 /**
  * Created by IntelliJ IDEA.
  * User: randheercode
@@ -47,6 +50,15 @@ public class OctLCJavaTest {
     @Test
     public void cloneGraph() {
         Assert.assertNull(obj.cloneGraph(null));
+    }
+
+    @Test
+    public void asteroidCollision() {
+        Assert.assertEquals("510", Arrays.stream(obj.asteroidCollision(new int[]{5, 10, -5})).mapToObj(Integer::toString).collect(Collectors.joining()));
+        Assert.assertEquals("", Arrays.stream(obj.asteroidCollision(new int[]{8, -8})).mapToObj(Integer::toString).collect(Collectors.joining()));
+        Assert.assertEquals("10", Arrays.stream(obj.asteroidCollision(new int[]{10, 2, -5})).mapToObj(Integer::toString).collect(Collectors.joining()));
+        Assert.assertEquals("-2-112", Arrays.stream(obj.asteroidCollision(new int[]{-2, -1, 1, 2})).mapToObj(Integer::toString).collect(Collectors.joining()));
+        Assert.assertEquals("-5", Arrays.stream(obj.asteroidCollision(new int[]{4, 2, -5})).mapToObj(Integer::toString).collect(Collectors.joining()));
     }
 
 }
