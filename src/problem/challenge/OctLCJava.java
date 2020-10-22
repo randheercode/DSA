@@ -1,6 +1,12 @@
 package problem.challenge;
 
+import utils.TreeNode;
+
 import java.util.*;
+
+interface ArrayReader {
+    int get(int index);
+}
 
 /**
  * Created by IntelliJ IDEA.
@@ -237,7 +243,44 @@ public class OctLCJava {
         return ans;
     }
 
+    public int searchReader(ArrayReader reader, int target) {
+        int start = 0, end = 10000;
+
+        while (start < end) {
+            int mid = start + (end - start) / 2;
+            if (reader.get(mid) > 9999) {
+                end = mid - 1;
+            } else {
+                start = mid + 1;
+            }
+        }
+
+        int left = 0, right = end;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            int val = reader.get(mid);
+            if (val == target) return mid;
+            if (val > target) {
+                right = mid - 1;
+            } else {
+                left = mid + 1;
+            }
+        }
+        return -1;
+    }
+
+    public int minDepth(TreeNode root) {
+        if (root == null) return 0;
+        if (root.getLeft() == null) {
+            return 1 + minDepth(root.getRight());
+        } else if (root.getRight() == null) {
+            return 1 + minDepth(root.getLeft());
+        }
+        return 1 + Math.min(minDepth(root.getLeft()), minDepth(root.getRight()));
+    }
 }
+
+
 
 
 
