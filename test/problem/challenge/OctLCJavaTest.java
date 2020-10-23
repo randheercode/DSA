@@ -61,4 +61,9 @@ public class OctLCJavaTest {
         Assert.assertEquals("-5", Arrays.stream(obj.asteroidCollision(new int[]{4, 2, -5})).mapToObj(Integer::toString).collect(Collectors.joining()));
     }
 
+    @Test
+    public void find132pattern() {
+        Assert.assertTrue(obj.find132pattern(new int[]{3, 1, 4, 2}));
+        Assert.assertFalse(obj.find132pattern(new int[]{1, 2, 3, 4}));
+    }
 }
