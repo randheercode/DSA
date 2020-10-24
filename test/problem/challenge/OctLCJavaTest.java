@@ -66,4 +66,11 @@ public class OctLCJavaTest {
         Assert.assertTrue(obj.find132pattern(new int[]{3, 1, 4, 2}));
         Assert.assertFalse(obj.find132pattern(new int[]{1, 2, 3, 4}));
     }
+
+    @Test
+    public void bagOfTokensScore() {
+        Assert.assertEquals(0, obj.bagOfTokensScore(new int[]{100}, 50));
+        Assert.assertEquals(1, obj.bagOfTokensScore(new int[]{100, 200}, 150));
+        Assert.assertEquals(2, obj.bagOfTokensScore(new int[]{100, 200, 300, 400}, 200));
+    }
 }
