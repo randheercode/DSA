@@ -73,4 +73,11 @@ public class OctLCJavaTest {
         Assert.assertEquals(1, obj.bagOfTokensScore(new int[]{100, 200}, 150));
         Assert.assertEquals(2, obj.bagOfTokensScore(new int[]{100, 200, 300, 400}, 200));
     }
+
+    @Test
+    public void winnerSquareGame() {
+        Assert.assertTrue(obj.winnerSquareGame(1));
+        Assert.assertFalse(obj.winnerSquareGame(2));
+        Assert.assertTrue(obj.winnerSquareGame(4));
+    }
 }

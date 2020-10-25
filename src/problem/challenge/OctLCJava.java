@@ -316,6 +316,22 @@ public class OctLCJava {
 
         return ans;
     }
+
+    Map<Integer, Boolean> map = new HashMap<>();
+
+    public boolean winnerSquareGame(int n) {
+        if (n == 0) return false;
+        if (map.containsKey(n)) return map.get(n);
+        boolean res = false;
+        for (int i = 1; i * i <= n; i++) {
+            if (!winnerSquareGame(n - i * i)) {
+                res = true;
+                break;
+            }
+        }
+        map.put(n, res);
+        return res;
+    }
 }
 
 
