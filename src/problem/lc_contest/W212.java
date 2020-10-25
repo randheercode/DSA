@@ -1,6 +1,9 @@
 package problem.lc_contest;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.PriorityQueue;
 
 public class W212 {
     public char slowestKey(int[] releaseTimes, String keysPressed) {
@@ -79,7 +82,8 @@ public class W212 {
         }
         return -1;
     }
-    public boolean inBounds(int x, int y, int r, int c) {
+
+    private boolean inBounds(int x, int y, int r, int c) {
         return x >= 0 && x < r && y >= 0 && y < c;
     }
 }
