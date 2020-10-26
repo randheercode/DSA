@@ -332,6 +332,86 @@ public class OctLCJava {
         map.put(n, res);
         return res;
     }
+
+    public boolean isAlienSorted(String[] words, String order) {
+        Map<Character, Integer> charOrder = new HashMap<>();
+        for (int i = 0; i < order.length(); i++) {
+            charOrder.put(order.charAt(i), i);
+        }
+
+        for (int i = 1; i < words.length; i++) {
+            String first = words[i - 1];
+            String second = words[i];
+            int len = Math.min(first.length(), second.length());
+            int k = -1;
+            for (int j = 0; j < len; j++) {
+                if (first.charAt(j) != second.charAt(j)) {
+                    if (charOrder.get(second.charAt(j)) > charOrder.get(first.charAt(j))) {
+                        k = j;
+                        break;
+                    } else {
+                        return false;
+                    }
+                }
+            }
+            if (k == -1 && second.length() < first.length()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public List<Integer> rightSideView(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
+        Queue<TreeNode> current = new LinkedList<>();
+        if (root == null) return result;
+        current.add(root);
+        Queue<TreeNode> nodes = new LinkedList<>();
+        while (!current.isEmpty() || !nodes.isEmpty()) {
+            while (!current.isEmpty()) {
+                if (current.size() == 1) {
+                    result.add(current.peek().getVal());
+                }
+                TreeNode node = current.poll();
+                if (node.getLeft() != null) nodes.offer(node.getLeft());
+                if (node.getRight() != null) nodes.offer(node.getRight());
+            }
+            current.addAll(nodes);
+            nodes.clear();
+        }
+        return result;
+    }
+
+    public boolean checkInclusion(String s1, String s2) {
+        if (s1.length() > s2.length())
+            return false;
+        int[] s1map = new int[26];
+        int[] s2map = new int[26];
+        for (int i = 0; i < s1.length(); i++) {
+            s1map[s1.charAt(i) - 'a']++;
+            s2map[s2.charAt(i) - 'a']++;
+        }
+        int count = 0;
+        for (int i = 0; i < 26; i++)
+            if (s1map[i] == s2map[i])
+                count++;
+        for (int i = 0; i < s2.length() - s1.length(); i++) {
+            int r = s2.charAt(i + s1.length()) - 'a', l = s2.charAt(i) - 'a';
+            if (count == 26)
+                return true;
+            s2map[r]++;
+            if (s2map[r] == s1map[r])
+                count++;
+            else if (s2map[r] == s1map[r] + 1)
+                count--;
+            s2map[l]--;
+            if (s2map[l] == s1map[l])
+                count++;
+            else if (s2map[l] == s1map[l] - 1)
+                count--;
+        }
+        return count == 26;
+    }
 }
 
 

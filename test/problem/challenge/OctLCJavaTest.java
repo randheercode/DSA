@@ -80,4 +80,11 @@ public class OctLCJavaTest {
         Assert.assertFalse(obj.winnerSquareGame(2));
         Assert.assertTrue(obj.winnerSquareGame(4));
     }
+
+    @Test
+    public void isAlienSorted() {
+        Assert.assertTrue(obj.isAlienSorted(new String[]{"hello", "leetcode"}, "hlabcdefgijkmnopqrstuvwxyz"));
+        Assert.assertFalse(obj.isAlienSorted(new String[]{"word", "world", "row"}, "worldabcefghijkmnpqstuvxyz"));
+        Assert.assertFalse(obj.isAlienSorted(new String[]{"apple", "app"}, "abcdefghijklmnopqrstuvwxyz"));
+    }
 }
