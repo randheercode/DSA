@@ -420,13 +420,49 @@ public class OctLCJava {
             for (int c = 0; c <= r; ++c) {
                 double q = (A[r][c] - 1.0) / 2.0;
                 if (q > 0) {
-                    A[r+1][c] += q;
-                    A[r+1][c+1] += q;
+                    A[r + 1][c] += q;
+                    A[r + 1][c + 1] += q;
                 }
             }
         }
 
         return Math.min(1, A[query_row][query_glass]);
+    }
+
+    interface ListNode {
+        int val = 0;
+        ListNode next = null;
+    }
+
+    public ListNode detectCycle(ListNode head) {
+
+        if (head == null) return null;
+
+        ListNode first = head;
+        ListNode second = head;
+
+        ListNode intersect = null;
+
+        while (second != null && second.next != null) {
+            first = first.next;
+            second = second.next.next;
+            if (first == second) {
+                intersect = first;
+                break;
+            }
+        }
+
+        if (intersect == null) return null;
+
+        first = head;
+        second = intersect;
+        while (!first.equals(second)) {
+            first = first.next;
+            second = second.next;
+        }
+
+        return first;
+
     }
 }
 
