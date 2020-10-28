@@ -462,7 +462,33 @@ public class OctLCJava {
         }
 
         return first;
+    }
 
+    public List<String> summaryRanges(int[] nums) {
+        List<String> result = new ArrayList<>();
+        if (nums.length == 0) return result;
+        int diff = nums[0];
+        int startIdx = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] - i != diff) {
+                if (startIdx == i - 1) {
+                    result.add("" + nums[startIdx]);
+                } else {
+                    result.add(nums[startIdx] + "->" + nums[i - 1]);
+                }
+                startIdx = i;
+                diff = nums[i] - i;
+            }
+
+            if (i == nums.length - 1) {
+                if (startIdx == i) {
+                    result.add("" + nums[startIdx]);
+                } else {
+                    result.add(nums[startIdx] + "->" + nums[i]);
+                }
+            }
+        }
+        return result;
     }
 }
 
