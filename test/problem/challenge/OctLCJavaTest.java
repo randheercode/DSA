@@ -87,4 +87,9 @@ public class OctLCJavaTest {
         Assert.assertFalse(obj.isAlienSorted(new String[]{"word", "world", "row"}, "worldabcefghijkmnpqstuvxyz"));
         Assert.assertFalse(obj.isAlienSorted(new String[]{"apple", "app"}, "abcdefghijklmnopqrstuvwxyz"));
     }
+
+    @Test
+    public void lengthOfLIS() {
+        Assert.assertEquals(4, obj.lengthOfLIS(new int[]{10, 9, 2, 5, 3, 7, 101, 18}));
+    }
 }
