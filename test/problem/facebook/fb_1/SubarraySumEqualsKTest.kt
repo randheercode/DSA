@@ -17,4 +17,9 @@ class SubarraySumEqualsKTest {
         Assert.assertEquals(2, obj.subarraySum(intArrayOf(1, 2, 3), 3))
         Assert.assertEquals(3, obj.subarraySum(intArrayOf(1, -1, 0), 0))
     }
+
+    @Test
+    fun subarraySumOptimal() {
+        Assert.assertEquals(2, obj.subarraySumOptimal(intArrayOf(1, 2, 3), 3))
+    }
 }
