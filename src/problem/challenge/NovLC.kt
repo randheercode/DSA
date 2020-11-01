@@ -34,4 +34,14 @@ class NovLC {
         }
         return result
     }
+
+    fun getDecimalValueOptimal(head: ListNode?): Int {
+        var head = head
+        var num = head!!.`val`
+        while (head?.next != null) {
+            num = num shl 1 or head.next!!.`val`
+            head = head.next
+        }
+        return num
+    }
 }
