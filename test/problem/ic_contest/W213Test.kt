@@ -33,6 +33,21 @@ class W213Test {
         )))
     }
 
+    @Test
+    fun countVowelStrings() {
+        Assert.assertEquals(5, obj.countVowelStrings(1))
+        Assert.assertEquals(15, obj.countVowelStrings(2))
+        Assert.assertEquals(66045, obj.countVowelStrings(33))
+    }
+
+    @Test
+    fun furthestBuilding() {
+//        Assert.assertEquals(4, obj.furthestBuilding(intArrayOf(4, 2, 7, 6, 9, 14, 12), 5, 1))
+//        Assert.assertEquals(7, obj.furthestBuilding(intArrayOf(4, 12, 2, 7, 3, 18, 20, 3, 19), 10, 2))
+//        Assert.assertEquals(3, obj.furthestBuilding(intArrayOf(14, 3, 19, 3), 17, 0))
+        Assert.assertEquals(3, obj.furthestBuilding(intArrayOf(3, 19), 87, 1))
+    }
+
 
 }
 
