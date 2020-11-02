@@ -44,4 +44,28 @@ class NovLC {
         }
         return num
     }
+
+    fun insertionSortList(head: ListNode?): ListNode? {
+
+        val resultHead = ListNode(Int.MIN_VALUE)
+        var current = head
+
+        while (current != null) {
+
+            // Copy and Detach
+            val temp = current
+            current = current.next
+            temp.next = null
+
+            var sortedCurrent: ListNode? = resultHead
+            while (sortedCurrent?.next != null && sortedCurrent.next!!.`val` <= temp.`val`) {
+                sortedCurrent = sortedCurrent.next
+            }
+            val tempNext = sortedCurrent?.next
+            sortedCurrent?.next = temp
+            temp.next = tempNext
+        }
+        return resultHead.next
+    }
+
 }

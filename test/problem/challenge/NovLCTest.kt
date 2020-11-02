@@ -20,5 +20,15 @@ class NovLCTest {
         Assert.assertEquals(1, obj.getDecimalValue(ListNode(1)))
     }
 
+    @Test
+    fun insertionSortList() {
+        val head = ListNode(4)
+        head.next = ListNode(2)
+        head.next?.next = ListNode(1)
+        head.next?.next?.next = ListNode(3)
+        obj.insertionSortList(head)
+        Assert.assertTrue(true)
+    }
+
 }
 
