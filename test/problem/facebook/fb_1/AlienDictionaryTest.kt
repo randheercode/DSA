@@ -9,10 +9,12 @@ import org.junit.Test
  * Time: 11:40 am
  */
 class AlienDictionaryTest {
+    private val obj = AlienDictionary()
+
     @Test
     fun alienOrder() {
-        Assert.assertEquals("wertf", arrayOf("wrt", "wrf", "er", "ett", "rftt"))
-        Assert.assertEquals("zx", arrayOf("z", "x"))
-        Assert.assertEquals("", arrayOf("z", "x", "z"))
+        Assert.assertEquals("wertf", obj.alienOrder(arrayOf("wrt", "wrf", "er", "ett", "rftt")))
+        Assert.assertEquals("zx", obj.alienOrder(arrayOf("z", "x")))
+        Assert.assertEquals("", obj.alienOrder(arrayOf("z", "x", "z")))
     }
 }
