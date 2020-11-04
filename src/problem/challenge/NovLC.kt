@@ -1,6 +1,8 @@
 package problem.challenge
 
 import java.lang.StrictMath.pow
+import java.util.*
+
 
 class ListNode(var `val`: Int) {
     var next: ListNode? = null
@@ -66,6 +68,51 @@ class NovLC {
             temp.next = tempNext
         }
         return resultHead.next
+    }
+
+    fun findMinHeightTrees(n: Int, edges: Array<IntArray>): List<Int>? {
+
+        // base cases
+        if (n < 2) {
+            val centroids = ArrayList<Int>()
+            for (i in 0 until n) centroids.add(i)
+            return centroids
+        }
+
+        // Build the graph with the adjacency list
+        val neighbors = ArrayList<MutableSet<Int>>()
+        for (i in 0 until n) neighbors.add(HashSet())
+        for (edge in edges) {
+            val start = edge[0]
+            val end = edge[1]
+            neighbors[start].add(end)
+            neighbors[end].add(start)
+        }
+
+        // Initialize the first layer of leaves
+        var leaves = ArrayList<Int>()
+        for (i in 0 until n) if (neighbors[i].size == 1) leaves.add(i)
+
+        // Trim the leaves until reaching the centroids
+        var remainingNodes = n
+        while (remainingNodes > 2) {
+            remainingNodes -= leaves.size
+            val newLeaves = ArrayList<Int>()
+
+            // remove the current leaves along with the edges
+            for (leaf in leaves) {
+                for (neighbor in neighbors[leaf]) {
+                    neighbors[neighbor].remove(leaf)
+                    if (neighbors[neighbor].size == 1) newLeaves.add(neighbor)
+                }
+            }
+
+            // prepare for the next round
+            leaves = newLeaves
+        }
+
+        // The remaining nodes are the centroids of the graph
+        return leaves
     }
 
 }
