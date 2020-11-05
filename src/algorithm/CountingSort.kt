@@ -13,9 +13,10 @@ class CountingSort {
 
         for (n in nums) count[n] += 1
 
-        for (i in 2 until 10) count[i] += count[i - 1]
+        for (i in 1 until 10) count[i] += count[i - 1]
 
-        for (n in nums) {
+        for (i in nums.lastIndex downTo 0) {
+            val n = nums[i]
             result[count[n] - 1] = n
             count[n] -= 1
         }
