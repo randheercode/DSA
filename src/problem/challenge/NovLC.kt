@@ -115,4 +115,17 @@ class NovLC {
         return leaves
     }
 
+    fun minCostToMoveChips(position: IntArray): Int {
+        var evenCnt = 0
+        var oddCnt = 0
+        for (i in position) {
+            if (i % 2 == 0) {
+                evenCnt++
+            } else {
+                oddCnt++
+            }
+        }
+        return maxOf(oddCnt, evenCnt)
+    }
+
 }
