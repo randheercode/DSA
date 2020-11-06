@@ -125,7 +125,7 @@ class NovLC {
                 oddCnt++
             }
         }
-        return maxOf(oddCnt, evenCnt)
+        return minOf(oddCnt, evenCnt)
     }
 
 }
