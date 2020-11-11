@@ -152,4 +152,21 @@ class NovLC {
         return maxOf(left, right)
     }
 
+    fun flipAndInvertImage(A: Array<IntArray>): Array<IntArray> {
+        fun reverseAndFlip(arr: IntArray) {
+            var s = 0
+            var e = arr.lastIndex
+            while (s < e) {
+                val t = arr[s]
+                arr[s] = arr[e].plus(1).rem(2)
+                arr[e] = t.plus(1).rem(2)
+                s++
+                e--
+            }
+            if (s == e) arr[s] = arr[s].plus(1).rem(2)
+        }
+        for (i in A.indices) reverseAndFlip(A[i])
+        return A
+    }
+
 }
