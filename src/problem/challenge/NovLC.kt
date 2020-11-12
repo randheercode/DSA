@@ -169,4 +169,14 @@ class NovLC {
         return A
     }
 
+    fun validSquare(p1: IntArray, p2: IntArray, p3: IntArray, p4: IntArray): Boolean {
+        fun dist(p1: IntArray, p2: IntArray): Double {
+            return ((p2[1] - p1[1]) * (p2[1] - p1[1]) + (p2[0] - p1[0]) * (p2[0] - p1[0])).toDouble()
+        }
+
+        val p = arrayOf(p1, p2, p3, p4)
+        Arrays.sort(p) { l1: IntArray, l2: IntArray -> if (l2[0] == l1[0]) l1[1] - l2[1] else l1[0] - l2[0] }
+        return dist(p[0], p[1]) != 0.0 && dist(p[0], p[1]) == dist(p[1], p[3]) && dist(p[1], p[3]) == dist(p[3], p[2]) && dist(p[3], p[2]) == dist(p[2], p[0]) && dist(p[0], p[3]) == dist(p[1], p[2])
+    }
+
 }
