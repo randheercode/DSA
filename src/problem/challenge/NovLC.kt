@@ -9,7 +9,7 @@ class ListNode(var `val`: Int) {
     var next: ListNode? = null
 }
 
-class NovLC {
+open class NovLC {
 
     fun canAttendMeetings(intervals: Array<IntArray>): Boolean {
         intervals.sortBy { it[0] }
@@ -177,6 +177,46 @@ class NovLC {
         val p = arrayOf(p1, p2, p3, p4)
         Arrays.sort(p) { l1: IntArray, l2: IntArray -> if (l2[0] == l1[0]) l1[1] - l2[1] else l1[0] - l2[0] }
         return dist(p[0], p[1]) != 0.0 && dist(p[0], p[1]) == dist(p[1], p[3]) && dist(p[1], p[3]) == dist(p[3], p[2]) && dist(p[3], p[2]) == dist(p[2], p[0]) && dist(p[0], p[3]) == dist(p[1], p[2])
+    }
+
+    fun permuteUnique(nums: IntArray): List<List<Int>>? {
+        val results: MutableList<List<Int>> = ArrayList()
+
+        // count the occurrence of each number
+        val counter = HashMap<Int, Int>()
+        for (num in nums) {
+            if (!counter.containsKey(num)) counter[num] = 0
+            counter[num] = counter[num]!! + 1
+        }
+        val comb: LinkedList<Int> = LinkedList()
+        backtrack(comb, nums.size, counter, results)
+        return results
+    }
+
+    private fun backtrack(
+            comb: LinkedList<Int>,
+            N: Int,
+            counter: HashMap<Int, Int>,
+            results: MutableList<List<Int>>) {
+        if (comb.size == N) {
+            // make a deep copy of the resulting permutation,
+            // since the permutation would be backtracked later.
+            results.add(ArrayList(comb))
+            return
+        }
+        for ((num, count) in counter) {
+            if (count == 0) continue
+            // add this number into the current combination
+            comb.addLast(num)
+            counter[num] = count - 1
+
+            // continue the exploration
+            backtrack(comb, N, counter, results)
+
+            // revert the choice for the next exploration
+            comb.removeLast()
+            counter[num] = count
+        }
     }
 
 }
