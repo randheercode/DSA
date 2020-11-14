@@ -219,4 +219,40 @@ open class NovLC {
         }
     }
 
+    class Node(var `val`: Int) {
+        var left: Node? = null
+        var right: Node? = null
+        var next: Node? = null
+    }
+
+    fun connect(root: Node?): Node? {
+
+        val currentNodes = LinkedList<Node?>()
+        val childrenNodes = LinkedList<Node?>()
+
+        currentNodes.add(root)
+
+        var prev: Node? = null
+        var current: Node?
+
+        while (currentNodes.isNotEmpty()) {
+            current = currentNodes.poll()
+
+            if (current?.left != null) childrenNodes.add(current.left)
+            if (current?.right != null) childrenNodes.add(current.right)
+
+            prev?.next = current
+            prev = current
+
+            if (currentNodes.isEmpty() && childrenNodes.isNotEmpty()) {
+                currentNodes.addAll(childrenNodes)
+                childrenNodes.clear()
+                prev = null
+            }
+
+        }
+
+        return root
+    }
+
 }
