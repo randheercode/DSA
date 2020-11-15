@@ -1,6 +1,6 @@
 package problem.lc_contest
 
-import kotlin.math.abs
+import java.util.*
 
 
 class W215 {
@@ -23,44 +23,62 @@ class W215 {
 
     // Wrong Answer
     fun closeStrings(word1: String, word2: String): Boolean {
-        if (word1.length != word2.length) return false
-
-        if (word1 == word2) return true
-
-        val diff = IntArray(26)
-
-        val count1 = IntArray(26)
-        for (c in word1) count1[c - 'a'] += 1
-
-        val count2 = IntArray(26)
-        for (c in word2) {
-            count2[c - 'a'] += 1
-            diff[c - 'a'] = count1[c - 'a'] - count2[c - 'a']
+        val N = 26
+        val arr1 = IntArray(N)
+        val arr2 = IntArray(N)
+        for (ch in word1.toCharArray()) {
+            arr1[ch - 'a']++
         }
-
-        if (diff.all { it == 0 }) return true
-
-        val count = mutableMapOf<Int, Int>()
-
-        for (d in diff) count[abs(d)] = count.getOrDefault(abs(d), 0) + 1
-
-        return count.all { it.value == 2 }
+        for (ch in word2.toCharArray()) {
+            arr2[ch - 'a']++
+        }
+        for (i in 0 until N) {
+            if (arr1[i] == arr2[i]) {
+                continue
+            }
+            if (arr1[i] == 0 || arr2[i] == 0) {
+                return false
+            }
+        }
+        Arrays.sort(arr1)
+        Arrays.sort(arr2)
+        for (i in 0 until N) {
+            if (arr1[i] != arr2[i]) {
+                return false
+            }
+        }
+        return true
     }
 
-    private fun countOps(nums: IntArray, sIdx: Int, eIdx: Int, x: Int, count: Int): Int {
-
-        if (x == 0) return count
-        if (x < 0 || sIdx == nums.size || eIdx == -1 || eIdx < sIdx) return Int.MAX_VALUE
-
-        return minOf(
-                countOps(nums, sIdx + 1, eIdx, x - nums[sIdx], count + 1),
-                countOps(nums, sIdx, eIdx - 1, x - nums[eIdx], count + 1))
-
-    }
 
     fun minOperations(nums: IntArray, x: Int): Int {
-        val result = countOps(nums, 0, nums.lastIndex, x, 0)
-        return if (result == Int.MAX_VALUE) -1 else result
+        val len = nums.size
+        val left = IntArray(len)
+        val right = IntArray(len)
+        var tmp = 0
+        for (i in 0 until len) {
+            tmp += nums[i]
+            left[i] = tmp
+        }
+        tmp = 0
+        for (i in len - 1 downTo -1 + 1) {
+            tmp += nums[i]
+            right[i] = tmp
+        }
+        val map: MutableMap<Int, Int?> = HashMap()
+        map[x] = -1
+        var res = Int.MAX_VALUE
+        for (i in 0 until len) {
+            if (left[i] > x) break
+            if (left[i] == x) res = i + 1
+            map[x - left[i]] = i
+        }
+        for (i in len - 1 downTo -1 + 1) {
+            if (map.containsKey(right[i])) {
+                res = Math.min(res, map[right[i]]!! + 1 + (len - i))
+            }
+        }
+        return if (res == Int.MAX_VALUE || res > len) -1 else res
     }
 
 }
