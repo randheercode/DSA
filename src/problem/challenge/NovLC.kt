@@ -3,6 +3,7 @@ package problem.challenge
 import problem.facebook.old.TreeNode
 import java.lang.StrictMath.pow
 import java.util.*
+import kotlin.math.ceil
 
 
 class ListNode(var `val`: Int) {
@@ -253,6 +254,11 @@ open class NovLC {
         }
 
         return root
+    }
+
+    fun poorPigs(buckets: Int, minutesToDie: Int, minutesToTest: Int): Int {
+        val states = minutesToTest / minutesToDie + 1
+        return ceil(Math.log(buckets.toDouble()) / Math.log(states.toDouble())).toInt()
     }
 
 }
