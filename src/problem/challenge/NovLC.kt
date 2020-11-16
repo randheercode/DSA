@@ -261,4 +261,33 @@ open class NovLC {
         return ceil(Math.log(buckets.toDouble()) / Math.log(states.toDouble())).toInt()
     }
 
+    open fun removeInterval(intervals: Array<IntArray>, toBeRemoved: IntArray): List<List<Int>>? {
+        val res: MutableList<List<Int>> = mutableListOf()
+        for (interval in intervals) {
+
+            if (toBeRemoved[0] > interval[0] && toBeRemoved[0] < interval[1]) {
+                val list: MutableList<Int> = ArrayList()
+                list.add(interval[0])
+                list.add(toBeRemoved[0])
+                res.add(list)
+            }
+
+            if (toBeRemoved[1] < interval[1] && toBeRemoved[1] > interval[0]) {
+                val list: MutableList<Int> = ArrayList()
+                list.add(toBeRemoved[1])
+                list.add(interval[1])
+                res.add(list)
+            }
+
+            if (toBeRemoved[0] >= interval[1] || interval[0] >= toBeRemoved[1]) {
+                val list: MutableList<Int> = ArrayList()
+                list.add(interval[0])
+                list.add(interval[1])
+                res.add(list)
+            }
+        }
+        return res
+    }
+
+
 }

@@ -30,5 +30,11 @@ class NovLCTest {
         Assert.assertTrue(true)
     }
 
+    @Test
+    fun removeInterval() {
+        val res = obj.removeInterval(generateIntArray("[[0,2],[3,4],[5,7]]"), intArrayOf(1, 6))
+        Assert.assertEquals("[[0, 1], [6, 7]]", res.toString())
+    }
+
 }
 
