@@ -313,4 +313,18 @@ open class NovLC {
         return ans
     }
 
+    open fun longestArithSeqLength(A: IntArray): Int {
+        val hash = Array(A.size) { IntArray(20000) }
+        var max = 0
+        for (i in 1 until A.size) for (j in i - 1 downTo 0) {
+            val diff = A!![i] - A!![j] + 10000
+            val counttillnow = hash[j][diff]
+            if (hash[i][diff] > counttillnow) continue else {
+                hash[i][diff] = counttillnow + 1
+                max = Math.max(max, counttillnow + 1)
+            }
+        }
+        return max + 1
+    }
+
 }
