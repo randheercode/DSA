@@ -327,4 +327,52 @@ open class NovLC {
         return max + 1
     }
 
+    fun search(nums: IntArray, target: Int): Boolean {
+
+        // returns true if we can reduce the search space in current binary search space
+        fun isBinarySearchHelpful(arr: IntArray, start: Int, element: Int): Boolean {
+            return arr[start] != element
+        }
+
+        // returns true if element exists in first array, false if it exists in second
+        fun existsInFirst(arr: IntArray, start: Int, element: Int): Boolean {
+            return arr[start] <= element
+        }
+
+        val n = nums.size
+        if (n == 0) return false
+        var end = n - 1
+        var start = 0
+        while (start <= end) {
+            val mid = start + (end - start) / 2
+            if (nums[mid] == target) {
+                return true
+            }
+            if (!isBinarySearchHelpful(nums, start, nums[mid])) {
+                start++
+                continue
+            }
+            // which array does pivot belong to.
+            val pivotArray = existsInFirst(nums, start, nums[mid])
+
+            // which array does target belong to.
+            val targetArray = existsInFirst(nums, start, target)
+            if (pivotArray xor targetArray) { // If pivot and target exist in different sorted arrays, recall that xor is true when both operands are distinct
+                if (pivotArray) {
+                    start = mid + 1 // pivot in the first, target in the second
+                } else {
+                    end = mid - 1 // target in the first, pivot in the second
+                }
+            } else { // If pivot and target exist in same sorted array
+                if (nums[mid] < target) {
+                    start = mid + 1
+                } else {
+                    end = mid - 1
+                }
+            }
+        }
+        return false
+    }
+
+
 }
