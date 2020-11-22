@@ -374,5 +374,26 @@ open class NovLC {
         return false
     }
 
+    fun atMostNGivenDigitSet(digits: Array<String>, n: Int): Int {
+        val S = n.toString()
+        val K = S.length
+        val dp = IntArray(K + 1)
+        dp[K] = 1
+
+        for (i in K - 1 downTo 0) {
+            // compute dp[i]
+            val Si = S[i] - '0'
+            for (d in digits) {
+                if (Integer.valueOf(d) < Si)
+                    dp[i] += Math.pow(digits.size.toDouble(), K - i - 1.toDouble()).toInt()
+                else if (Integer.valueOf(d) == Si)
+                    dp[i] += dp[i + 1]
+            }
+        }
+
+        for (i in 1 until K)
+            dp[0] += Math.pow(digits.size.toDouble(), i.toDouble()).toInt()
+        return dp[0]
+    }
 
 }
