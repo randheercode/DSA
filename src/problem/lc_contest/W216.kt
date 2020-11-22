@@ -38,4 +38,45 @@ class W216 {
         return result.toString()
     }
 
+
+    fun waysToMakeFair(nums: IntArray): Int {
+        var count = 0
+        if (nums.size < 3) return nums.size.rem(2)
+        val rightSumEven = IntArray(nums.size)
+        val rightSumOdd = IntArray(nums.size)
+        for (i in nums.lastIndex downTo 0) {
+            if (i.rem(2) == 0) {
+                rightSumEven[i] = rightSumEven[minOf(i + 1, nums.lastIndex)] + nums[i]
+                rightSumOdd[i] = rightSumOdd[minOf(i + 1, nums.lastIndex)]
+            } else {
+                rightSumOdd[i] = rightSumOdd[minOf(i + 1, nums.lastIndex)] + nums[i]
+                rightSumEven[i] = rightSumEven[minOf(i + 1, nums.lastIndex)]
+            }
+        }
+        val leftSumEven = IntArray(nums.size)
+        val leftSumOdd = IntArray(nums.size)
+        for (i in nums.indices) {
+            if (i.rem(2) == 0) {
+                leftSumEven[i] = leftSumEven[maxOf(i - 1, 0)] + nums[i]
+                leftSumOdd[i] = leftSumOdd[maxOf(i - 1, 0)]
+            } else {
+                leftSumOdd[i] = leftSumOdd[maxOf(i - 1, 0)] + nums[i]
+                leftSumEven[i] = leftSumEven[maxOf(i - 1, 0)]
+            }
+        }
+
+        for (i in nums.indices) {
+            if (i == 0) {
+                if (rightSumEven[1] == rightSumOdd[1]) count++
+            } else if (i == nums.lastIndex) {
+                if (leftSumEven[i - 1] == leftSumOdd[i - 1]) count++
+            } else {
+                val first = leftSumEven[i - 1] + rightSumOdd[i + 1]
+                val second = leftSumOdd[i - 1] + rightSumEven[i + 1]
+                if (first == second) count++
+            }
+        }
+        return count
+    }
+
 }
