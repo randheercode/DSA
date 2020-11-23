@@ -396,4 +396,42 @@ open class NovLC {
         return dp[0]
     }
 
+    open fun lengthOfLongestSubstringTwoDistinct(s: String?): Int {
+        if (s == null || s.isEmpty()) return 0
+        var left = 0
+        var right = 0
+        var max = 0
+        val map: MutableMap<Char, Int> = HashMap()
+        while (right < s.length) {
+            if (map.size <= 2) {
+                map[s[right]] = right
+            }
+            if (map.size > 2) {
+                var leftMost = s.length
+                for (index in map.values) {
+                    leftMost = Math.min(index, leftMost)
+                }
+                map.remove(s[leftMost])
+                left = leftMost + 1
+            }
+            max = Math.max(right - left + 1, max)
+            right++
+        }
+        return max
+    }
+
+    fun uniqueMorseRepresentations(words: Array<String>): Int {
+        val morse = arrayOf(".-", "-...", "-.-.", "-..", ".", "..-.", "--.",
+                "....", "..", ".---", "-.-", ".-..", "--", "-.",
+                "---", ".--.", "--.-", ".-.", "...", "-", "..-",
+                "...-", ".--", "-..-", "-.--", "--..")
+        val seen: MutableSet<String> = HashSet()
+        for (word in words) {
+            val code = StringBuilder()
+            for (c in word.toCharArray()) code.append(morse[c - 'a'])
+            seen.add(code.toString())
+        }
+        return seen.size
+    }
+
 }
