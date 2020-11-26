@@ -1,5 +1,6 @@
 package problem.challenge
 
+import jdk.vm.ci.code.CodeUtil
 import problem.facebook.old.TreeNode
 import java.lang.StrictMath.pow
 import java.util.*
@@ -432,6 +433,17 @@ open class NovLC {
             seen.add(code.toString())
         }
         return seen.size
+    }
+
+    fun smallestRepunitDivByK(K: Int): Int {
+        var remainder = 0
+        for (length_N in 1..CodeUtil.K) {
+            remainder = (remainder * 10 + 1) % CodeUtil.K
+            if (remainder == 0) {
+                return length_N
+            }
+        }
+        return -1
     }
 
 }
