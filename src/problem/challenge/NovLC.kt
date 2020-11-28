@@ -1,6 +1,5 @@
 package problem.challenge
 
-import jdk.vm.ci.code.CodeUtil
 import problem.facebook.old.TreeNode
 import java.lang.StrictMath.pow
 import java.util.*
@@ -444,6 +443,24 @@ open class NovLC {
             }
         }
         return -1
+    }
+
+    fun canPartition(nums: IntArray): Boolean {
+        if (nums.isEmpty()) return false
+        var totalSum = 0
+        for (num in nums) {
+            totalSum += num
+        }
+        if (totalSum % 2 != 0) return false
+        val subSetSum = totalSum / 2
+        val dp = BooleanArray(subSetSum + 1)
+        dp[0] = true
+        for (curr in nums) {
+            for (j in subSetSum downTo curr) {
+                dp[j] = dp[j] or dp[j - curr]
+            }
+        }
+        return dp[subSetSum]
     }
 
 }
