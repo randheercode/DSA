@@ -532,4 +532,37 @@ open class NovLC {
         return false
     }
 
+    fun getSkyline(buildings: Array<IntArray>): List<List<Int>>? {
+        val res: MutableList<List<Int>> = ArrayList()
+        val heights: MutableList<IntArray> = ArrayList()
+        transformBuilding(buildings, heights) // O(n)
+        heights.sortWith(Comparator { a: IntArray, b: IntArray -> if (a[0] == b[0]) a[1] - b[1] else a[0] - b[0] }) // O(nlogn)
+        val pq = PriorityQueue { a: Int, b: Int -> b - a }
+        pq.offer(0)
+        var preMax = 0
+        for (height in heights) {
+            if (height[1] < 0) {
+                pq.offer(-height[1])
+            } else {
+                pq.remove(height[1]) //O(logn)
+            }
+            val currMax = pq.peek()
+            if (currMax != preMax) {
+                val subRes: MutableList<Int> = ArrayList()
+                subRes.add(height[0])
+                subRes.add(currMax)
+                res.add(subRes)
+                preMax = currMax
+            }
+        }
+        return res
+    }
+
+    private fun transformBuilding(buildings: Array<IntArray>, heights: MutableList<IntArray>) {
+        for (building in buildings) {
+            heights.add(intArrayOf(building[0], -building[2]))
+            heights.add(intArrayOf(building[1], building[2]))
+        }
+    }
+
 }
