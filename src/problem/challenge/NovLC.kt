@@ -1,6 +1,7 @@
 package problem.challenge
 
 import problem.facebook.old.TreeNode
+import java.lang.StrictMath.abs
 import java.lang.StrictMath.pow
 import java.util.*
 import kotlin.math.ceil
@@ -485,6 +486,50 @@ open class NovLC {
         for (i in 0 until n - k + 1) output[i] = maxOf(left[i + k - 1], right[i])
 
         return output
+    }
+
+    fun findMaxAverage(nums: IntArray, k: Int): Double {
+        var max = Int.MIN_VALUE.toDouble()
+        var min = Int.MAX_VALUE.toDouble()
+        for (n in nums) {
+            max = maxOf(max, n.toDouble())
+            min = minOf(min, n.toDouble())
+        }
+        var midOld = max
+        var error = Int.MAX_VALUE.toDouble()
+        while (error > 0.00001) {
+            val mid = (max + min) * 0.5
+            if (check(nums, mid, k)) min = mid else max = mid
+            error = abs(midOld - mid)
+            midOld = mid
+        }
+        return min
+    }
+
+    fun check(nums: IntArray, mid: Double, k: Int): Boolean {
+        var sum = 0.0
+        var prev = 0.0
+        var minSum = 0.0
+        for (i in 0 until k) sum += nums[i] - mid
+        if (sum >= 0) return true
+        for (i in k until nums.size) {
+            sum += nums[i] - mid
+            prev += nums[i - k] - mid
+            minSum = minOf(prev, minSum)
+            if (sum >= minSum) return true
+        }
+        return false
+    }
+
+    fun canReach(arr: IntArray, start: Int): Boolean {
+        if (start >= 0 && start < arr.size && arr[start] >= 0) {
+            if (arr[start] == 0) {
+                return true
+            }
+            arr[start] = -arr[start]
+            return canReach(arr, start + arr[start]) || canReach(arr, start - arr[start])
+        }
+        return false
     }
 
 }
