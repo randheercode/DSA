@@ -42,7 +42,6 @@ class Dec20 {
         while (start <= end) {
             val fromStart = nums[start] * nums[start]
             val fromEnd = nums[end] * nums[end]
-
             result[idx--] = if (fromEnd >= fromStart) {
                 end--
                 fromEnd
