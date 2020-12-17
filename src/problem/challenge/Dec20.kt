@@ -1,5 +1,7 @@
 package problem.challenge
 
+import utils.TreeNode
+
 class Dec20 {
     private fun reverseLinkedList(head: ListNode?): ListNode? {
         val result = ListNode(0)
@@ -51,5 +53,19 @@ class Dec20 {
             }
         }
         return result
+    }
+
+    private fun validateBST(root: TreeNode?, low: Int?, high: Int?): Boolean {
+
+        if (root == null) {
+            return true
+        }
+        return if (low != null && root.`val` <= low || high != null && root.`val` >= high) {
+            false
+        } else validateBST(root.right, root.`val`, high) && validateBST(root.left, low, root.`val`)
+    }
+
+    fun isValidBST(root: TreeNode?): Boolean {
+        return validateBST(root, null, null)
     }
 }
