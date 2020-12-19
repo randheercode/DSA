@@ -68,4 +68,23 @@ class Dec20 {
     fun isValidBST(root: TreeNode?): Boolean {
         return validateBST(root, null, null)
     }
+
+    fun increasingTriplet(nums: IntArray): Boolean {
+        var firstNum = Int.MAX_VALUE
+        var secondNum = Int.MAX_VALUE
+        for (n in nums) {
+            when {
+                n <= firstNum -> {
+                    firstNum = n
+                }
+                n <= secondNum -> {
+                    secondNum = n
+                }
+                else -> {
+                    return true
+                }
+            }
+        }
+        return false
+    }
 }
