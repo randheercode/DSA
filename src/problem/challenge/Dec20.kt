@@ -87,4 +87,36 @@ class Dec20 {
         }
         return false
     }
+
+    fun cherryPickup(grid: Array<IntArray>): Int {
+        val m = grid.size
+        val n: Int = grid[0].size
+        val dp = Array(m) { Array(n) { IntArray(n) } }
+        for (row in m - 1 downTo 0) {
+            for (col1 in 0 until n) {
+                for (col2 in 0 until n) {
+                    var result = 0
+                    // current cell
+                    result += grid[row][col1]
+                    if (col1 != col2) {
+                        result += grid[row][col2]
+                    }
+                    // transition
+                    if (row != m - 1) {
+                        var max = 0
+                        for (newCol1 in col1 - 1..col1 + 1) {
+                            for (newCol2 in col2 - 1..col2 + 1) {
+                                if (newCol1 in 0 until n && newCol2 >= 0 && newCol2 < n) {
+                                    max = Math.max(max, dp[row + 1][newCol1][newCol2])
+                                }
+                            }
+                        }
+                        result += max
+                    }
+                    dp[row][col1][col2] = result
+                }
+            }
+        }
+        return dp[0][0][n - 1]
+    }
 }
