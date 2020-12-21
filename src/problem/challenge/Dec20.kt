@@ -1,6 +1,8 @@
 package problem.challenge
 
 import utils.TreeNode
+import java.util.*
+
 
 class Dec20 {
     private fun reverseLinkedList(head: ListNode?): ListNode? {
@@ -118,5 +120,19 @@ class Dec20 {
             }
         }
         return dp[0][0][n - 1]
+    }
+
+    fun smallestRangeII(A: IntArray, K: Int): Int {
+        val N = A.size
+        Arrays.sort(A)
+        var ans = A[N - 1] - A[0]
+        for (i in 0 until A.size - 1) {
+            val a = A[i]
+            val b = A[i + 1]
+            val high = maxOf(A[N - 1] - K, a + K)
+            val low = minOf(A[0] + K, b - K)
+            ans = minOf(ans, high - low)
+        }
+        return ans
     }
 }
