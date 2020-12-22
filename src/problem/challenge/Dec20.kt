@@ -135,4 +135,44 @@ class Dec20 {
         }
         return ans
     }
+
+    fun findNearestRightNode(root: TreeNode?, u: TreeNode?): TreeNode? {
+
+        val stack = LinkedList<TreeNode?>()
+        var nodeFound = true
+        val list = mutableListOf<TreeNode?>()
+
+        stack.push(root)
+
+        while (stack.peek() != null) {
+
+            val node = stack.peek()
+            if (nodeFound) return node
+            if (node?.`val` == u?.`val`) nodeFound = true
+            if (nodeFound && stack.isEmpty()) return null
+
+            if (node?.left != null) list.add(node.left)
+            if (node?.right != null) list.add(node.right)
+
+            if (stack.isEmpty()) {
+                stack.addAll(list)
+                list.clear()
+            }
+        }
+
+        return null
+    }
+
+    private fun height(root: TreeNode?): Int {
+        // An empty tree has height -1
+        return if (root == null) {
+            -1
+        } else 1 + maxOf(height(root.left), height(root.right))
+    }
+
+    fun isBalanced(root: TreeNode?): Boolean {
+        return if (root == null) {
+            true
+        } else Math.abs(height(root.left) - height(root.right)) < 2 && isBalanced(root.left) && isBalanced(root.right)
+    }
 }
