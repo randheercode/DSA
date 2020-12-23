@@ -2,6 +2,7 @@ package problem.challenge
 
 import utils.TreeNode
 import java.util.*
+import kotlin.collections.HashSet
 
 
 class Dec20 {
@@ -174,5 +175,21 @@ class Dec20 {
         return if (root == null) {
             true
         } else Math.abs(height(root.left) - height(root.right)) < 2 && isBalanced(root.left) && isBalanced(root.right)
+    }
+
+    fun twoSum(nums: IntArray, target: Int): IntArray {
+        val lookup = HashSet<Int>()
+        val result = IntArray(2) { -1 }
+        for (i in nums.indices) {
+            val num = target - nums[i]
+            if (lookup.contains(num)) {
+                result[0] = nums.indexOf(num)
+                result[1] = i
+                break
+            } else {
+                lookup.add(num)
+            }
+        }
+        return result
     }
 }
