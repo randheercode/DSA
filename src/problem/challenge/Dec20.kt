@@ -192,4 +192,40 @@ class Dec20 {
         }
         return result
     }
+
+    fun nextGreaterElement(n: Int): Int {
+        val a = ("" + n).toCharArray()
+        var i = a.size - 2
+        while (i >= 0 && a[i + 1] <= a[i]) {
+            i--
+        }
+        if (i < 0) return -1
+        var j = a.size - 1
+        while (j >= 0 && a[j] <= a[i]) {
+            j--
+        }
+        swap(a, i, j)
+        reverse(a, i + 1)
+        return try {
+            String(a).toInt()
+        } catch (e: Exception) {
+            -1
+        }
+    }
+
+    private fun reverse(a: CharArray, start: Int) {
+        var i = start
+        var j = a.size - 1
+        while (i < j) {
+            swap(a, i, j)
+            i++
+            j--
+        }
+    }
+
+    private fun swap(a: CharArray, i: Int, j: Int) {
+        val temp = a[i]
+        a[i] = a[j]
+        a[j] = temp
+    }
 }
