@@ -228,4 +228,18 @@ class Dec20 {
         a[i] = a[j]
         a[j] = temp
     }
+
+    fun swapPairs(head: ListNode?): ListNode? {
+        if (head?.next == null) {
+            return head
+        }
+
+        val firstNode: ListNode = head
+        val secondNode = head.next
+
+        firstNode.next = swapPairs(secondNode!!.next)
+        secondNode.next = firstNode
+
+        return secondNode
+    }
 }
