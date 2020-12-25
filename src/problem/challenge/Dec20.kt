@@ -242,4 +242,62 @@ class Dec20 {
 
         return secondNode
     }
+
+    fun findDiagonalOrder(matrix: Array<IntArray>): IntArray {
+        if (matrix.isEmpty()) return intArrayOf()
+        var row = 0
+        var col = 0
+        val maxRow = matrix.size - 1
+        val maxCol = matrix[0].size - 1
+        val results = mutableListOf<Int>()
+        var directionDown = false
+
+        while (true) {
+            results.add(matrix[row][col])
+            if (row == maxRow && col == maxCol) {
+                return results.toIntArray()
+            }
+            if (!directionDown) {
+                when {
+                    row == 0 -> {
+                        if (col < maxCol) {
+                            col++
+                        } else {
+                            row++
+                        }
+                        directionDown = true
+                    }
+                    col == maxCol -> {
+                        row++
+                        directionDown = true
+                    }
+                    else -> {
+                        row--
+                        col++
+                    }
+                }
+
+            } else {
+                when {
+                    col == 0 -> {
+                        if (row < maxRow) {
+                            row++
+                        } else {
+                            col++
+                        }
+                        directionDown = false
+                    }
+                    row == maxRow -> {
+                        col = minOf(maxCol, col + 1)
+                        directionDown = false
+                    }
+                    else -> {
+                        row++
+                        col--
+                    }
+                }
+            }
+        }
+    }
+
 }
