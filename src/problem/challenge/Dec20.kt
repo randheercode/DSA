@@ -333,4 +333,40 @@ class Dec20 {
         } else recursiveWithMemo(0, s)
     }
 
+    fun countStudents(students: IntArray, sandwiches: IntArray): Int {
+        val sw = LinkedList<Int>()
+        val st = LinkedList<Int>()
+        for (s in sandwiches) sw.offer(s)
+        for (s in students) st.offer(s)
+
+        var count = 0
+
+        while (!sw.isEmpty() && count != st.size) {
+            if (sw.peekFirst() == st.peekFirst()) {
+                st.removeFirst()
+                sw.removeFirst()
+                count = 0
+            } else {
+                count++
+                val d = st.removeFirst()
+                st.offer(d)
+            }
+        }
+
+        return st.size
+    }
+
+    fun averageWaitingTime(customers: Array<IntArray>): Double {
+        var waitingTime = 0.0
+
+        var chefBusyTill = 0
+
+        for (c in customers) {
+            waitingTime += maxOf(chefBusyTill, c[0]).plus(c[1]).minus(c[0])
+            chefBusyTill = maxOf(chefBusyTill.plus(c[1]), c[0].plus(c[1]))
+        }
+
+        return waitingTime.div(customers.size)
+    }
+
 }
