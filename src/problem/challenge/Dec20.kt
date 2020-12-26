@@ -300,4 +300,37 @@ class Dec20 {
         }
     }
 
+    fun numDecodings(s: String?): Int {
+        val memo = HashMap<Int, Int>()
+
+        fun recursiveWithMemo(index: Int, str: String): Int {
+
+            if (index == str.length) {
+                return 1
+            }
+
+
+            if (str[index] == '0') {
+                return 0
+            }
+            if (index == str.length - 1) {
+                return 1
+            }
+
+            if (memo.containsKey(index)) {
+                return memo[index]!!
+            }
+            var ans = recursiveWithMemo(index + 1, str)
+            if (str.substring(index, index + 2).toInt() <= 26) {
+                ans += recursiveWithMemo(index + 2, str)
+            }
+
+            memo[index] = ans
+            return ans
+        }
+        return if (s == null || s.isEmpty()) {
+            0
+        } else recursiveWithMemo(0, s)
+    }
+
 }
