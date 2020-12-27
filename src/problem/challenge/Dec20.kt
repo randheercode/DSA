@@ -369,4 +369,62 @@ class Dec20 {
         return waitingTime.div(customers.size)
     }
 
+    fun halvesAreAlike(s: String): Boolean {
+        val set = HashSet<Char>()
+        set.add('a')
+        set.add('e')
+        set.add('i')
+        set.add('o')
+        set.add('u')
+        set.add('A')
+        set.add('E')
+        set.add('I')
+        set.add('O')
+        set.add('U')
+
+        var count = 0
+        var fac = 1
+        val half = s.length.div(2)
+        for (i in s.indices) {
+            fac = if (i >= half) -1 else 1
+            if (set.contains(s[i])) {
+                count += (1 * fac)
+            }
+        }
+
+        return count == 0
+
+    }
+
+    fun eatenApples(apples: IntArray, days: IntArray): Int {
+        val len: Int = apples.size
+
+        val pq = PriorityQueue(Comparator { a: IntArray, b: IntArray -> a[1].compareTo(b[1]) })
+        var startEatingDay = -1
+        for (i in 0 until len) {
+            if (apples[i] != 0) {
+                pq.add(intArrayOf(apples[i], i + days[i]))
+                if (startEatingDay == -1) startEatingDay = i
+            }
+        }
+
+        var res = 0
+
+        var i = startEatingDay
+        while (!pq.isEmpty()) {
+            while (!pq.isEmpty() && pq.peek()[1] <= i) {
+                pq.remove()
+            }
+            if (!pq.isEmpty()) {
+                res++
+                pq.peek()[0]--
+                if (pq.peek()[0] == 0) pq.remove()
+            }
+            i++
+        }
+
+
+        return res
+    }
+
 }
